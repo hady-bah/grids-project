@@ -8,7 +8,8 @@ function App() {
   return (
     <div style={{display: 'flex', flexDirection:'row'}}>
       <Sidebar/>
-      <div>Content</div>
+      
+      
     </div>
   )
 }

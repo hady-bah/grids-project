@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { BrowserRouter,Routes, Route, Link, useNavigate } from 'react-router-dom';
+import ContentComponent from './ContentComponent';
 import {
   DesktopOutlined,
-  DatabaseOutlined,
+  AppstoreOutlined,
   HomeOutlined,
   TeamOutlined,
   UserOutlined,
@@ -17,9 +19,9 @@ function getItem(label, key, icon, children) {
   };
 }
 const items = [
-  getItem('Home', '1', <HomeOutlined />),
-  getItem('Dashboard', '2', <DesktopOutlined />),
-  getItem('Grids', '9', <DatabaseOutlined />),
+  getItem('Home', "/", <HomeOutlined />),
+  getItem('Dashboard', '/dashboard', <DesktopOutlined />),
+  getItem('Grids', '/grids', <AppstoreOutlined />),
   getItem('Admins', 'sub1', <UserOutlined />, [
     getItem('Hady Bah', '3'),
     getItem('Abdourahamane Ly', '4'),
@@ -30,6 +32,7 @@ const items = [
 ];
 
 function Sidebar() {
+  const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },
@@ -44,33 +47,19 @@ function Sidebar() {
         >
         <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
             <div className="demo-logo-vertical" />
-            <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline" items={items} />
+            <Menu
+            onClick={({key})=>{
+                navigate(key)
+            }} 
+            theme="dark" 
+            defaultSelectedKeys={['1']} 
+            mode="inline" 
+            items={items} />
         </Sider>
+        <ContentComponent/>
         </Layout>
     </div>
   )
 }
 
 export default Sidebar
-
-
-// import React from 'react'
-// import { useState } from 'react'
-// import {Menu} from 'antd'
-
-// function Sidebar() {
-//   return (
-//     <div style={{display: 'flex', flexDirection:'row'}}>
-//         <Menu items={[
-//             {label:'Home'},
-//             {label:'Profile'},
-//             {label:'Dashboard'},
-//             {label:'User List'},
-//             {label:'Settings'},
-//             {label:'Sign Out'},]}
-//             ></Menu>
-//     </div>
-//   )
-// }
-
-// export default Sidebar
