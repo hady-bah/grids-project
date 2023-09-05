@@ -4,6 +4,7 @@ import ContentComponent from './ContentComponent';
 import {
   DesktopOutlined,
   AppstoreOutlined,
+  SnippetsOutlined,
   HomeOutlined,
   TeamOutlined,
   UserOutlined,
@@ -22,6 +23,7 @@ const items = [
   getItem('Home', "/", <HomeOutlined />),
   getItem('Dashboard', '/dashboard', <DesktopOutlined />),
   getItem('Grids', '/grids', <AppstoreOutlined />),
+  getItem('New receipt', '/receipt', <SnippetsOutlined />),
   getItem('Admins', 'sub1', <UserOutlined />, [
     getItem('Hady Bah', '3'),
     getItem('Abdourahamane Ly', '4'),
@@ -56,7 +58,9 @@ function Sidebar() {
             mode="inline" 
             items={items} />
         </Sider>
-        <ContentComponent/>
+        <div style={{diplay: 'flex', paddingTop: '30px', paddingLeft:'40px'}}>
+        <ContentComponent />
+        </div>
         </Layout>
     </div>
   )
