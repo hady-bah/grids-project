@@ -40,14 +40,14 @@ function Receipt() {
     <Form form={form} name="validateOnly" layout="vertical" autoComplete="off">
       <Form.Item label="Place">
         <Select>
-          <Select.Option value="demo">AS</Select.Option>
-          <Select.Option value="demo">BL</Select.Option>
-          <Select.Option value="demo">AC</Select.Option>
+          <Select.Option value="AS">AS</Select.Option>
+          <Select.Option value="BL">BL</Select.Option>
+          <Select.Option value="AC">AC</Select.Option>
         </Select>
       </Form.Item>
       <Form.Item
-        name="name"
-        label="Name"
+        name="Sender"
+        label="Sender"
         rules={[
           {
             required: true,
@@ -57,8 +57,8 @@ function Receipt() {
         <Input />
       </Form.Item>
       <Form.Item
-        name="age"
-        label="Age"
+        name="Receiver"
+        label="Receiver"
         rules={[
           {
             required: true,
@@ -70,7 +70,8 @@ function Receipt() {
       <Form.Item>
         <Space>
           <SubmitButton form={form} />
-          <Button htmlType="reset">Reset</Button>
+          <Button>Print</Button>
+          <Button htmlType="reset" style={{color:'#a61d24'}}>Reset</Button>
         </Space>
       </Form.Item>
     </Form>

@@ -30,7 +30,7 @@ const items = [
     getItem('Amadou Diallo', '5'),
     getItem('Abdoulaye Diallo', '10'),
   ]),
-  getItem('Customers', 'sub2', <TeamOutlined />, [getItem('Person 1', '6'), getItem('Person 2', '8')]),
+  getItem('Customers', 'sub2', <TeamOutlined />, [getItem('Alfred Fatormah', '6'), getItem('Ousmane Diallo', '8')]),
 ];
 
 function Sidebar() {
