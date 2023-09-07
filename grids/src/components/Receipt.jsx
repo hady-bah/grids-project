@@ -7,6 +7,7 @@ import {
   Space,
   InputNumber,
   DatePicker,
+  Card,
   Tooltip,
   Typography,
 } from "antd";
@@ -24,6 +25,11 @@ function Receipt() {
   };
 
   return (
+    <Card
+    title="New Receipt"
+    hoverable
+    style={{ width: 350, cursor:'default' }}
+    >
     <Form
       name="Receipt"
       onFinish={onFinish}
@@ -217,6 +223,7 @@ function Receipt() {
         </div>
       </Form.Item>
     </Form>
+  </Card>
   );
 }
 export default Receipt;
