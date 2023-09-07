@@ -25,12 +25,13 @@ const items = [
   getItem('Grids', '/grids', <AppstoreOutlined />),
   getItem('New receipt', '/receipt', <SnippetsOutlined />),
   getItem('Admins', 'sub1', <UserOutlined />, [
-    getItem('Hady Bah', '3'),
-    getItem('Abdourahamane Ly', '4'),
-    getItem('Amadou Diallo', '5'),
-    getItem('Abdoulaye Diallo', '10'),
+    getItem('Hady Bah', '/hadybah'),
+    getItem('Abdourahamane Ly', '/abdourahamanely'),
+    getItem('Amadou Diallo', '/amadoudiallo'),
+    getItem('Abdoulaye Diallo', '/abdoulayediallo'),
+    // getItem('Alpha Diallo', '/alphadiallo'),
   ]),
-  getItem('Customers', 'sub2', <TeamOutlined />, [getItem('Alfred Fatormah', '6'), getItem('Ousmane Diallo', '8')]),
+  getItem('Customers', 'sub2', <TeamOutlined />, [getItem('Add New', '/newcustomer'), getItem('View List', '/customerlist')]),
 ];
 
 function Sidebar() {
