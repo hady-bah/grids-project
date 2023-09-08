@@ -178,7 +178,7 @@ function Receipt() {
               style={{
                 width: 160,
               }}
-              placeholder="number/blank"
+              placeholder="Number/Blank"
             />
           </Form.Item>
         </Space>

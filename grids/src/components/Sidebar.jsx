@@ -22,16 +22,20 @@ function getItem(label, key, icon, children) {
 const items = [
   getItem('Home', "/", <HomeOutlined />),
   getItem('Dashboard', '/dashboard', <DesktopOutlined />),
-  getItem('Grids', '/grids', <AppstoreOutlined />),
+  getItem('Grids', 'sub1', <AppstoreOutlined />,[
+    getItem('AS', '/asgrid'),
+    getItem('BL', '/blgrid'),
+    getItem('AC', '/acgrid'),
+  ]),
   getItem('New receipt', '/receipt', <SnippetsOutlined />),
-  getItem('Admins', 'sub1', <UserOutlined />, [
+  getItem('Admins', 'sub2', <UserOutlined />, [
     getItem('Hady Bah', '/hadybah'),
     getItem('Abdourahamane Ly', '/abdourahamanely'),
     getItem('Amadou Diallo', '/amadoudiallo'),
     getItem('Abdoulaye Diallo', '/abdoulayediallo'),
-    // getItem('Alpha Diallo', '/alphadiallo'),
+    getItem('Alpha Diallo', '/alphadiallo'),
   ]),
-  getItem('Customers', 'sub2', <TeamOutlined />, [getItem('Add New', '/newcustomer'), getItem('View List', '/customerlist')]),
+  getItem('Customers', 'sub3', <TeamOutlined />, [getItem('Add New', '/newcustomer'), getItem('View List', '/customerlist')]),
 ];
 
 function Sidebar() {

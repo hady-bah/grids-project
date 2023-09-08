@@ -4,6 +4,7 @@ import Home from './Home';
 import Dashboard from './Dashboard';
 import Grids from './Grids';
 import Receipt from './Receipt';
+import AsGrid from './AsGrid';
 
 function ContentComponent() {
   return (
@@ -11,7 +12,7 @@ function ContentComponent() {
       <Routes>
         <Route path = "/" element = {<Home/>}></Route>
         <Route path = "/dashboard" element = {<Dashboard/>}></Route>
-        <Route path = "/grids" element = {<Grids/>}></Route>
+        <Route path = "/asgrid" element = {<AsGrid/>}></Route>
         <Route path = "/receipt" element = {<Receipt/>}></Route>
       </Routes>
     </div>
