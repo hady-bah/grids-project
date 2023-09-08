@@ -2,7 +2,7 @@ import { SearchOutlined } from '@ant-design/icons';
 import React, { useRef, useState } from 'react';
 import Highlighter from 'react-highlight-words';
 import { Button, Input, Space, Table } from 'antd';
-import AsGrid from './AsGrid';
+import Transfers from './Transfers';
 
 
 
@@ -11,7 +11,7 @@ function Grids() {
     <div>
 
       <div>
-        <AsGrid/>
+        <Transfers/>
       </div>
 
     </div>

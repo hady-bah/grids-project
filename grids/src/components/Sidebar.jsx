@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter,Routes, Route, Link, useNavigate } from 'react-router-dom';
-import ContentComponent from './ContentComponent';
+import ContentComponent from '../Layouts/ContentComponent';
 import {
   DesktopOutlined,
   AppstoreOutlined,
@@ -23,9 +23,10 @@ const items = [
   getItem('Home', "/", <HomeOutlined />),
   getItem('Dashboard', '/dashboard', <DesktopOutlined />),
   getItem('Grids', 'sub1', <AppstoreOutlined />,[
-    getItem('AS', '/asgrid'),
-    getItem('BL', '/blgrid'),
-    getItem('AC', '/acgrid'),
+    getItem('Add new', '/newgrid'),
+    getItem('Money Transfer 2.0', '/transfers'),
+    
+    
   ]),
   getItem('New receipt', '/receipt', <SnippetsOutlined />),
   getItem('Admins', 'sub2', <UserOutlined />, [

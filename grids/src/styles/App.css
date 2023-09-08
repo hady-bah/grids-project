@@ -1,1 +1,14 @@
 
+  
+  /* Styles for the fixed Sidebar on the left */
+  .fixed-left {
+    position: fixed;
+    left: 0;
+    top: 0; /* Adjust top position if necessary */
+    width: 250px; /* Adjust the width as needed */
+    height: 100%; /* Make it cover the full height of the viewport */
+    z-index: 100; /* Adjust the z-index as needed */
+    background-color: #f0f0f0; /* Add background color if necessary */
+  }
+
+  
