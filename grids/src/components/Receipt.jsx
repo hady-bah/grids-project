@@ -207,7 +207,7 @@ function Receipt() {
             <Select placeholder="Status">
               <Option value="Cash">Cash</Option>
               <Option value="Deposit">Deposit</Option>
-              <Option value="Not Payed">Not Payed</Option>
+              <Option value="Not Paid">Not Paid</Option>
             </Select>
           </Form.Item>
       </Form.Item>
