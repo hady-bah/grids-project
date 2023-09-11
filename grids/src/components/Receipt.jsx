@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useRef, useState, useEffect } from 'react';
+import { supabase } from '../createClient';
 import {
   Button,
   Form,
   Input,
   Select,
+  message,
   Space,
   InputNumber,
   DatePicker,
@@ -13,15 +15,38 @@ import {
 } from "antd";
 const { Option } = Select;
 
-const onFinish = (values) => {
-  console.log("Received values of form: ", values);
-};
+
 
 function Receipt() {
   const [form] = Form.useForm();
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const success = () => {
+    messageApi.open({
+      type: 'success',
+      content: 'Receipt sent successfully',
+    });
+  };
 
   const onReset = () => {
     form.resetFields();
+  };
+
+  const onFinish = async (values) => {
+
+    const { data, error } = await supabase
+      .from('transfers')
+      .insert([
+        values
+      ])
+  
+      if (error) {
+        console.error(error);
+      } else {
+        success(); // Display success message
+        form.resetFields();
+      }
+  
   };
 
   return (
@@ -173,7 +198,7 @@ function Receipt() {
 
       <Form.Item label="Mobile money">
         <Space>
-          <Form.Item name="mobile-money" noStyle>
+          <Form.Item name="mobileMoney" noStyle>
             <Input
               style={{
                 width: 160,
@@ -184,7 +209,7 @@ function Receipt() {
         </Space>
       </Form.Item>
 
-      <Form.Item name="date-picker" label="Date" rules={[
+      <Form.Item name="date" label="Date" rules={[
           {
             required: true,
             message: "Date is required",
@@ -215,7 +240,7 @@ function Receipt() {
       <Form.Item label=" " colon={false}>
         <div style={{display:'flex', marginTop:'20px'}}>
           <Button type="primary" htmlType="submit">
-            Print & Submit
+            Submit
           </Button>
           <Button htmlType="button" onClick={onReset} style={{marginLeft:'10px'}}>
             Reset
