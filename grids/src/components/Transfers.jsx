@@ -3,7 +3,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import Highlighter from 'react-highlight-words';
 import { Button, Input, Space, Table, DatePicker } from 'antd';
 import { FloatButton } from 'antd';
-import { supabase } from '../createClient';
+import { supabase } from '../../createClient';
 
 
 function Transfers() {

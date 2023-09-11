@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { supabase } from '../createClient';
+import { supabase } from '../../createClient';
 import {
   Button,
   Form,
