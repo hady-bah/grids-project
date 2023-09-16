@@ -1,15 +1,20 @@
 import { SearchOutlined } from '@ant-design/icons';
 import React, { useRef, useState, useEffect } from 'react';
 import Highlighter from 'react-highlight-words';
-import { Button, Input, Space, Table, DatePicker } from 'antd';
+import { Button, Input, Space, Table, DatePicker, Typography } from 'antd';
 import { FloatButton } from 'antd';
 import { supabase } from '../../createClient';
+import { Divider } from 'antd';
+import LearnDataGrid from './LearnDataGrid';
+import TotalsFilter from './TotalsFilter';
+
 
 
 function Transfers() {
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
     const searchInput = useRef(null);
+    const { Title } = Typography;
 
     //supabase setup
     const [transfers, setTransfers] = useState([])
@@ -202,7 +207,25 @@ function Transfers() {
         ...getColumnSearchProps('status'),
       },
     ];
-    return <Table columns={columns} dataSource={transfers} pagination={false}/>;
+    return( 
+    <>
+      <Title>Money Transfer 2.0</Title>
+      <Divider style={{ borderTopWidth: 5 }}/>
+
+      <LearnDataGrid/>
+
+      <Divider style={{ borderTopWidth: 2 }}/>
+      <Title level={2}>Summary:</Title>
+
+      <TotalsFilter/>
+      
+      <Divider style={{ borderTopWidth: 2 }}/>
+      <Title level={2}>View</Title>
+      
+      <Table columns={columns} dataSource={transfers} pagination={false}/>
+    </>
+
+    );
 };
 
 export default Transfers
@@ -234,4 +257,3 @@ export default Transfers
 // }
 
 // export default Transfers;
-

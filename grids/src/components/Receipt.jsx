@@ -12,6 +12,7 @@ import {
   Card,
   Tooltip,
   Typography,
+  Divider,
 } from "antd";
 const { Option } = Select;
 
@@ -20,6 +21,7 @@ const { Option } = Select;
 function Receipt() {
   const [form] = Form.useForm();
   const [messageApi, contextHolder] = message.useMessage();
+  const { Title } = Typography;
 
   const success = () => {
     messageApi.open({
@@ -50,6 +52,8 @@ function Receipt() {
   };
 
   return (
+  <>
+    
     <Card
     title="New Receipt"
     hoverable
@@ -240,7 +244,7 @@ function Receipt() {
       <Form.Item label=" " colon={false}>
         <div style={{display:'flex', marginTop:'20px'}}>
           <Button type="primary" htmlType="submit">
-            Submit
+            Submit & Print
           </Button>
           <Button htmlType="button" onClick={onReset} style={{marginLeft:'10px'}}>
             Reset
@@ -249,6 +253,7 @@ function Receipt() {
       </Form.Item>
     </Form>
   </Card>
+  </>
   );
 }
 export default Receipt;

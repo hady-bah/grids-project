@@ -14,8 +14,10 @@
     "antd": "^5.8.6",
     "express": "^4.18.2",
     "highlight-words": "^1.2.2",
+    "lodash": "^4.17.21",
     "node": "^20.5.1",
     "react": "^18.2.0",
+    "react-countup": "^6.4.2",
     "react-dom": "^18.2.0",
     "react-highlight-words": "^0.20.0",
     "react-router-dom": "^6.15.0"

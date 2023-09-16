@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { BrowserRouter,Routes, Route, Link, useNavigate } from 'react-router-dom';
 import ContentComponent from '../Layouts/ContentComponent';
 import {
-  DesktopOutlined,
+  FundOutlined,
   AppstoreOutlined,
   SnippetsOutlined,
   HomeOutlined,
@@ -21,7 +21,7 @@ function getItem(label, key, icon, children) {
 }
 const items = [
   getItem('Home', "/", <HomeOutlined />),
-  getItem('Dashboard', '/dashboard', <DesktopOutlined />),
+  getItem('Dashboard', '/dashboard', <FundOutlined />),
   getItem('Grids', 'sub1', <AppstoreOutlined />,[
     getItem('Add new', '/newgrid'),
     getItem('Money Transfer 2.0', '/transfers'),
