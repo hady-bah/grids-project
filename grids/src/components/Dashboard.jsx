@@ -11,8 +11,11 @@ function Dashboard() {
     <Divider style={{ borderTopWidth: 5 }}/>
     <LearnDataGrid/>
     <Divider style={{ borderTopWidth: 2 }}/>
+
+    <Divider style={{ borderTopWidth: 5, borderTop: '2px solid #000' }}/>
     <AllTimeTotals/>
-    <Divider style={{ borderTopWidth: 5 }}/>
+    <Divider style={{ borderTopWidth: 5, borderTop: '2px solid #000' }}/>
+    
     </>
   )
 }
