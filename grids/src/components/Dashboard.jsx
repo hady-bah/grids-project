@@ -2,6 +2,7 @@ import React from 'react'
 import AllTimeTotals from './AllTimeTotals'
 import { Divider, Typography } from 'antd';
 import LearnDataGrid from './LearnDataGrid';
+import DailyTotals from './DailyTotals';
 
 function Dashboard() {
   const { Title } = Typography;
@@ -10,11 +11,16 @@ function Dashboard() {
     <Title>Dashboard</Title>
     <Divider style={{ borderTopWidth: 5 }}/>
     <LearnDataGrid/>
-    <Divider style={{ borderTopWidth: 2 }}/>
+  
 
-    <Divider style={{ borderTopWidth: 5, borderTop: '2px solid #000' }}/>
+    <Divider style={{ borderTopWidth: 5}}/>
+    <DailyTotals/>
+    <Divider style={{ borderTopWidth: 5}}/>
+
+    
     <AllTimeTotals/>
-    <Divider style={{ borderTopWidth: 5, borderTop: '2px solid #000' }}/>
+    <Divider style={{ borderTopWidth: 5}}/>
+    
     
     </>
   )

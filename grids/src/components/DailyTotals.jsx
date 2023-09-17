@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { supabase } from "../../createClient";
 import CountUp from "react-countup";
-import { Col, Row, Statistic, Typography, Divider } from "antd";
+import { Col, Row, Statistic, Typography, Divider, DatePicker } from "antd";
 
-function AllTimeTotals() {
+function DailyTotals() {
   const { Title } = Typography;
+  const { RangePicker } = DatePicker;
   const formatter = (value) => (
-    <span >
+    <span>
       $ <CountUp end={value} separator="," />
     </span>
   );
@@ -32,12 +33,12 @@ function AllTimeTotals() {
     grandTotalAS: 0,
     totalDepositsAS: 0,
     cashTotalAS: 0,
-    totalAmountBL: 0, // Add BL totals
+    totalAmountBL: 0,
     totalFeeBL: 0,
     grandTotalBL: 0,
     totalDepositsBL: 0,
     cashTotalBL: 0,
-    totalAmountAC: 0, // Add AC totals
+    totalAmountAC: 0,
     totalFeeAC: 0,
     grandTotalAC: 0,
     totalDepositsAC: 0,
@@ -47,14 +48,21 @@ function AllTimeTotals() {
     transactionsBL: 0,
     transactionsAC: 0,
   });
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   useEffect(() => {
-    fetchTransfers();
-  }, []);
+    fetchTransfers(selectedDate);
+  }, [selectedDate]);
 
-  async function fetchTransfers() {
-    // Fetch all transfer records from Supabase
-    const { data, error } = await supabase.from("transfers").select("*");
+  async function fetchTransfers(selectedDate) {
+    // Format selected date to "yyyy-MM-dd"
+    const formattedDate = selectedDate.toISOString().split("T")[0];
+
+    // Fetch transfer records for the selected date from Supabase
+    const { data, error } = await supabase
+      .from("transfers")
+      .select("*")
+      .eq("date", formattedDate);
 
     if (error) {
       console.error("Error fetching data from Supabase:", error.message);
@@ -68,10 +76,10 @@ function AllTimeTotals() {
     let totalAmountAS = 0;
     let totalFeeAS = 0;
     let totalDepositsAS = 0;
-    let totalAmountBL = 0; // Initialize BL totals
+    let totalAmountBL = 0;
     let totalFeeBL = 0;
     let totalDepositsBL = 0;
-    let totalAmountAC = 0; // Initialize AC totals
+    let totalAmountAC = 0;
     let totalFeeAC = 0;
     let totalDepositsAC = 0;
     let transactions = 0;
@@ -93,18 +101,17 @@ function AllTimeTotals() {
       }
 
       if (transfer.status !== "Not Paid" && transfer.label === "BL") {
-        totalAmountBL += transfer.amount; // Add to BL totals
+        totalAmountBL += transfer.amount;
         totalFeeBL += transfer.fee;
         transactionsBL ++;
       }
 
       if (transfer.status !== "Not Paid" && transfer.label === "AC") {
-        totalAmountAC += transfer.amount; // Add to AC totals
+        totalAmountAC += transfer.amount;
         totalFeeAC += transfer.fee;
         transactionsAC ++;
       }
 
-      // Check if the label is "Deposit" and include it in totalDeposits
       if (transfer.status === "Deposit") {
         totalDeposits += transfer.amount + transfer.fee;
       }
@@ -114,27 +121,24 @@ function AllTimeTotals() {
       }
 
       if (transfer.status === "Deposit" && transfer.label === "BL") {
-        totalDepositsBL += transfer.amount + transfer.fee; // Add to BL totalDeposits
+        totalDepositsBL += transfer.amount + transfer.fee;
       }
 
       if (transfer.status === "Deposit" && transfer.label === "AC") {
-        totalDepositsAC += transfer.amount + transfer.fee; // Add to AC totalDeposits
+        totalDepositsAC += transfer.amount + transfer.fee;
       }
     });
 
-    // Calculate the grand total
     const grandTotal = totalAmount + totalFee;
     const grandTotalAS = totalAmountAS + totalFeeAS;
-    const grandTotalBL = totalAmountBL + totalFeeBL; // Calculate BL grand total
-    const grandTotalAC = totalAmountAC + totalFeeAC; // Calculate AC grand total
+    const grandTotalBL = totalAmountBL + totalFeeBL;
+    const grandTotalAC = totalAmountAC + totalFeeAC;
 
-    // Calculate the cash total by subtracting total deposits from grand total
     const cashTotal = grandTotal - totalDeposits;
     const cashTotalAS = grandTotalAS - totalDepositsAS;
-    const cashTotalBL = grandTotalBL - totalDepositsBL; // Calculate BL cash total
-    const cashTotalAC = grandTotalAC - totalDepositsAC; // Calculate AC cash total
+    const cashTotalBL = grandTotalBL - totalDepositsBL;
+    const cashTotalAC = grandTotalAC - totalDepositsAC;
 
-    // Update the state with the calculated totals
     setTransfers(data);
     setTotals({
       totalAmount,
@@ -147,12 +151,12 @@ function AllTimeTotals() {
       grandTotalAS,
       totalDepositsAS,
       cashTotalAS,
-      totalAmountBL, // Add BL totals
+      totalAmountBL,
       totalFeeBL,
       grandTotalBL,
       totalDepositsBL,
       cashTotalBL,
-      totalAmountAC, // Add AC totals
+      totalAmountAC,
       totalFeeAC,
       grandTotalAC,
       totalDepositsAC,
@@ -164,11 +168,17 @@ function AllTimeTotals() {
     });
   }
 
+  //to pick date range
+  // const handleDateChange = (date, dateString) => {
+  //   setSelectedDate(date);
+  // };
+
   return (
     <>
-      <Title level={2}>All time summary:</Title>
+      <Title level={2}>Daily summary for: {selectedDate.toDateString()}</Title>
       <Divider style={{ borderTopWidth: 2 }} />
       <Title level={4}>AS - BL - AC</Title>
+      {/* <RangePicker onChange={handleDateChange} /> */}
       <Row gutter={80}>
         <Col>
           <Statistic
@@ -216,6 +226,7 @@ function AllTimeTotals() {
           />
         </Col>
       </Row>
+
       <Divider style={{ borderTopWidth: 2 }} />
       <Title level={4}>AS</Title>
       <Row gutter={80}>
@@ -265,6 +276,7 @@ function AllTimeTotals() {
           />
         </Col>
       </Row>
+
       <Divider style={{ borderTopWidth: 2 }} />
       <Title level={4}>BL</Title>
       <Row gutter={80}>
@@ -314,6 +326,7 @@ function AllTimeTotals() {
           />
         </Col>
       </Row>
+
       <Divider style={{ borderTopWidth: 2 }} />
       <Title level={4}>AC</Title>
       <Row gutter={80}>
@@ -367,4 +380,4 @@ function AllTimeTotals() {
   );
 }
 
-export default AllTimeTotals;
+export default DailyTotals;
