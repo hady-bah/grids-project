@@ -14,11 +14,10 @@ function Dashboard() {
   
 
     <Divider style={{ borderTopWidth: 5}}/>
-    <DailyTotals/>
+    <AllTimeTotals/>
     <Divider style={{ borderTopWidth: 5}}/>
 
-    
-    <AllTimeTotals/>
+    <DailyTotals/>
     <Divider style={{ borderTopWidth: 5}}/>
     
     

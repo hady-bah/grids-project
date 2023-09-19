@@ -10,6 +10,7 @@ function App() {
   const [count, setCount] = useState(0);
 
   return (
+    <>
     <div>
       <div>
         <NavBar />
@@ -19,6 +20,7 @@ function App() {
       </div>
       <FloatButton.BackTop />
     </div>
+    </>
   );
 }
 

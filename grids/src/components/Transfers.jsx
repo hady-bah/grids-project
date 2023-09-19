@@ -215,7 +215,7 @@ function Transfers() {
       <LearnDataGrid/>
 
       <Divider style={{ borderTopWidth: 2 }}/>
-      <Title level={2}>Summary:</Title>
+      <Title level={2}>Advanced filter:</Title>
 
       <TotalsFilter/>
       
