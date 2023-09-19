@@ -60,7 +60,7 @@ function Receipt() {
     <Card
     title="New Receipt"
     hoverable
-    style={{ width: 350, cursor:'default' }}
+    style={{ width: 375, cursor:'default' }}
     >
     <Form
       name="Receipt"
@@ -75,6 +75,7 @@ function Receipt() {
       style={{
         maxWidth: 600,
       }}
+      size="large"
     >
       <Form.Item label="Place">
         <Space>
@@ -177,31 +178,49 @@ function Receipt() {
         </Space>
       </Form.Item>
 
-      <Form.Item
-        label="Amount"
-        name="amount"
-        rules={[
-          {
-            required: true,
-            message: "Amount is required",
-          },
-        ]}
-      >
-        <InputNumber placeholder="$" />
-      </Form.Item>
+      <Form.Item label="Amount">
+        <Space>
+          <Form.Item
+            name="amount"
+            noStyle
+            rules={[
+              {
+                required: true,
+                message: "Amount is required",
+              },
+            ]}
+          >
+            <InputNumber
+              style={{
+                width: 160,
+              }}
+              placeholder="$"
+            />
+          </Form.Item>
+        </Space>
+        </Form.Item>
 
-      <Form.Item
-        label="Fee"
-        name="fee"
-        rules={[
-          {
-            required: true,
-            message: "Fee is required",
-          },
-        ]}
-      >
-        <InputNumber placeholder="$"/>
-      </Form.Item>
+        <Form.Item label="Fee">
+        <Space>
+          <Form.Item
+            name="fee"
+            noStyle
+            rules={[
+              {
+                required: true,
+                message: "Fee is required",
+              },
+            ]}
+          >
+            <InputNumber
+              style={{
+                width: 160,
+              }}
+              placeholder="$"
+            />
+          </Form.Item>
+        </Space>
+        </Form.Item>
 
       <Form.Item label="Mobile money">
         <Space>
@@ -216,14 +235,22 @@ function Receipt() {
         </Space>
       </Form.Item>
 
-      <Form.Item name="date" label="Date" rules={[
-          {
-            required: true,
-            message: "Date is required",
-          },
-        ]}>
-        <DatePicker />
-      </Form.Item>
+      <Form.Item label="Date">
+        <Space>
+          <Form.Item
+            name="date"
+            noStyle
+            rules={[
+              {
+                required: true,
+                message: "Date is required",
+              },
+            ]}
+          >
+            <DatePicker/>
+          </Form.Item>
+        </Space>
+        </Form.Item>
 
       <Form.Item label="Status">
           <Form.Item
@@ -246,10 +273,10 @@ function Receipt() {
 
       <Form.Item label=" " colon={false}>
         <div style={{display:'flex', marginTop:'20px'}}>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" size="default">
             Submit & Print
           </Button>
-          <Button htmlType="button" onClick={onReset} style={{marginLeft:'10px'}}>
+          <Button htmlType="button" onClick={onReset} style={{marginLeft:'10px'}} size="default">
             Reset
           </Button>
         </div>
