@@ -209,7 +209,7 @@ function Transfers() {
     ];
     return( 
     <>
-      <Title>Money Transfer 2.0</Title>
+      <Title>Transfer 2.0</Title>
       <Divider style={{ borderTopWidth: 5 }}/>
 
       <LearnDataGrid/>
