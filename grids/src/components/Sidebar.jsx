@@ -45,15 +45,19 @@ function Sidebar() {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
+
+
   return (
+    <>
     <div style={{display:'flex'}}>
-        <Layout
-        style={{
-            minHeight: '100vh',
-            
-        }}
-        >
-        <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
+    <Layout>
+        <Sider  style={{
+          overflow: 'auto',
+          height: '100vh',
+          position: 'fixed',
+          paddingTop:'50px',
+          
+        }}>
             <div className="demo-logo-vertical" />
             <Menu
             onClick={({key})=>{
@@ -64,11 +68,26 @@ function Sidebar() {
             mode="inline" 
             items={items} />
         </Sider>
-        <div style={{diplay: 'flex', paddingTop: '30px', paddingLeft:'40px'}}>
-        <ContentComponent />
-        </div>
+        <Layout
+        className="site-layout">
+        <Content
+          style={{ 
+            marginLeft: 200, 
+            paddingTop:'50px',
+          }}
+        >
+          <div
+            style={{
+              padding: 24,
+            }}
+          >
+            <ContentComponent/>
+          </div>
+        </Content>
+        </Layout>
         </Layout>
     </div>
+    </>
   )
 }
 
