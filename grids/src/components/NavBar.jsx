@@ -1,5 +1,5 @@
 import React from 'react';
-import { LaptopOutlined, NotificationOutlined, UserOutlined, PoweroffOutlined } from '@ant-design/icons';
+import { LaptopOutlined, NotificationOutlined, UserOutlined, PoweroffOutlined, SettingOutlined } from '@ant-design/icons';
 import { Breadcrumb, Layout, Menu, theme, Button } from 'antd';
 import { Divider } from 'antd';
 import Logo from "../images/BAHSoftwareSolutionsLogo.png";
@@ -18,7 +18,9 @@ function NavBar() {
     <>
     <div className="blured-navbar">
       <div className="logout-position">
-        <button className="logout-button"><PoweroffOutlined /></button>
+        <button className="nav-buttons"><UserOutlined /></button>
+        <button className="nav-buttons"><SettingOutlined /></button>
+        <button className="nav-buttons"><PoweroffOutlined /></button>
       </div>
 
     </div>

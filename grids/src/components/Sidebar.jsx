@@ -10,6 +10,7 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
+import '../styles/nav.css';
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
   return {
@@ -70,7 +71,7 @@ function Sidebar() {
         </Sider>
         <Layout
         className="site-layout">
-        <Content
+        <Content 
           style={{ 
             marginLeft: 200, 
             paddingTop:'100px',

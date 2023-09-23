@@ -274,15 +274,11 @@ function Transfers() {
       <Title>Transfer 2.0</Title>
       <Divider style={{ borderTopWidth: 5 }} />
 
-      <LearnDataGrid />
+      <Title style={{paddingTop:'20px'}} level={2}>Advanced filter:</Title>
 
-      <Divider style={{ borderTopWidth: 2 }} />
-      <Title level={2}>Advanced filter:</Title>
-
+      <div style={{paddingBottom:'50px'}}>
       <TotalsFilter />
-
-      <Divider style={{ borderTopWidth: 2 }} />
-      <Title level={2}>View</Title>
+      </div>
 
       <Table
         columns={columns}

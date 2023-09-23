@@ -10,15 +10,16 @@ function Dashboard() {
     <>
     <Title>Dashboard</Title>
     <Divider style={{ borderTopWidth: 5 }}/>
-    <LearnDataGrid/>
   
 
-    <Divider style={{ borderTopWidth: 5}}/>
+    <div style={{paddingTop: '20px'}}>
     <AllTimeTotals/>
-    <Divider style={{ borderTopWidth: 5}}/>
-
+    </div>
+    
+    <div style={{paddingTop: '20px'}}>
     <DailyTotals/>
-    <Divider style={{ borderTopWidth: 5}}/>
+    </div>
+    
     
     
     </>

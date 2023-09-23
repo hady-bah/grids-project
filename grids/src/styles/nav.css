@@ -21,17 +21,21 @@
     z-index: 9999; /* Ensure it's above everything */
 }
 
-.logout-button {
+.nav-buttons {
     cursor: pointer;
     border: none;
-    backdrop-filter: blur(20px);
     background: linear-gradient(rgb(22, 119, 255) 0%, rgba(102, 102, 102, 0.05) 100%);
     opacity: 1;
     border-radius: 15px;
     z-index: 9999;
     color: white;
-    padding: 15px 15px;
+    padding: 10px 10px;
+    margin: 10px;
     
+}
+
+.nav-buttons:hover {
+    background: rgb(22, 119, 255);
 }
 
 .logout-position {
@@ -39,8 +43,6 @@
     padding: 10px;
 }
   
-
-
   
   
   
