@@ -51,11 +51,11 @@ function Sidebar() {
     <>
     <div style={{display:'flex'}}>
     <Layout>
-        <Sider  style={{
+        <Sider  theme="dark" style={{
           overflow: 'auto',
           height: '100vh',
           position: 'fixed',
-          paddingTop:'50px',
+          paddingTop:'20px',
           
         }}>
             <div className="demo-logo-vertical" />
@@ -73,7 +73,7 @@ function Sidebar() {
         <Content
           style={{ 
             marginLeft: 200, 
-            paddingTop:'50px',
+            paddingTop:'100px',
             overflowX: 'hidden',
           }}
         >
