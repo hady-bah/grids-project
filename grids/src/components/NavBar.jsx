@@ -1,8 +1,8 @@
 import React from 'react';
-import { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
+import { LaptopOutlined, NotificationOutlined, UserOutlined, PoweroffOutlined } from '@ant-design/icons';
+import { Breadcrumb, Layout, Menu, theme, Button } from 'antd';
 import { Divider } from 'antd';
-import Logo from "../images/GridsIcon.png";
+import Logo from "../images/BAHSoftwareSolutionsLogo.png";
 import { Typography } from 'antd';
 import '../styles/nav.css';
 
@@ -17,6 +17,9 @@ function NavBar() {
   return (
     <>
     <div className="blured-navbar">
+      <div className="logout-position">
+        <button className="logout-button"><PoweroffOutlined /></button>
+      </div>
 
     </div>
     </>

@@ -1,4 +1,6 @@
 .blured-navbar {
+    display: flex;
+    align-items: center;
     --border-bottom-width: 0.5px;
     --border-color: rgba(255, 255, 255, 0.1);
     --border-left-width: 0.5px;
@@ -18,6 +20,27 @@
     transform: translateX(-40%); /* Center horizontally */
     z-index: 9999; /* Ensure it's above everything */
 }
+
+.logout-button {
+    cursor: pointer;
+    border: none;
+    backdrop-filter: blur(20px);
+    background: linear-gradient(rgb(22, 119, 255) 0%, rgba(102, 102, 102, 0.05) 100%);
+    opacity: 1;
+    border-radius: 15px;
+    z-index: 9999;
+    color: white;
+    padding: 15px 15px;
+    
+}
+
+.logout-position {
+    margin-left: auto; /* Pushes the button to the far right */
+    padding: 10px;
+}
+  
+
+
   
   
   
