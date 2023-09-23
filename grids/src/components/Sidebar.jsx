@@ -74,11 +74,13 @@ function Sidebar() {
           style={{ 
             marginLeft: 200, 
             paddingTop:'50px',
+            overflowX: 'hidden',
           }}
         >
           <div
             style={{
-              padding: 24,
+              padding: 30,
+              
             }}
           >
             <ContentComponent/>
