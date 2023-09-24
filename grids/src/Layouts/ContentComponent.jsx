@@ -17,8 +17,7 @@ function ContentComponent() {
         <Route path = "/transfers" element = {<Transfers/>}></Route>
         <Route path = "/receipt" element = {<Receipt/>}></Route>
         <Route path = "/newgrid" element = {<ComingSoon/>}></Route>
-        <Route path = "/newcustomer" element = {<ComingSoon/>}></Route>
-        <Route path = "/customerlist" element = {<ComingSoon/>}></Route>
+        <Route path = "/customers" element = {<ComingSoon/>}></Route>
       </Routes>
     </div>
   )

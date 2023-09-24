@@ -24,10 +24,9 @@ const items = [
   getItem('Home', "/", <HomeOutlined />),
   getItem('Dashboard', '/dashboard', <FundOutlined />),
   getItem('Grids', 'sub1', <AppstoreOutlined />,[
-    getItem('Add new', '/newgrid'),
     getItem('Money Transfer 2.0', '/transfers'),
-    
-    
+    getItem('Add new', '/newgrid'),
+
   ]),
   getItem('New receipt', '/receipt', <SnippetsOutlined />),
   getItem('Admins', 'sub2', <UserOutlined />, [
@@ -37,7 +36,7 @@ const items = [
     getItem('Abdoulaye Diallo', '/abdoulayediallo'),
     getItem('Alpha Diallo', '/alphadiallo'),
   ]),
-  getItem('Customers', 'sub3', <TeamOutlined />, [getItem('Add New', '/newcustomer'), getItem('View List', '/customerlist')]),
+  getItem('Customers', "/customers", <TeamOutlined />),
 ];
 
 function Sidebar() {

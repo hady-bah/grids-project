@@ -20,19 +20,33 @@ function Transfers() {
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
   const { Title } = Typography;
+
+  const formatNumber = (number) => {// Ensure the input is a valid number
+    const parsedNumber = parseFloat(number);
+    if (isNaN(parsedNumber)) {
+      return number; // Return the original value if it's not a number
+    }
+  
+    // Format the number with two decimal places and thousands separator
+    return parsedNumber.toLocaleString(undefined, {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+  };
+
   const formatter = (value) => (
     <span >
-      $ <CountUp end={value} separator="," />
+      <CountUp end={value} separator="," decimals={2} prefix="$ "/>
     </span>
   );
   const formatterCash = (value) => (
     <span style={{color:'green'}}>
-      $ <CountUp end={value} separator="," />
+      <CountUp end={value} separator="," decimals={2} prefix="$ "/>
     </span>
   );
   const formatterDeposit = (value) => (
     <span style={{color:'#23a6e8'}}>
-      $ <CountUp end={value} separator="," />
+      <CountUp end={value} separator="," decimals={2} prefix="$ "/>
     </span>
   );
 
@@ -293,31 +307,31 @@ function Transfers() {
           {summaryData.label}
         </td> */}
         <td
-          style={{ fontWeight: "bold", paddingLeft: "60px", fontSize: "16px" }}
+           style={{ fontWeight: "bold", paddingLeft: "60px", fontSize: "16px" }}
         >
-          Sent: ${summaryData.amount}
+          Sent: ${formatNumber(summaryData.amount)}
         </td>
         <td
           style={{ fontWeight: "bold", paddingLeft: "60px", fontSize: "16px" }}
         >
-          Fees: ${summaryData.fee}
+          Fees: ${formatNumber(summaryData.fee)}
         </td>
         <td
           style={{ fontWeight: "bold", paddingLeft: "60px", fontSize: "16px" }}
         >
-          Grand Total: ${grandTotal}
-        </td>
-        <td colSpan="6"></td>
-        <td
-          style={{ fontWeight: "bold", paddingLeft: "60px", fontSize: "16px" }}
-        >
-          {`Deposits: $${totalDeposit}`}
+          Grand Total: ${formatNumber(grandTotal)}
         </td>
         <td colSpan="6"></td>
         <td
           style={{ fontWeight: "bold", paddingLeft: "60px", fontSize: "16px" }}
         >
-          {`Cash: $${totalCash}`}
+          {`Deposits: $${formatNumber(totalDeposit)}`}
+        </td>
+        <td colSpan="6"></td>
+        <td
+           style={{ fontWeight: "bold", paddingLeft: "60px", fontSize: "16px" }}
+        >
+          {`Cash: $${formatNumber(totalCash)}`}
         </td>
         <td colSpan="6"></td>
         <td

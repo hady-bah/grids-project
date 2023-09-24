@@ -8,17 +8,17 @@ function DailyTotals() {
   const { RangePicker } = DatePicker;
   const formatter = (value) => (
     <span>
-      $ <CountUp end={value} separator="," />
+      <CountUp end={value} separator="," decimals={2} prefix="$ "/>
     </span>
   );
   const formatterCash = (value) => (
     <span style={{color:'green'}}>
-      $ <CountUp end={value} separator="," />
+      <CountUp end={value} separator="," decimals={2} prefix="$ "/>
     </span>
   );
   const formatterDeposit = (value) => (
     <span style={{color:'#23a6e8'}}>
-      $ <CountUp end={value} separator="," />
+      <CountUp end={value} separator="," decimals={2} prefix="$ "/>
     </span>
   );
   const [transfers, setTransfers] = useState([]);

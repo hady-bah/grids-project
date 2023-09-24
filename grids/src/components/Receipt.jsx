@@ -191,10 +191,14 @@ function Receipt() {
             ]}
           >
             <InputNumber
+            formatter={(value) => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+            parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
               style={{
                 width: 160,
               }}
               placeholder="$"
+              step={0.01} 
+              precision={2}
             />
           </Form.Item>
         </Space>
@@ -213,10 +217,14 @@ function Receipt() {
             ]}
           >
             <InputNumber
-              style={{
-                width: 160,
-              }}
-              placeholder="$"
+              formatter={(value) => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+              parser={(value) => value.replace(/\$\s?|(,*)/g, '')}
+                style={{
+                  width: 160,
+                }}
+                placeholder="$"
+                step={0.01} 
+                precision={2}
             />
           </Form.Item>
         </Space>
