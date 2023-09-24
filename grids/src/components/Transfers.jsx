@@ -1,7 +1,8 @@
 import { SearchOutlined } from "@ant-design/icons";
 import React, { useRef, useState, useEffect } from "react";
 import Highlighter from "react-highlight-words";
-import { Button, Input, Space, Table, DatePicker, Typography } from "antd";
+import { Button, Input, Space, Table, DatePicker, Typography, Row, Statistic, Col } from "antd";
+import CountUp from "react-countup";
 import { FloatButton } from "antd";
 import { supabase } from "../../createClient";
 import { Divider } from "antd";
@@ -9,10 +10,31 @@ import LearnDataGrid from "./LearnDataGrid";
 import TotalsFilter from "./TotalsFilter";
 
 function Transfers() {
+  const [totalAmount, setTotalAmount] = useState(0);
+  const [totalFee, setTotalFee] = useState(0);
+  const [grandTotal, setGrandTotal] = useState(0);
+  const [totalDeposit, setTotalDeposit] = useState(0);
+  const [totalCash, setTotalCash] = useState(0);
+  const [totalTransactions, setTotalTransactions] = useState(0);
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
   const { Title } = Typography;
+  const formatter = (value) => (
+    <span >
+      $ <CountUp end={value} separator="," />
+    </span>
+  );
+  const formatterCash = (value) => (
+    <span style={{color:'green'}}>
+      $ <CountUp end={value} separator="," />
+    </span>
+  );
+  const formatterDeposit = (value) => (
+    <span style={{color:'#23a6e8'}}>
+      $ <CountUp end={value} separator="," />
+    </span>
+  );
 
   //supabase setup
   const [transfers, setTransfers] = useState([]);
@@ -242,27 +264,66 @@ function Transfers() {
       const grandTotal = (
         parseFloat(summaryData.amount) + parseFloat(summaryData.fee)
       ).toFixed(2);
+
+      const depositData = filteredData.filter((record) => record.status === "Deposit");
+      const depostData = calculateSum(depositData);
+
+      const totalDeposit = (
+        parseFloat(depostData.amount) + parseFloat(depostData.fee)
+      ).toFixed(2);
+
+      const totalCash = (
+        grandTotal - totalDeposit
+      ).toFixed(2);
+  
+      const totalTransactions = filteredData.length;
+
+      // Update the state variables
+    setTotalAmount(summaryData.amount);
+    setTotalFee(summaryData.fee);
+    setGrandTotal(grandTotal);
+    setTotalDeposit(totalDeposit);
+    setTotalCash(totalCash); 
+    setTotalTransactions(filteredData.length);
     
 
     return (
       <tr>
-        <td style={{ fontWeight: "bold", fontSize: "16px" }}>
+        {/* <td style={{ fontWeight: "bold", fontSize: "16px" }}>
           {summaryData.label}
+        </td> */}
+        <td
+          style={{ fontWeight: "bold", paddingLeft: "60px", fontSize: "16px" }}
+        >
+          Sent: ${summaryData.amount}
         </td>
         <td
           style={{ fontWeight: "bold", paddingLeft: "60px", fontSize: "16px" }}
         >
-          Total Amount Sent: ${summaryData.amount}
-        </td>
-        <td
-          style={{ fontWeight: "bold", paddingLeft: "60px", fontSize: "16px" }}
-        >
-          Total Fees: ${summaryData.fee}
+          Fees: ${summaryData.fee}
         </td>
         <td
           style={{ fontWeight: "bold", paddingLeft: "60px", fontSize: "16px" }}
         >
           Grand Total: ${grandTotal}
+        </td>
+        <td colSpan="6"></td>
+        <td
+          style={{ fontWeight: "bold", paddingLeft: "60px", fontSize: "16px" }}
+        >
+          {`Deposits: $${totalDeposit}`}
+        </td>
+        <td colSpan="6"></td>
+        <td
+          style={{ fontWeight: "bold", paddingLeft: "60px", fontSize: "16px" }}
+        >
+          {`Cash: $${totalCash}`}
+        </td>
+        <td colSpan="6"></td>
+        <td
+          style={{ fontWeight: "bold", paddingLeft: "60px", fontSize: "16px" }}
+        >
+          {`Transactions: ${totalTransactions}`}
         </td>
         <td colSpan="6"></td>
       </tr>
@@ -274,10 +335,61 @@ function Transfers() {
       <Title>Transfer 2.0</Title>
       <Divider style={{ borderTopWidth: 5 }} />
 
-      <Title style={{paddingTop:'20px'}} level={2}>Advanced filter:</Title>
+      <Title style={{paddingTop:'20px'}} level={4}>Advanced filter:</Title>
 
       <div style={{paddingBottom:'50px'}}>
       <TotalsFilter />
+      </div>
+
+      {/* totals summary stats */}
+      <div style={{paddingBottom:'20px'}}>
+      <Row gutter={80}>
+        <Col>
+          <Statistic
+            title="Sent"
+            value={totalAmount}
+            formatter={formatter}
+          />
+        </Col>
+        <Col>
+          <Statistic
+            title="Fees"
+            value={totalFee}
+            precision={2}
+            formatter={formatter}
+          />
+        </Col>
+        <Col>
+          <Statistic
+            title="Grand Total"
+            value={grandTotal}
+            precision={2}
+            formatter={formatter}
+          />
+        </Col>
+        <Col>
+          <Statistic
+            title="Deposits"
+            value={totalDeposit}
+            precision={2}
+            formatter={formatterDeposit}
+          />
+        </Col>
+        <Col>
+          <Statistic
+            title="Cash"
+            value={totalCash}
+            precision={2}
+            formatter={formatterCash}
+          />
+        </Col>
+        <Col>
+          <Statistic
+            title="Transactions"
+            value={totalTransactions}
+          />
+        </Col>
+      </Row>
       </div>
 
       <Table
