@@ -1,7 +1,7 @@
 import { SearchOutlined } from "@ant-design/icons";
 import React, { useRef, useState, useEffect } from "react";
 import Highlighter from "react-highlight-words";
-import { Button, Input, Space, Table, DatePicker, Typography, Row, Statistic, Col } from "antd";
+import { Button, Input, Space, Table, DatePicker, Typography, Row, Statistic, Col, Badge } from "antd";
 import CountUp from "react-countup";
 import { FloatButton } from "antd";
 import { supabase } from "../../createClient";
@@ -45,7 +45,7 @@ function Transfers() {
     </span>
   );
   const formatterDeposit = (value) => (
-    <span style={{color:'#23a6e8'}}>
+    <span style={{color:'rgb(22, 119, 255)'}}>
       <CountUp end={value} separator="," decimals={2} prefix="$ "/>
     </span>
   );
@@ -259,6 +259,9 @@ function Transfers() {
       key: "status",
       width: "20%",
       ...getColumnSearchProps("status"),
+      render: (text, record) => (
+        <Badge status={record.status === "Deposit" ? "processing" : "success"} text={text} />
+      ),
     },
   ];
 
@@ -419,4 +422,3 @@ function Transfers() {
 }
 
 export default Transfers;
-
