@@ -255,11 +255,7 @@ function Transfers() {
       ...getColumnSearchProps("date"),
     },
     {
-      title: (
-        <span>
-          <Tag color="cyan">Status</Tag>
-        </span>
-      ),
+      title: "Status",
       dataIndex: "status",
       key: "status",
       width: "20%",
