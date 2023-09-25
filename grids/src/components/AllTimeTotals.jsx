@@ -16,7 +16,7 @@ function AllTimeTotals() {
     </span>
   );
   const formatterDeposit = (value) => (
-    <span style={{color:'rgb(22, 119, 255)'}}>
+    <span style={{color:'#23a6e8'}}>
       <CountUp end={value} separator="," decimals={2} prefix="$ "/>
     </span>
   );
