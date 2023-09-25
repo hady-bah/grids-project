@@ -16,6 +16,7 @@ import {
   Divider,
   Radio, 
   Tag,
+  notification,
 } from "antd";
 const { Option } = Select;
 
@@ -26,10 +27,21 @@ function Receipt() {
   const [messageApi, contextHolder] = message.useMessage();
   const { Title } = Typography;
 
-  const success = () => {
-    messageApi.open({
-      type: 'success',
-      content: 'Receipt sent successfully',
+  const openSuccesNotification = () => {
+    notification.success({
+      message: 'Receipt Sent',
+      description: 
+        'The receipt was successfully saved to the database.',
+      placement: 'bottomRight'
+    });
+  };
+
+  const openErrorNotification = () => {
+    notification.error({
+      message: 'Error',
+      description: 
+        'Unable to send reciept',
+      placement: 'bottomRight'
     });
   };
 
@@ -46,12 +58,11 @@ function Receipt() {
       ])
   
       if (error) {
-        console.error(error);
+        openErrorNotification();
       } else {
-        success(); // Display success message
+        openSuccesNotification(); // Display success message
         form.resetFields();
       }
-  
   };
 
   return (

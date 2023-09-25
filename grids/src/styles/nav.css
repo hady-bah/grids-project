@@ -18,7 +18,7 @@
     left: 50%; /* Center horizontally */
     top: 3%;
     transform: translateX(-40%); /* Center horizontally */
-    z-index: 9999; /* Ensure it's above everything */
+    z-index: 9997; /* Ensure it's above everything */
 }
 
 .nav-buttons {
@@ -27,7 +27,7 @@
     background: linear-gradient(rgb(22, 119, 255) 0%, rgba(102, 102, 102, 0.05) 100%);
     opacity: 1;
     border-radius: 15px;
-    z-index: 9999;
+    z-index: 9998;
     color: white;
     padding: 10px 10px;
     margin: 10px;
