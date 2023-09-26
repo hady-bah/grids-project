@@ -31,8 +31,13 @@
     color: white;
     padding: 10px 10px;
     margin: 10px;
+    transition: box-shadow 0.3s ease-in-out;
     
 }
+
+.nav-buttons:active {
+    box-shadow: 0 0 3px 3px rgba(22, 119, 255, 0.7);
+  }
 
 .nav-buttons:hover {
     background: rgb(22, 119, 255);
