@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useRef, useState, useEffect } from "react";
 import { LaptopOutlined, NotificationOutlined, UserOutlined, PoweroffOutlined, SettingOutlined } from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu, theme, Button } from 'antd';
+import { Breadcrumb, Layout, Menu, theme, Button, Modal, Tooltip, } from 'antd';
 import { Divider } from 'antd';
 import Logo from "../images/BAHSoftwareSolutionsLogo.png";
 import { Typography } from 'antd';
@@ -14,16 +14,61 @@ function NavBar() {
     token: { colorBgContainer },
   } = theme.useToken();
 
+  const [userModalOpen, setUserModalOpen] = useState(false);
+  const [settingModalOpen, setSettingModalOpen] = useState(false);
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
+
   return (
     <>
     <div className="blured-navbar">
       <div className="logout-position">
-        <button className="nav-buttons"><UserOutlined /></button>
-        <button className="nav-buttons"><SettingOutlined /></button>
-        <button className="nav-buttons"><PoweroffOutlined /></button>
+        <Tooltip title="User Information" placement="bottom">
+          <button className="nav-buttons" onClick={() => setUserModalOpen(true)}>
+            <UserOutlined />
+          </button>
+        </Tooltip>
+
+        <Tooltip title="Settings" placement="bottom">
+          <button className="nav-buttons" onClick={() => setSettingModalOpen(true)}>
+            <SettingOutlined />
+          </button>
+        </Tooltip>
+
+        <Tooltip title="Logout" placement="bottom">
+          <button className="nav-buttons">
+            <PoweroffOutlined />
+          </button>
+        </Tooltip>
+
       </div>
 
     </div>
+
+    <Modal
+        title="User Information"
+        centered
+        open={userModalOpen}
+        onOk={() => setUserModalOpen(false)}
+        onCancel={() => setUserModalOpen(false)}
+        userModalOpen
+      >
+        <p>some contents...</p>
+        <p>some contents...</p>
+        <p>some contents...</p>
+      </Modal>
+
+      <Modal
+        title="Settings"
+        centered
+        open={settingModalOpen}
+        onOk={() => setSettingModalOpen(false)}
+        onCancel={() => setSettingModalOpen(false)}
+        userModalOpen
+      >
+        <p>settings</p>
+        
+      </Modal>
+
     </>
   );
 }
