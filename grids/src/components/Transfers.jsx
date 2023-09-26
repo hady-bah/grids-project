@@ -46,7 +46,7 @@ function Transfers() {
     </span>
   );
   const formatterDeposit = (value) => (
-    <span style={{color:'#23a6e8'}}>
+    <span style={{color:'#1677ff'}}>
       <CountUp end={value} separator="," decimals={2} prefix="$ "/>
     </span>
   );
