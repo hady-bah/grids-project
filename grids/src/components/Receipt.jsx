@@ -88,7 +88,7 @@ function Receipt() {
       }}
       size="medium"
     >
-      <Form.Item label="Place">
+      <Form.Item label="Place" required tooltip="This is a required field">
         <Space>
           <Form.Item
             name="place"
@@ -109,7 +109,7 @@ function Receipt() {
           </Form.Item>
         </Space>
       </Form.Item>
-      <Form.Item label="Code">
+      <Form.Item label="Code" required tooltip="This is a required field">
         <Space.Compact>
           <Form.Item
             name="label"
@@ -146,7 +146,7 @@ function Receipt() {
           </Form.Item>
         </Space.Compact>
       </Form.Item>
-      <Form.Item label="Sender">
+      <Form.Item label="Sender" required tooltip="This is a required field">
         <Space>
           <Form.Item
             name="sender"
@@ -167,7 +167,7 @@ function Receipt() {
           </Form.Item>
         </Space>
       </Form.Item>
-      <Form.Item label="Receiver">
+      <Form.Item label="Receiver" required tooltip="This is a required field">
         <Space>
           <Form.Item
             name="receiver"
@@ -189,7 +189,7 @@ function Receipt() {
         </Space>
       </Form.Item>
 
-      <Form.Item label="Amount">
+      <Form.Item label="Amount" required tooltip="This is a required field">
         <Space>
           <Form.Item
             name="amount"
@@ -215,7 +215,7 @@ function Receipt() {
         </Space>
         </Form.Item>
 
-        <Form.Item label="Fee">
+        <Form.Item label="Fee" required tooltip="This is a required field">
         <Space>
           <Form.Item
             name="fee"
@@ -241,20 +241,20 @@ function Receipt() {
         </Space>
         </Form.Item>
 
-      <Form.Item label="Mobile money">
+      <Form.Item label="Mobile" tooltip="Optional field">
         <Space>
           <Form.Item name="mobileMoney" noStyle>
             <Input
               style={{
                 width: 160,
               }}
-              placeholder="Number/Blank"
+              placeholder="Number"
             />
           </Form.Item>
         </Space>
       </Form.Item>
 
-      <Form.Item label="Date">
+      <Form.Item label="Date" required tooltip="This is a required field">
         <Space>
           <Form.Item
             name="date"
@@ -271,7 +271,7 @@ function Receipt() {
         </Space>
         </Form.Item>
 
-      <Form.Item label="Status">
+      <Form.Item label="Status" required tooltip="This is a required field">
           <Form.Item
             name="status"
             noStyle
