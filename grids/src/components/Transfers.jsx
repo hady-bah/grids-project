@@ -1,14 +1,92 @@
 import { SearchOutlined } from "@ant-design/icons";
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useContext,  } from "react";
 import Highlighter from "react-highlight-words";
 import { Button, Input, Space, Table, DatePicker, Typography, Row, 
-  Statistic, Col, Badge, Tag,  } from "antd";
+  Statistic, Col, Badge, Tag, Popconfirm, Form  } from "antd";
 import CountUp from "react-countup";
 import { FloatButton } from "antd";
 import { supabase } from "../../createClient";
 import { Divider } from "antd";
 import LearnDataGrid from "./LearnDataGrid";
 import TotalsFilter from "./TotalsFilter";
+
+const EditableContext = React.createContext(null);
+const EditableRow = ({ index, ...props }) => {
+  const [form] = Form.useForm();
+  return (
+    <Form form={form} component={false}>
+      <EditableContext.Provider value={form}>
+        <tr {...props} />
+      </EditableContext.Provider>
+    </Form>
+  );
+};
+const EditableCell = ({
+  title,
+  editable,
+  children,
+  dataIndex,
+  record,
+  handleSave,
+  ...restProps
+}) => {
+  const [editing, setEditing] = useState(false);
+  const inputRef = useRef(null);
+  const form = useContext(EditableContext);
+  useEffect(() => {
+    if (editing) {
+      inputRef.current.focus();
+    }
+  }, [editing]);
+  const toggleEdit = () => {
+    setEditing(!editing);
+    form.setFieldsValue({
+      [dataIndex]: record[dataIndex],
+    });
+  };
+  const save = async () => {
+    try {
+      const values = await form.validateFields();
+      toggleEdit();
+      handleSave({
+        ...record,
+        ...values,
+      });
+    } catch (errInfo) {
+      console.log('Save failed:', errInfo);
+    }
+  };
+  let childNode = children;
+  if (editable) {
+    childNode = editing ? (
+      <Form.Item
+        style={{
+          margin: 0,
+        }}
+        name={dataIndex}
+        rules={[
+          {
+            required: true,
+            message: `${title} is required.`,
+          },
+        ]}
+      >
+        <Input ref={inputRef} onPressEnter={save} onBlur={save} />
+      </Form.Item>
+    ) : (
+      <div
+        className="editable-cell-value-wrap"
+        style={{
+          paddingRight: 24,
+        }}
+        onClick={toggleEdit}
+      >
+        {children}
+      </div>
+    );
+  }
+  return <td {...restProps}>{childNode}</td>;
+};
 
 function Transfers() {
   const [totalAmount, setTotalAmount] = useState(0);
@@ -196,6 +274,7 @@ function Transfers() {
       dataIndex: "label",
       key: "label",
       width: "20%",
+      editable: true,
       ...getColumnSearchProps("label"),
     },
     {
@@ -210,6 +289,7 @@ function Transfers() {
       dataIndex: "place",
       key: "place",
       width: "20%",
+      editable: true,
       ...getColumnSearchProps("place"),
     },
     {
@@ -217,6 +297,7 @@ function Transfers() {
       dataIndex: "sender",
       key: "sender",
       width: "20%",
+      editable: true,
       ...getColumnSearchProps("sender"),
     },
     {
@@ -224,6 +305,7 @@ function Transfers() {
       dataIndex: "receiver",
       key: "receiver",
       width: "20%",
+      editable: true,
       ...getColumnSearchProps("receiver"),
     },
     {
@@ -231,6 +313,7 @@ function Transfers() {
       dataIndex: "amount",
       key: "amount",
       width: "20%",
+      editable: true,
       ...getColumnSearchProps("amount"),
     },
     {
@@ -238,6 +321,7 @@ function Transfers() {
       dataIndex: "fee",
       key: "fee",
       width: "20%",
+      editable: true,
       ...getColumnSearchProps("fee"),
     },
     {
@@ -245,6 +329,7 @@ function Transfers() {
       dataIndex: "mobileMoney",
       key: "mobileMoney",
       width: "20%",
+      editable: true,
       ...getColumnSearchProps("mobileMoney"),
     },
     {
@@ -259,6 +344,7 @@ function Transfers() {
       dataIndex: "status",
       key: "status",
       width: "20%",
+      editable: true,
       ...getColumnSearchProps("status"),
       render: (text, record) => (
         <span>
@@ -352,6 +438,46 @@ function Transfers() {
     );
   };
 
+  const handleSave = async (row) => {
+
+    const { data, error } = await supabase
+      .from('transfers')
+      .update({...row})
+      .eq('id', row.id)
+  
+    if (error) {
+      console.log("error saving edit");
+    } else {
+      console.log("Successfully updated!");
+      
+    }
+  
+  }
+
+
+  const components = {
+    body: {
+      row: EditableRow,
+      cell: EditableCell,
+    },
+  };
+  
+  const editColumns = columns.map((col) => {
+    if (!col.editable) {
+      return col;
+    }
+    return {
+      ...col,
+      onCell: (record) => ({
+        record,
+        editable: col.editable,
+        dataIndex: col.dataIndex,
+        title: col.title,
+        handleSave,
+      }),
+    };
+  });
+
   return (
     <>
       <Title>Transfer 2.0</Title>
@@ -415,7 +541,9 @@ function Transfers() {
       </div>
 
       <Table
-        columns={columns}
+        components={components}
+        rowClassName={() => 'editable-row'}
+        columns={editColumns}
         dataSource={transfers}
         pagination={false}
         scroll={{ x: "max-content" }} // Add horizontal scrolling if needed
