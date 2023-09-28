@@ -137,7 +137,7 @@ function Transfers() {
   }, []);
 
   async function fetchTransfers() {
-    const { data } = await supabase.from("transfers").select("*");
+    const { data } = await supabase.from("transfers").select("*").order('date', {ascending: false});
     setTransfers(data);
   }
 
