@@ -438,18 +438,45 @@ function Transfers() {
     );
   };
 
-  const handleSave = async (row) => {
+  const [loading, setLoading] = useState(false);
 
-    const { data, error } = await supabase
-      .from('transfers')
-      .update({...row})
-      .eq('id', row.id)
+  const handleSave = async (row) => {
   
-    if (error) {
-      console.log("error saving edit");
-    } else {
-      console.log("Successfully updated!");
-      
+    setLoading(true); // disable save
+  
+    // Optimistic update
+    setTransfers(prevTransfers => {
+
+      // Find index of updated row
+      const index = prevTransfers.findIndex(t => t.id === row.id);
+
+      // Create new array with updated row  
+      const updated = [...prevTransfers];
+      updated[index] = row;
+
+      return updated;
+
+})
+  
+    try {
+  
+      const { data, error } = await supabase.from('transfers')  
+        .update({...row})
+        .eq('id', row.id)
+  
+      if (error) {
+        // Revert optimistic update  
+        throw error 
+      }
+  
+      // Refresh data after update
+      fetchTransfers()
+    
+    } catch (error) {
+      // Undo optimistic update  
+      // Show error message
+    } finally {
+      setLoading(false); // re-enable save
     }
   
   }
