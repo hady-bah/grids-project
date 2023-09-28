@@ -546,7 +546,7 @@ function Transfers() {
         columns={editColumns}
         dataSource={transfers}
         pagination={false}
-        scroll={{ x: "max-content" }} // Add horizontal scrolling if needed
+        // scroll={{ x: "max-content" }} // Add horizontal scrolling if needed
         footer={customFooter} // Assign the custom footer
         getPopupContainer={(triggerNode) => triggerNode.parentNode}
       />
