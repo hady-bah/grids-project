@@ -2,7 +2,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import React, { useRef, useState, useEffect, useContext,  } from "react";
 import Highlighter from "react-highlight-words";
 import { Button, Input, Space, Table, DatePicker, Typography, Row, 
-  Statistic, Col, Badge, Tag, Popconfirm, Form  } from "antd";
+  Statistic, Col, Badge, Tag, Popconfirm, Form, notification,message  } from "antd";
 import CountUp from "react-countup";
 import { FloatButton } from "antd";
 import { supabase } from "../../createClient";
@@ -99,6 +99,34 @@ function Transfers() {
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
   const { Title } = Typography;
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const openSuccesNotification = () => {
+    notification.success({
+      message: 'Updated successfully',
+      description: 
+        'The receipt was successfully updated to the database.',
+      placement: 'bottomRight'
+    });
+  };
+
+  const openDeleteNotification = () => {
+    notification.info({
+      message: 'Receipt deleted',
+      description: 
+        'The receipt was deleted from the database.',
+      placement: 'bottomRight'
+    });
+  };
+
+  const openErrorNotification = () => {
+    notification.error({
+      message: 'Error',
+      description: 
+        'Unable to perform operation.',
+      placement: 'bottomRight'
+    });
+  };
 
   const formatNumber = (number) => {// Ensure the input is a valid number
     const parsedNumber = parseFloat(number);
@@ -390,7 +418,9 @@ const handleDelete = async (id) => {
     .eq('id', id)
 
   // Filter deleted record from UI
-  setTransfers(transfers.filter(t => t.id !== id)) 
+  setTransfers(transfers.filter(t => t.id !== id))
+  
+  openDeleteNotification();
 
 }
 
@@ -513,8 +543,10 @@ const handleDelete = async (id) => {
     } catch (error) {
       // Undo optimistic update  
       // Show error message
+      openErrorNotification();
     } finally {
       setLoading(false); // re-enable save
+      openSuccesNotification();
     }
   
   }

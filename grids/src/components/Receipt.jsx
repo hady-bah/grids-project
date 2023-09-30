@@ -40,7 +40,7 @@ function Receipt() {
     notification.error({
       message: 'Error',
       description: 
-        'Unable to send reciept',
+        'Unable to send reciept.',
       placement: 'bottomRight'
     });
   };
@@ -63,6 +63,7 @@ function Receipt() {
         openSuccesNotification(); // Display success message
         form.resetFields();
       }
+
   };
 
   return (
