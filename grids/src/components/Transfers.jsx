@@ -145,10 +145,15 @@ function Transfers() {
     let sumAmount = 0;
     let sumFee = 0;
 
-    filteredData.forEach((record) => {
-      sumAmount += record.amount || 0;
-      sumFee += record.fee || 0;
-    });
+  filteredData.forEach(record => {
+
+    const amount = Number(record.amount) || 0;
+    const fee = Number(record.fee) || 0;
+
+    sumAmount += amount;
+    sumFee += fee;
+
+  })
 
     return {
       label: "Summary",
@@ -268,6 +273,8 @@ function Transfers() {
         text
       ),
   });
+
+
   const columns = [
     {
       title: "Label",
@@ -278,7 +285,7 @@ function Transfers() {
       ...getColumnSearchProps("label"),
     },
     {
-      title: "Code #",
+      title: "Code",
       dataIndex: "codeNumber",
       key: "codeNumber",
       width: "20%",
@@ -354,7 +361,38 @@ function Transfers() {
       </span>
       ),
     },
+    {
+      title: 'ID',
+      dataIndex: 'id',
+      key: 'id'  
+    },
+    // Operation column renders delete button
+    {
+      title: 'Operation',
+      render: (_, record) => (
+        <Popconfirm 
+          title="Delete?"
+          onConfirm={() => handleDelete(record.id)}  
+        >
+          <a>Delete</a>
+        </Popconfirm>
+      ),
+    },
   ];
+
+  // Handle delete
+const handleDelete = async (id) => {
+
+  // Delete from Supabase
+  await supabase
+    .from('transfers')
+    .delete()
+    .eq('id', id)
+
+  // Filter deleted record from UI
+  setTransfers(transfers.filter(t => t.id !== id)) 
+
+}
 
   const customFooter = (currentPageData) => {
 
@@ -573,7 +611,9 @@ function Transfers() {
         columns={editColumns}
         dataSource={transfers}
         pagination={false}
-        // scroll={{ x: "max-content" }} // Add horizontal scrolling if needed
+        scroll={{
+          x: 'calc(700px + 50%)',
+        }}
         footer={customFooter} // Assign the custom footer
         getPopupContainer={(triggerNode) => triggerNode.parentNode}
       />
