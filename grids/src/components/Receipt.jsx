@@ -61,10 +61,30 @@ function Receipt() {
         openErrorNotification();
       } else {
         openSuccesNotification(); // Display success message
+        // Print receipt
+    const text = 
+    `Place: ${values.place}\n` +
+    `Code: ${values.label} ${values.codeNumber}\n` +  
+    `Sender: ${values.sender}\n` +
+    `Receiver: ${values.receiver}\n` +
+    `Amount: $${values.amount}\n` +
+    `Fee: $${values.fee}\n` +
+    `Mobile: ${values.mobileMoney || 'N/A'}\n` +
+    `Date: ${values.date.format('YYYY-MM-DD')}\n` +
+    `Status: ${values.status}\n`;
+  
+        printReceipt(text);
         form.resetFields();
       }
 
   };
+
+  const printReceipt = (text) => {
+    const printWindow = window.open();
+    printWindow.document.write(text);
+    printWindow.print();
+    printWindow.close();
+  }
 
   return (
   <>
