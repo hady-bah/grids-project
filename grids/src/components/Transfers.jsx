@@ -1,8 +1,28 @@
-import { SearchOutlined } from "@ant-design/icons";
-import React, { useRef, useState, useEffect, useContext,  } from "react";
+import {
+  SearchOutlined,
+  DeleteOutlined,
+  PrinterOutlined,
+} from "@ant-design/icons";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import Highlighter from "react-highlight-words";
-import { Button, Input, Space, Table, DatePicker, Typography, Row, 
-  Statistic, Col, Badge, Tag, Popconfirm, Form, notification,message  } from "antd";
+import {
+  Button,
+  Input,
+  Space,
+  Table,
+  DatePicker,
+  Typography,
+  Row,
+  Statistic,
+  Col,
+  Badge,
+  Tag,
+  Popconfirm,
+  Form,
+  notification,
+  message,
+  Tooltip,
+} from "antd";
 import CountUp from "react-countup";
 import { FloatButton } from "antd";
 import { supabase } from "../../createClient";
@@ -53,7 +73,7 @@ const EditableCell = ({
         ...values,
       });
     } catch (errInfo) {
-      console.log('Save failed:', errInfo);
+      console.log("Save failed:", errInfo);
     }
   };
   let childNode = children;
@@ -103,37 +123,35 @@ function Transfers() {
 
   const openSuccesNotification = () => {
     notification.success({
-      message: 'Updated successfully',
-      description: 
-        'The receipt was successfully updated to the database.',
-      placement: 'bottomRight'
+      message: "Updated successfully",
+      description: "The receipt was successfully updated to the database.",
+      placement: "bottomRight",
     });
   };
 
   const openDeleteNotification = () => {
     notification.info({
-      message: 'Receipt deleted',
-      description: 
-        'The receipt was deleted from the database.',
-      placement: 'bottomRight'
+      message: "Receipt deleted",
+      description: "The receipt was deleted from the database.",
+      placement: "bottomRight",
     });
   };
 
   const openErrorNotification = () => {
     notification.error({
-      message: 'Error',
-      description: 
-        'Unable to perform operation.',
-      placement: 'bottomRight'
+      message: "Error",
+      description: "Unable to perform operation.",
+      placement: "bottomRight",
     });
   };
 
-  const formatNumber = (number) => {// Ensure the input is a valid number
+  const formatNumber = (number) => {
+    // Ensure the input is a valid number
     const parsedNumber = parseFloat(number);
     if (isNaN(parsedNumber)) {
       return number; // Return the original value if it's not a number
     }
-  
+
     // Format the number with two decimal places and thousands separator
     return parsedNumber.toLocaleString(undefined, {
       minimumFractionDigits: 2,
@@ -142,18 +160,18 @@ function Transfers() {
   };
 
   const formatter = (value) => (
-    <span >
-      <CountUp end={value} separator="," decimals={2} prefix="$ "/>
+    <span>
+      <CountUp end={value} separator="," decimals={2} prefix="$ " />
     </span>
   );
   const formatterCash = (value) => (
-    <span style={{color:'green'}}>
-      <CountUp end={value} separator="," decimals={2} prefix="$ "/>
+    <span style={{ color: "green" }}>
+      <CountUp end={value} separator="," decimals={2} prefix="$ " />
     </span>
   );
   const formatterDeposit = (value) => (
-    <span style={{color:'#1677ff'}}>
-      <CountUp end={value} separator="," decimals={2} prefix="$ "/>
+    <span style={{ color: "#1677ff" }}>
+      <CountUp end={value} separator="," decimals={2} prefix="$ " />
     </span>
   );
 
@@ -165,7 +183,10 @@ function Transfers() {
   }, []);
 
   async function fetchTransfers() {
-    const { data } = await supabase.from("transfers").select("*").order('date', {ascending: false});
+    const { data } = await supabase
+      .from("transfers")
+      .select("*")
+      .order("date", { ascending: false });
     setTransfers(data);
   }
 
@@ -173,15 +194,13 @@ function Transfers() {
     let sumAmount = 0;
     let sumFee = 0;
 
-  filteredData.forEach(record => {
+    filteredData.forEach((record) => {
+      const amount = Number(record.amount) || 0;
+      const fee = Number(record.fee) || 0;
 
-    const amount = Number(record.amount) || 0;
-    const fee = Number(record.fee) || 0;
-
-    sumAmount += amount;
-    sumFee += fee;
-
-  })
+      sumAmount += amount;
+      sumFee += fee;
+    });
 
     return {
       label: "Summary",
@@ -302,7 +321,6 @@ function Transfers() {
       ),
   });
 
-
   const columns = [
     {
       title: "Label",
@@ -383,85 +401,92 @@ function Transfers() {
       ...getColumnSearchProps("status"),
       render: (text, record) => (
         <span>
-        <Tag color={record.status === "Deposit" ? "blue" : "green"}>
-          {text}
-        </Tag>
-      </span>
+          <Tag color={record.status === "Deposit" ? "blue" : "green"}>
+            {text}
+          </Tag>
+        </span>
       ),
     },
     {
-      title: 'ID',
-      dataIndex: 'id',
-      key: 'id'  
+      title: "ID",
+      dataIndex: "id",
+      key: "id",
     },
     // Operation column renders delete button
     {
-      title: 'Operation',
+      title: "Operations",
       render: (_, record) => (
-        <Popconfirm 
-          title="Delete?"
-          onConfirm={() => handleDelete(record.id)}  
-        >
-          <a>Delete</a>
-        </Popconfirm>
+        <div>
+
+          <span style={{marginRight:'25px'}}>
+          <Tooltip title="Print" placement="bottom">
+            <PrinterOutlined style={{fontSize: '18px'}} onClick={() => handlePrint(record.id)} />
+          </Tooltip>
+          </span>
+
+          <Tooltip title="Delete" placement="bottom">
+            <Popconfirm
+              title="Delete?"
+              onConfirm={() => handleDelete(record.id)}
+            >
+              <DeleteOutlined/>
+            </Popconfirm>
+          </Tooltip>
+        </div>
       ),
     },
   ];
 
   // Handle delete
-const handleDelete = async (id) => {
+  const handleDelete = async (id) => {
+    // Delete from Supabase
+    await supabase.from("transfers").delete().eq("id", id);
 
-  // Delete from Supabase
-  await supabase
-    .from('transfers')
-    .delete()
-    .eq('id', id)
+    // Filter deleted record from UI
+    setTransfers(transfers.filter((t) => t.id !== id));
 
-  // Filter deleted record from UI
-  setTransfers(transfers.filter(t => t.id !== id))
-  
-  openDeleteNotification();
-
-}
+    openDeleteNotification();
+  };
 
   const customFooter = (currentPageData) => {
-
     let filteredData = currentPageData;
 
-    if(searchText){
+    if (searchText) {
       filteredData = currentPageData.filter((record) =>
         Object.keys(record).some((key) =>
-          record[key].toString().toLowerCase().includes(searchText.toLowerCase())
+          record[key]
+            .toString()
+            .toLowerCase()
+            .includes(searchText.toLowerCase())
         )
       );
     }
 
-      const summaryData = calculateSum(filteredData);
-      const grandTotal = (
-        parseFloat(summaryData.amount) + parseFloat(summaryData.fee)
-      ).toFixed(2);
+    const summaryData = calculateSum(filteredData);
+    const grandTotal = (
+      parseFloat(summaryData.amount) + parseFloat(summaryData.fee)
+    ).toFixed(2);
 
-      const depositData = filteredData.filter((record) => record.status === "Deposit");
-      const depostData = calculateSum(depositData);
+    const depositData = filteredData.filter(
+      (record) => record.status === "Deposit"
+    );
+    const depostData = calculateSum(depositData);
 
-      const totalDeposit = (
-        parseFloat(depostData.amount) + parseFloat(depostData.fee)
-      ).toFixed(2);
+    const totalDeposit = (
+      parseFloat(depostData.amount) + parseFloat(depostData.fee)
+    ).toFixed(2);
 
-      const totalCash = (
-        grandTotal - totalDeposit
-      ).toFixed(2);
-  
-      const totalTransactions = filteredData.length;
+    const totalCash = (grandTotal - totalDeposit).toFixed(2);
 
-      // Update the state variables
+    const totalTransactions = filteredData.length;
+
+    // Update the state variables
     setTotalAmount(summaryData.amount);
     setTotalFee(summaryData.fee);
     setGrandTotal(grandTotal);
     setTotalDeposit(totalDeposit);
-    setTotalCash(totalCash); 
+    setTotalCash(totalCash);
     setTotalTransactions(filteredData.length);
-    
 
     return (
       <tr>
@@ -469,7 +494,7 @@ const handleDelete = async (id) => {
           {summaryData.label}
         </td> */}
         <td
-           style={{ fontWeight: "bold", paddingLeft: "60px", fontSize: "16px" }}
+          style={{ fontWeight: "bold", paddingLeft: "60px", fontSize: "16px" }}
         >
           Sent: ${formatNumber(summaryData.amount)}
         </td>
@@ -491,7 +516,7 @@ const handleDelete = async (id) => {
         </td>
         <td colSpan="6"></td>
         <td
-           style={{ fontWeight: "bold", paddingLeft: "60px", fontSize: "16px" }}
+          style={{ fontWeight: "bold", paddingLeft: "60px", fontSize: "16px" }}
         >
           {`Cash: $${formatNumber(totalCash)}`}
         </td>
@@ -509,48 +534,42 @@ const handleDelete = async (id) => {
   const [loading, setLoading] = useState(false);
 
   const handleSave = async (row) => {
-  
     setLoading(true); // disable save
-  
+
     // Optimistic update
-    setTransfers(prevTransfers => {
-
+    setTransfers((prevTransfers) => {
       // Find index of updated row
-      const index = prevTransfers.findIndex(t => t.id === row.id);
+      const index = prevTransfers.findIndex((t) => t.id === row.id);
 
-      // Create new array with updated row  
+      // Create new array with updated row
       const updated = [...prevTransfers];
       updated[index] = row;
 
       return updated;
+    });
 
-})
-  
     try {
-  
-      const { data, error } = await supabase.from('transfers')  
-        .update({...row})
-        .eq('id', row.id)
-  
+      const { data, error } = await supabase
+        .from("transfers")
+        .update({ ...row })
+        .eq("id", row.id);
+
       if (error) {
-        // Revert optimistic update  
-        throw error 
+        // Revert optimistic update
+        throw error;
       }
-  
+
       // Refresh data after update
-      fetchTransfers()
-    
+      fetchTransfers();
     } catch (error) {
-      // Undo optimistic update  
+      // Undo optimistic update
       // Show error message
       openErrorNotification();
     } finally {
       setLoading(false); // re-enable save
       openSuccesNotification();
     }
-  
-  }
-
+  };
 
   const components = {
     body: {
@@ -558,7 +577,7 @@ const handleDelete = async (id) => {
       cell: EditableCell,
     },
   };
-  
+
   const editColumns = columns.map((col) => {
     if (!col.editable) {
       return col;
@@ -580,71 +599,66 @@ const handleDelete = async (id) => {
       <Title>Transfer 2.0</Title>
       <Divider style={{ borderTopWidth: 5 }} />
 
-      <Title style={{paddingTop:'20px'}} level={4}>Advanced filter:</Title>
+      <Title style={{ paddingTop: "20px" }} level={4}>
+        Advanced filter:
+      </Title>
 
-      <div style={{paddingBottom:'50px'}}>
-      <TotalsFilter />
+      <div style={{ paddingBottom: "50px" }}>
+        <TotalsFilter />
       </div>
 
       {/* totals summary stats */}
-      <div style={{paddingBottom:'20px'}}>
-      <Row gutter={80}>
-        <Col>
-          <Statistic
-            title="Sent"
-            value={totalAmount}
-            formatter={formatter}
-          />
-        </Col>
-        <Col>
-          <Statistic
-            title="Fees"
-            value={totalFee}
-            precision={2}
-            formatter={formatter}
-          />
-        </Col>
-        <Col>
-          <Statistic
-            title="Grand Total"
-            value={grandTotal}
-            precision={2}
-            formatter={formatter}
-          />
-        </Col>
-        <Col>
-          <Statistic
-            title="Deposits"
-            value={totalDeposit}
-            precision={2}
-            formatter={formatterDeposit}
-          />
-        </Col>
-        <Col>
-          <Statistic
-            title="Cash"
-            value={totalCash}
-            precision={2}
-            formatter={formatterCash}
-          />
-        </Col>
-        <Col>
-          <Statistic
-            title="Transactions"
-            value={totalTransactions}
-          />
-        </Col>
-      </Row>
+      <div style={{ paddingBottom: "20px" }}>
+        <Row gutter={80}>
+          <Col>
+            <Statistic title="Sent" value={totalAmount} formatter={formatter} />
+          </Col>
+          <Col>
+            <Statistic
+              title="Fees"
+              value={totalFee}
+              precision={2}
+              formatter={formatter}
+            />
+          </Col>
+          <Col>
+            <Statistic
+              title="Grand Total"
+              value={grandTotal}
+              precision={2}
+              formatter={formatter}
+            />
+          </Col>
+          <Col>
+            <Statistic
+              title="Deposits"
+              value={totalDeposit}
+              precision={2}
+              formatter={formatterDeposit}
+            />
+          </Col>
+          <Col>
+            <Statistic
+              title="Cash"
+              value={totalCash}
+              precision={2}
+              formatter={formatterCash}
+            />
+          </Col>
+          <Col>
+            <Statistic title="Transactions" value={totalTransactions} />
+          </Col>
+        </Row>
       </div>
 
       <Table
         components={components}
-        rowClassName={() => 'editable-row'}
+        rowClassName={() => "editable-row"}
         columns={editColumns}
         dataSource={transfers}
         pagination={false}
         scroll={{
-          x: 'calc(700px + 50%)',
+          x: "calc(700px + 50%)",
         }}
         footer={customFooter} // Assign the custom footer
         getPopupContainer={(triggerNode) => triggerNode.parentNode}
