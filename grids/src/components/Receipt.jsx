@@ -92,7 +92,7 @@ function Receipt() {
   return (
   <>
     <span class="gradient-text">New Receipt</span>
-    <Divider style={{ borderTopWidth: 5 }} />
+    <Divider style={{ borderTopWidth: 2 }} />
     <Card
     title={
       <span>

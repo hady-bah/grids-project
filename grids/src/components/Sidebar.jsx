@@ -56,7 +56,7 @@ function Sidebar() {
           height: '100vh',
           position: 'fixed',
           paddingTop:'20px',
-          
+          // borderInlineEnd: '1px solid rgba(5, 5, 5, 0.06)', 
         }}>
             <div className="demo-logo-vertical" />
             <Menu
@@ -75,6 +75,7 @@ function Sidebar() {
             marginLeft: 200, 
             paddingTop:'100px',
             overflowX: 'hidden',
+            backgroundColor: 'rgba(255, 255, 255)', 
           }}
         >
           <div

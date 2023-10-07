@@ -594,7 +594,7 @@ function Transfers() {
   return (
     <>
       <span class="gradient-text">Transfer 2.0</span>
-      <Divider style={{ borderTopWidth: 5 }} />
+      <Divider style={{ borderTopWidth: 2 }} />
 
       <Title style={{ paddingTop: "20px" }} level={4}>
         Advanced filter:
