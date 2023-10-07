@@ -18,6 +18,9 @@ import {
   Tag,
   notification,
 } from "antd";
+
+import '../styles/styles.css';
+
 const { Option } = Select;
 
 
@@ -88,12 +91,13 @@ function Receipt() {
 
   return (
   <>
-    
+    <span class="gradient-text">New Receipt</span>
+    <Divider style={{ borderTopWidth: 5 }} />
     <Card
     title={
       <span>
         <FormOutlined  style={{ marginRight: '8px' }} />
-        New Receipt
+        Fill out
       </span>
     }
     hoverable

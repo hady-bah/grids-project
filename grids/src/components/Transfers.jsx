@@ -29,6 +29,7 @@ import { supabase } from "../../createClient";
 import { Divider } from "antd";
 import LearnDataGrid from "./LearnDataGrid";
 import TotalsFilter from "./TotalsFilter";
+import '../styles/styles.css';
 
 const EditableContext = React.createContext(null);
 const EditableRow = ({ index, ...props }) => {
@@ -407,7 +408,7 @@ function Transfers() {
         </span>
       ),
     },
-    
+
     // Operation column renders delete button
     {
       title: "Operations",
@@ -592,7 +593,7 @@ function Transfers() {
 
   return (
     <>
-      <Title>Transfer 2.0</Title>
+      <span class="gradient-text">Transfer 2.0</span>
       <Divider style={{ borderTopWidth: 5 }} />
 
       <Title style={{ paddingTop: "20px" }} level={4}>

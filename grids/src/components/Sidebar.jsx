@@ -24,7 +24,7 @@ const items = [
   getItem('Home', "/", <HomeOutlined />),
   getItem('Dashboard', '/dashboard', <FundOutlined />),
   getItem('Grids', 'sub1', <AppstoreOutlined />,[
-    getItem('Money Transfer 2.0', '/transfers'),
+    getItem('Transfer 2.0', '/transfers'),
     getItem('Add new', '/newgrid'),
 
   ]),
