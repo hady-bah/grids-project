@@ -407,11 +407,7 @@ function Transfers() {
         </span>
       ),
     },
-    {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
-    },
+    
     // Operation column renders delete button
     {
       title: "Operations",
@@ -506,7 +502,7 @@ function Transfers() {
         <td
           style={{ fontWeight: "bold", paddingLeft: "60px", fontSize: "16px" }}
         >
-          Grand Total: ${formatNumber(grandTotal)}
+          Total: ${formatNumber(grandTotal)}
         </td>
         <td colSpan="6"></td>
         <td

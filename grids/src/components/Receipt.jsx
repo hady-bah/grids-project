@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { supabase } from '../../createClient';
-import { InfoCircleOutlined } from '@ant-design/icons';
+import { InfoCircleOutlined, FormOutlined, ScissorOutlined   } from '@ant-design/icons';
 import {
   Button,
   Form,
@@ -90,9 +90,14 @@ function Receipt() {
   <>
     
     <Card
-    title="New Receipt"
+    title={
+      <span>
+        <FormOutlined  style={{ marginRight: '8px' }} />
+        New Receipt
+      </span>
+    }
     hoverable
-    style={{ width: 375, cursor:'default' }}
+    style={{ width: 500, cursor:'default' }}
     >
     <Form
       name="Receipt"
@@ -107,7 +112,7 @@ function Receipt() {
       style={{
         maxWidth: 600,
       }}
-      size="medium"
+      size="large"
     >
       <Form.Item label="Place" required tooltip="This is a required field">
         <Space>
@@ -142,7 +147,7 @@ function Receipt() {
               },
             ]}
           >
-            <Select placeholder="Label">
+            <Select placeholder="Label" style={{ width: '100px' }}>
               <Option value="AS">AS</Option>
               <Option value="BL">BL</Option>
               <Option value="AC">AC</Option>
@@ -160,7 +165,7 @@ function Receipt() {
           >
             <Input
               style={{
-                width: "70%",
+                width: "150px",
               }}
               placeholder="Number"
             />
@@ -303,7 +308,7 @@ function Receipt() {
               },
             ]}
           >
-            <Select placeholder="Status">
+            <Select placeholder="Status" style={{ width: '155px' }}>
               <Option value="Cash">Cash</Option>
               <Option value="Deposit">Deposit</Option>
               {/* <Option value="Not Paid">Not Paid</Option> */}
