@@ -91,13 +91,13 @@ function Receipt() {
 
   return (
   <>
-    <span class="gradient-text">New Receipt</span>
+    <span class="gradient-text">Receipt</span>
     <Divider style={{ borderTopWidth: 2 }} />
     <Card
     title={
       <span>
         <FormOutlined  style={{ marginRight: '8px' }} />
-        Fill out
+        New Receipt
       </span>
     }
     hoverable
@@ -278,7 +278,7 @@ function Receipt() {
               style={{
                 width: 160,
               }}
-              placeholder="Number"
+              placeholder="Phone #"
             />
           </Form.Item>
         </Space>

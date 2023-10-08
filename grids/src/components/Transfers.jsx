@@ -2,11 +2,14 @@ import {
   SearchOutlined,
   DeleteOutlined,
   PrinterOutlined,
+  ConsoleSqlOutlined,
+  QuestionCircleOutlined, 
 } from "@ant-design/icons";
 import React, { useRef, useState, useEffect, useContext } from "react";
 import Highlighter from "react-highlight-words";
 import {
   Button,
+  Switch,
   Input,
   Space,
   Table,
@@ -597,8 +600,18 @@ function Transfers() {
       <Divider style={{ borderTopWidth: 2 }} />
 
       <Title style={{ paddingTop: "20px" }} level={4}>
-        Advanced filter:
+        <ConsoleSqlOutlined /> Advanced Filter 
+          <span style={{marginLeft: '10px'}}>
+            <Tooltip placement="right" title="When ON, returns table based on your select query">
+              <QuestionCircleOutlined style={{color:"gray", fontSize: '15px', cursor: 'help'}}/>
+            </Tooltip>
+          </span>
+          <br/>
+          <span>
+        <Switch defaultUnChecked size="medium"/>
+          </span>
       </Title>
+
 
       <div style={{ paddingBottom: "50px" }}>
         <TotalsFilter />
@@ -620,7 +633,7 @@ function Transfers() {
           </Col>
           <Col>
             <Statistic
-              title="Grand Total"
+              title="Total"
               value={grandTotal}
               precision={2}
               formatter={formatter}

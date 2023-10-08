@@ -28,7 +28,7 @@ const items = [
     getItem('Add new', '/newgrid'),
 
   ]),
-  getItem('New receipt', '/receipt', <SnippetsOutlined />),
+  getItem('Receipt', '/receipt', <SnippetsOutlined />),
   getItem('Admins', 'sub2', <UserOutlined />, [
     getItem('Hady Bah', '/hadybah'),
     getItem('Abdourahamane Ly', '/abdourahamanely'),
