@@ -602,7 +602,7 @@ function Transfers() {
       <Title style={{ paddingTop: "20px" }} level={4}>
         <ConsoleSqlOutlined /> Advanced Filter 
           <span style={{marginLeft: '10px'}}>
-            <Tooltip placement="right" title="When ON, returns table based on your select query">
+            <Tooltip placement="right" title="When switched on, returns table based on your select query.">
               <QuestionCircleOutlined style={{color:"gray", fontSize: '15px', cursor: 'help'}}/>
             </Tooltip>
           </span>
