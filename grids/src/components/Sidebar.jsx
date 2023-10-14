@@ -29,13 +29,13 @@ const items = [
 
   ]),
   getItem('Receipt', '/receipt', <SnippetsOutlined />),
-  getItem('Admins', 'sub2', <UserOutlined />, [
-    getItem('Hady Bah', '/hadybah'),
-    getItem('Abdourahamane Ly', '/abdourahamanely'),
-    getItem('Amadou Diallo', '/amadoudiallo'),
-    getItem('Abdoulaye Diallo', '/abdoulayediallo'),
-    getItem('Alpha Diallo', '/alphadiallo'),
-  ]),
+  // getItem('Admins', 'sub2', <UserOutlined />, [
+  //   getItem('Hady Bah', '/hadybah'),
+  //   getItem('Abdourahamane Ly', '/abdourahamanely'),
+  //   getItem('Amadou Diallo', '/amadoudiallo'),
+  //   getItem('Abdoulaye Diallo', '/abdoulayediallo'),
+  //   getItem('Alpha Diallo', '/alphadiallo'),
+  // ]),
   getItem('Customers', "/customers", <TeamOutlined />),
 ];
 
