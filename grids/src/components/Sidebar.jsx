@@ -8,6 +8,7 @@ import {
   HomeOutlined,
   TeamOutlined,
   UserOutlined,
+  EnvironmentOutlined,
 } from '@ant-design/icons';
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
 import '../styles/nav.css';
@@ -21,11 +22,10 @@ function getItem(label, key, icon, children) {
   };
 }
 const items = [
-  getItem('Home', "/", <HomeOutlined />),
-  getItem('Dashboard', '/dashboard', <FundOutlined />),
+  getItem('Dashboard', '/', <FundOutlined />),
   getItem('Grids', 'sub1', <AppstoreOutlined />,[
     getItem('Transfer 2.0', '/transfers'),
-    getItem('Add new', '/newgrid'),
+    // getItem('Add new', '/newgrid'),
 
   ]),
   getItem('Receipt', '/receipt', <SnippetsOutlined />),
@@ -36,7 +36,9 @@ const items = [
   //   getItem('Abdoulaye Diallo', '/abdoulayediallo'),
   //   getItem('Alpha Diallo', '/alphadiallo'),
   // ]),
+  getItem('Places', "/places", <EnvironmentOutlined />),
   getItem('Customers', "/customers", <TeamOutlined />),
+  
 ];
 
 function Sidebar() {

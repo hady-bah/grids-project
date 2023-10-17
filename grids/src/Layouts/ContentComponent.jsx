@@ -12,12 +12,12 @@ function ContentComponent() {
   return (
     <div>
       <Routes>
-        <Route path = "/" element = {<ComingSoon/>}></Route>
-        <Route path = "/dashboard" element = {<Dashboard/>}></Route>
+        <Route path = "/" element = {<Dashboard/>}></Route>
         <Route path = "/transfers" element = {<Transfers/>}></Route>
         <Route path = "/receipt" element = {<Receipt/>}></Route>
-        <Route path = "/newgrid" element = {<ComingSoon/>}></Route>
+        {/* <Route path = "/newgrid" element = {<ComingSoon/>}></Route> */}
         <Route path = "/customers" element = {<ComingSoon/>}></Route>
+        <Route path = "/places" element = {<ComingSoon/>}></Route>
       </Routes>
     </div>
   )
