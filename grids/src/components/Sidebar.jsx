@@ -7,6 +7,7 @@ import {
   SnippetsOutlined,
   HomeOutlined,
   TeamOutlined,
+  BarChartOutlined,
   UserOutlined,
   EnvironmentOutlined,
 } from '@ant-design/icons';
@@ -22,7 +23,7 @@ function getItem(label, key, icon, children) {
   };
 }
 const items = [
-  getItem('Dashboard', '/', <FundOutlined />),
+  getItem('Dashboard', '/', <BarChartOutlined />),
   getItem('Grids', 'sub1', <AppstoreOutlined />,[
     getItem('Transfer 2.0', '/transfers'),
     // getItem('Add new', '/newgrid'),
