@@ -6,20 +6,20 @@ function generateCode(){
         code.push(Math.floor(Math.random() * 10));
     }
 
-    let letter = "B";
-    let num = Math.floor(Math.random() * 3);
+    // let letter = "B";
+    // let num = Math.floor(Math.random() * 3);
 
-    if(num  === 0){
-        letter = "B"
-    }
-    else if(num === 1){
-        letter = "A"
-    }
-    else{
-        letter = "H"
-    }
+    // if(num  === 0){
+    //     letter = "B"
+    // }
+    // else if(num === 1){
+    //     letter = "A"
+    // }
+    // else{
+    //     letter = "H"
+    // }
 
-    let finalCode = letter+code[0]+code[1]+code[2]+"-"+code[3]+code[4]+"-"+code[5]+code[6]+code[7];
+    let finalCode = "B"+code[0]+code[1]+code[2]+"A"+code[3]+code[4]+"H"+code[5]+code[6]+code[7];
     
     return finalCode; 
 
