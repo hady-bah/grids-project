@@ -73,7 +73,6 @@ function Receipt() {
     `Amount: $${values.amount}\n` +
     `Fee: $${values.fee}\n` +
     `Mobile: ${values.mobileMoney || 'N/A'}\n` +
-    `Date: ${values.date.format('YYYY-MM-DD')}\n` +
     `Status: ${values.status}\n`;
   
         printReceipt(text);
@@ -284,7 +283,7 @@ function Receipt() {
         </Space>
       </Form.Item>
 
-      <Form.Item label="Date" required tooltip="This is a required field">
+      {/* <Form.Item label="Date" required tooltip="This is a required field">
         <Space>
           <Form.Item
             name="date"
@@ -299,7 +298,7 @@ function Receipt() {
             <DatePicker/>
           </Form.Item>
         </Space>
-        </Form.Item>
+        </Form.Item> */}
 
       <Form.Item label="Status" required tooltip="This is a required field">
           <Form.Item

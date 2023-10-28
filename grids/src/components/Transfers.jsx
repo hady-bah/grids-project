@@ -149,6 +149,19 @@ function Transfers() {
     });
   };
 
+  //time formatter
+  function formatDateTime(dateTimeString) {
+    const options = {
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+    };
+  
+    const date = new Date(dateTimeString);
+    const formattedTime = date.toLocaleString('en-US', options);
+    return formattedTime;
+  }
+
   const formatNumber = (number) => {
     // Ensure the input is a valid number
     const parsedNumber = parseFloat(number);
@@ -390,7 +403,7 @@ function Transfers() {
       ...getColumnSearchProps("mobileMoney"),
     },
     {
-      title: "Date(YY/MM/DD)",
+      title: "Date(yy/mm/dd)",
       dataIndex: "date",
       key: "date",
       width: "20%",
@@ -411,7 +424,13 @@ function Transfers() {
         </span>
       ),
     },
-
+    {
+      title: "Time(+zone)",
+      dataIndex: "time",
+      key: "time",
+      width: "20%",
+      render: (text) => <span>{formatDateTime(text)}</span>,
+    },
     // Operation column renders delete button
     {
       title: "Operations",
