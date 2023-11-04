@@ -192,7 +192,7 @@ function Transfers() {
     </span>
   );
 
-  //supabase setup
+  //supabase setup to fetch
   const [transfers, setTransfers] = useState([]);
 
   useEffect(() => {
