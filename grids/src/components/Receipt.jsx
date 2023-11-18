@@ -88,6 +88,7 @@ function Receipt() {
 
   useEffect(() => {
     fetchPlaces();
+    generateUniqueCode();
   }, []);
 
   async function fetchPlaces() {
@@ -97,6 +98,62 @@ function Receipt() {
       .order("name", { ascending: false });
     setPlaces(data);
   }
+
+  //generate code
+  const [code, setCode] = useState('');
+
+  async function generateUniqueCode() {
+    const existingCodes = await fetchCodesFromDatabase();
+    const totalPossibleCodes = 10 ** 8; // Assuming there are 10^8 possible codes
+    console.log(existingCodes);
+
+    if (existingCodes.length >= totalPossibleCodes) {
+      // Handle the case when all possible codes are used
+      notification.error({
+        message: 'Error',
+        description: 'All possible codes are used.',
+        placement: 'bottomRight',
+      });
+      return;
+    }
+
+    let newCode;
+    do {
+      newCode = generateCode();
+    } while (existingCodes.includes(newCode));
+
+    setCode(newCode);
+
+  }
+
+  async function fetchCodesFromDatabase() {
+    // Fetch existing codes from your database (replace 'code' with your actual column name)
+    const { data, error } = await supabase.from('transfers').select('codeNumber');
+    if (error) {
+      console.error('Error fetching codes:', error);
+      return [];
+    }
+    return data.map(item => item.codeNumber);
+  }
+
+  function generateCode() {
+    let code = [];
+
+    for (let i = 0; i < 8; i++) {
+      code.push(Math.floor(Math.random() * 10));
+    }
+
+    let finalCode = 'B' + code[0] + code[1] + code[2] + 'A' + code[3] + code[4] + 'H' + code[5] + code[6] + code[7];
+
+    return finalCode;
+  }
+
+  // Use useEffect to update the form field after code is generated
+  useEffect(() => {
+    if (code) {
+      form.setFieldsValue({ codeNumber: code });
+    }
+  }, [code]);
 
   return (
     <>
@@ -359,3 +416,5 @@ function Receipt() {
   );
 }
 export default Receipt;
+
+
