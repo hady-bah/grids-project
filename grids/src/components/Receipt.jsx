@@ -238,7 +238,8 @@ function Receipt() {
                   style={{
                     width: "150px",
                   }}
-                  placeholder="Number"
+                  placeholder="Generating..."
+                  disabled
                 />
               </Form.Item>
             </Space.Compact>

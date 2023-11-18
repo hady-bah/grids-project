@@ -203,7 +203,7 @@ function Transfers() {
     const { data } = await supabase
       .from("transfers")
       .select("*")
-      .order("date", { ascending: false });
+      .order("time", { ascending: false });
     setTransfers(data);
   }
 
