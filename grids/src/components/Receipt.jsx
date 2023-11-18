@@ -259,7 +259,7 @@ function Receipt() {
                   style={{
                     width: 160,
                   }}
-                  placeholder="Full name"
+                  placeholder="Full Name"
                 />
               </Form.Item>
             </Space>
@@ -284,7 +284,7 @@ function Receipt() {
                   style={{
                     width: 160,
                   }}
-                  placeholder="Full name"
+                  placeholder="Full Name"
                 />
               </Form.Item>
             </Space>
