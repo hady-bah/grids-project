@@ -5,6 +5,7 @@ import {
   ConsoleSqlOutlined,
   QuestionCircleOutlined, 
   FilterOutlined,
+  EyeOutlined,
 } from "@ant-design/icons";
 import React, { useRef, useState, useEffect, useContext } from "react";
 import Highlighter from "react-highlight-words";
@@ -381,14 +382,12 @@ function Transfers() {
       key: "label",
       width: "20%",
       editable: true,
-      ...getColumnSearchProps("label"),
     },
     {
       title: "Code",
       dataIndex: "codeNumber",
       key: "codeNumber",
       width: "20%",
-      ...getColumnSearchProps("codeNumber"),
     },
     {
       title: "Place",
@@ -690,7 +689,6 @@ function Transfers() {
           <Button shape="circle" icon={<SearchOutlined />} onClick={handleUserSearch}/>
         </Tooltip>
         </div>
-
       </div>
 
 
@@ -739,6 +737,15 @@ function Transfers() {
       </div>
 
       <Divider style={{ borderTopWidth: 2 }} />
+
+      <Title style={{ paddingTop: "20px", paddingBottom:"10px"}} level={5}>
+        <EyeOutlined /> View 
+          <span style={{marginLeft: '10px'}}>
+            <Tooltip placement="right" title="Returns table based on your select query.">
+              <QuestionCircleOutlined style={{color:"gray", fontSize: '15px', cursor: 'help'}}/>
+            </Tooltip>
+          </span>
+      </Title>
       
       <Table
         components={components}
