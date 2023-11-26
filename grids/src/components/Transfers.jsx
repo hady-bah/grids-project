@@ -581,7 +581,7 @@ function Transfers() {
       // Refresh data after update
       fetchTransfers();
       openSuccesNotification();
-      
+
     } catch (error) {
       // Undo optimistic update
       // Show error message
@@ -686,7 +686,10 @@ function Transfers() {
         rowClassName={() => "editable-row"}
         columns={editColumns}
         dataSource={transfers}
-        pagination={false}
+        pagination={{
+          position: ['bottomCenter'], // Centered at the bottom
+          pageSize: 50, // transactions per page size
+        }}
         scroll={{
           x: "calc(700px + 50%)",
         }}
