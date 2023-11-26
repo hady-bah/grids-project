@@ -4,6 +4,7 @@ import {
   PrinterOutlined,
   ConsoleSqlOutlined,
   QuestionCircleOutlined, 
+  FilterOutlined,
 } from "@ant-design/icons";
 import React, { useRef, useState, useEffect, useContext } from "react";
 import Highlighter from "react-highlight-words";
@@ -122,7 +123,7 @@ function Transfers() {
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
-  const { Title } = Typography;
+  const { Title, Text } = Typography;
   const [messageApi, contextHolder] = message.useMessage();
 
   const openSuccesNotification = () => {
@@ -199,13 +200,48 @@ function Transfers() {
     fetchTransfers();
   }, []);
 
+  const [searchCode, setSearchCode] = useState("");
+  const [searchLabel, setSearchLabel] = useState("");
+  const [searchDate, setSearchDate] = useState("");
+
   async function fetchTransfers() {
-    const { data } = await supabase
-      .from("transfers")
-      .select("*")
-      .order("time", { ascending: false });
+    let dataQuery = supabase.from("transfers").select("*");
+
+    if (searchCode !== "") {
+      dataQuery = dataQuery.eq("codeNumber", searchCode);
+    }
+
+    if (searchLabel !== "") {
+      dataQuery = dataQuery.eq("label", searchLabel);
+    }
+
+    if (searchDate !== "") {
+      dataQuery = dataQuery.eq("date", searchDate);
+    }
+
+    dataQuery = dataQuery.order("time", { ascending: false });
+
+    const { data } = await dataQuery;
     setTransfers(data);
   }
+
+
+    // Function to handle user input change
+    const handleCodeInputChange = (e) => {
+      setSearchCode(e.target.value);
+    };
+  
+    const handleLabelInputChange = (e) => {
+      setSearchLabel(e.target.value);
+    };
+  
+    const handleDateInputChange = (e) => {
+      setSearchDate(e.target.value);
+    };
+  
+    const handleUserSearch = async () => {
+      await fetchTransfers();
+    };
 
   const calculateSum = (filteredData) => {
     let sumAmount = 0;
@@ -614,31 +650,52 @@ function Transfers() {
     };
   });
 
+  const onClear = (e) => {
+    console.log(e);
+  };
+
   return (
     <>
       <span class="gradient-text">Transfer 2.0</span>
       <Divider style={{ borderTopWidth: 2 }} />
 
-      <Title style={{ paddingTop: "20px" }} level={4}>
-        <ConsoleSqlOutlined /> Advanced Filter 
+      <Title style={{ paddingTop: "20px", paddingBottom:"10px"}} level={5}>
+        <FilterOutlined /> Filter 
           <span style={{marginLeft: '10px'}}>
-            <Tooltip placement="right" title="When switched on, returns table based on your select query.">
+            <Tooltip placement="right" title="Returns table based on your select query.">
               <QuestionCircleOutlined style={{color:"gray", fontSize: '15px', cursor: 'help'}}/>
             </Tooltip>
           </span>
-          <br/>
-          <span>
-        <Switch defaultUnChecked size="medium"/>
-          </span>
       </Title>
 
+      <div className="filter-container">
 
-      <div style={{ paddingBottom: "50px" }}>
-        <TotalsFilter />
+      <div className="filter-inputs">
+          <span><Text strong>Code: </Text></span><Input placeholder="All Codes" value={searchCode} onChange={handleCodeInputChange} 
+          style={{ width: "200px" }} allowClear onClear={onClear}/>
+        </div>
+
+        <div className="filter-inputs">
+          <span><Text strong>Label: </Text></span><Input placeholder="All Labels" value={searchLabel} onChange={handleLabelInputChange} 
+          style={{ width: "200px" }} allowClear onClear={onClear}/>
+        </div>
+
+        <div className="filter-inputs">
+          <span><Text strong>Date: </Text></span><Input placeholder="All Time" value={searchDate} onChange={handleDateInputChange} 
+          style={{ width: "200px" }} allowClear onClear={onClear} />
+        </div>
+
+        <div>
+        <Tooltip title="search">
+          <Button shape="circle" icon={<SearchOutlined />} onClick={handleUserSearch}/>
+        </Tooltip>
+        </div>
+
       </div>
 
+
       {/* totals summary stats */}
-      <div style={{ paddingBottom: "20px" }}>
+      <div style={{ paddingBottom: "20px", paddingTop:"15px" }}>
         <Row gutter={80}>
           <Col>
             <Statistic title="Sent" value={totalAmount} formatter={formatter} />
@@ -681,6 +738,8 @@ function Transfers() {
         </Row>
       </div>
 
+      <Divider style={{ borderTopWidth: 2 }} />
+      
       <Table
         components={components}
         rowClassName={() => "editable-row"}
@@ -688,7 +747,7 @@ function Transfers() {
         dataSource={transfers}
         pagination={{
           position: ['bottomCenter'], // Centered at the bottom
-          pageSize: 50, // transactions per page size
+          pageSize: 10, // transactions per page size
         }}
         scroll={{
           x: "calc(700px + 50%)",

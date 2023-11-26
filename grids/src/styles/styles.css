@@ -7,3 +7,12 @@
     font-size: 40px; /* Adjust the font size as needed */
   }
   
+.filter-inputs{
+  margin-right: 10px;
+  
+}
+
+.filter-container{
+  display: flex;
+}
+
