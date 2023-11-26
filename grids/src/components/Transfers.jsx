@@ -580,13 +580,14 @@ function Transfers() {
 
       // Refresh data after update
       fetchTransfers();
+      openSuccesNotification();
+      
     } catch (error) {
       // Undo optimistic update
       // Show error message
       openErrorNotification();
     } finally {
       setLoading(false); // re-enable save
-      openSuccesNotification();
     }
   };
 
