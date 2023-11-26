@@ -2,7 +2,6 @@ import React, { useRef, useState, useEffect } from "react";
 import { LaptopOutlined, NotificationOutlined, UserOutlined, PoweroffOutlined, SettingOutlined } from '@ant-design/icons';
 import { Breadcrumb, Layout, Menu, theme, Button, Modal, Tooltip, } from 'antd';
 import { Divider } from 'antd';
-import Logo from "../images/BAHSoftwareSolutionsLogo.png";
 import { Typography } from 'antd';
 import '../styles/nav.css';
 
