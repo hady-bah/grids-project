@@ -5,6 +5,7 @@ import {
   InfoCircleOutlined,
   FormOutlined,
   ScissorOutlined,
+  SyncOutlined,
 } from "@ant-design/icons";
 import {
   Button,
@@ -32,6 +33,26 @@ function Receipt() {
   const [form] = Form.useForm();
   const [messageApi, contextHolder] = message.useMessage();
   const { Title } = Typography;
+  const [loadings, setLoadings] = useState([]);
+
+  const enterLoading = (index) => {
+    setLoadings((prevLoadings) => {
+      const newLoadings = [...prevLoadings];
+      newLoadings[index] = true;
+      return newLoadings;
+    });
+
+    generateUniqueCode().then(() => { // Use .then() to wait for the promise to resolve
+      setTimeout(() => {
+        setLoadings((prevLoadings) => {
+          const newLoadings = [...prevLoadings];
+          newLoadings[index] = false;
+          return newLoadings;
+        });
+      }, 2000);
+    });
+
+  };
 
   const openSuccesNotification = () => {
     notification.success({
@@ -238,10 +259,21 @@ function Receipt() {
                   style={{
                     width: "150px",
                   }}
-                  placeholder="Generating..."
+                  placeholder="No code"
                   disabled
                 />
               </Form.Item>
+
+              <span>
+              <Tooltip title="Generate New" placement="right"> 
+              <Button
+              type="primary"
+              icon={<SyncOutlined />}
+              loading={loadings[2]}
+              onClick={() => enterLoading(2)}
+              />
+              </Tooltip> 
+              </span>
             </Space.Compact>
           </Form.Item>
           <Form.Item label="Sender" required tooltip="This is a required field">
