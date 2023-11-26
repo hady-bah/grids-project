@@ -3,7 +3,7 @@ import {
   DeleteOutlined,
   PrinterOutlined,
   ConsoleSqlOutlined,
-  QuestionCircleOutlined, 
+  QuestionCircleOutlined,
   FilterOutlined,
   EyeOutlined,
 } from "@ant-design/icons";
@@ -34,7 +34,7 @@ import { supabase } from "../../createClient";
 import { Divider } from "antd";
 import LearnDataGrid from "./LearnDataGrid";
 import TotalsFilter from "./TotalsFilter";
-import '../styles/styles.css';
+import "../styles/styles.css";
 
 const EditableContext = React.createContext(null);
 const EditableRow = ({ index, ...props }) => {
@@ -127,6 +127,14 @@ function Transfers() {
   const { Title, Text } = Typography;
   const [messageApi, contextHolder] = message.useMessage();
 
+  // New variables based on select query
+  const [filterTotalAmount, setFilterTotalAmount] = useState(0);
+  const [filterTotalFee, setFilterTotalFee] = useState(0);
+  const [filterGrandTotal, setFilterGrandTotal] = useState(0);
+  const [filterTotalDeposit, setFilterTotalDeposit] = useState(0);
+  const [filterTotalCash, setFilterTotalCash] = useState(0);
+  const [filterTotalTransactions, setFilterTotalTransactions] = useState(0);
+
   const openSuccesNotification = () => {
     notification.success({
       message: "Updated successfully",
@@ -154,13 +162,13 @@ function Transfers() {
   //time formatter
   function formatDateTime(dateTimeString) {
     const options = {
-      hour: 'numeric',
-      minute: '2-digit',
+      hour: "numeric",
+      minute: "2-digit",
       hour12: true,
     };
-  
+
     const date = new Date(dateTimeString);
-    const formattedTime = date.toLocaleString('en-US', options);
+    const formattedTime = date.toLocaleString("en-US", options);
     return formattedTime;
   }
 
@@ -226,23 +234,22 @@ function Transfers() {
     setTransfers(data);
   }
 
+  // Function to handle user input change
+  const handleCodeInputChange = (e) => {
+    setSearchCode(e.target.value);
+  };
 
-    // Function to handle user input change
-    const handleCodeInputChange = (e) => {
-      setSearchCode(e.target.value);
-    };
-  
-    const handleLabelInputChange = (e) => {
-      setSearchLabel(e.target.value);
-    };
-  
-    const handleDateInputChange = (e) => {
-      setSearchDate(e.target.value);
-    };
-  
-    const handleUserSearch = async () => {
-      await fetchTransfers();
-    };
+  const handleLabelInputChange = (e) => {
+    setSearchLabel(e.target.value);
+  };
+
+  const handleDateInputChange = (e) => {
+    setSearchDate(e.target.value);
+  };
+
+  const handleUserSearch = async () => {
+    await fetchTransfers();
+  };
 
   const calculateSum = (filteredData) => {
     let sumAmount = 0;
@@ -471,11 +478,13 @@ function Transfers() {
       title: "Operations",
       render: (_, record) => (
         <div>
-
-          <span style={{marginRight:'25px'}}>
-          <Tooltip title="Print" placement="bottom">
-            <PrinterOutlined style={{fontSize: '18px'}} onClick={() => handlePrint(record.id)} />
-          </Tooltip>
+          <span style={{ marginRight: "25px" }}>
+            <Tooltip title="Print" placement="bottom">
+              <PrinterOutlined
+                style={{ fontSize: "18px" }}
+                onClick={() => handlePrint(record.id)}
+              />
+            </Tooltip>
           </span>
 
           <Tooltip title="Delete" placement="bottom">
@@ -483,7 +492,7 @@ function Transfers() {
               title="Delete?"
               onConfirm={() => handleDelete(record.id)}
             >
-              <DeleteOutlined/>
+              <DeleteOutlined />
             </Popconfirm>
           </Tooltip>
         </div>
@@ -585,6 +594,61 @@ function Transfers() {
     );
   };
 
+  //For select query
+  // Calculate the sums based on the filtered data
+  const calculateFilterSum = (filteredData) => {
+    let sumAmount = 0;
+    let sumFee = 0;
+
+    filteredData.forEach((record) => {
+      const amount = Number(record.amount) || 0;
+      const fee = Number(record.fee) || 0;
+
+      sumAmount += amount;
+      sumFee += fee;
+    });
+
+    return {
+      label: "Summary",
+      amount: sumAmount.toFixed(2),
+      fee: sumFee.toFixed(2),
+    };
+  };
+
+  // Function to update the statistics based on filtered data
+  const updateFilterStatistics = (filteredData) => {
+    const summaryData = calculateFilterSum(filteredData);
+    const filterGrandTotal = (
+      parseFloat(summaryData.amount) + parseFloat(summaryData.fee)
+    ).toFixed(2);
+
+    const depositData = filteredData.filter(
+      (record) => record.status === "Deposit"
+    );
+    const filterDepostData = calculateFilterSum(depositData);
+
+    const filterTotalDeposit = (
+      parseFloat(filterDepostData.amount) + parseFloat(filterDepostData.fee)
+    ).toFixed(2);
+
+    const filterTotalCash = (filterGrandTotal - filterTotalDeposit).toFixed(2);
+
+    const filterTotalTransactions = filteredData.length;
+
+    // Update the state variables
+    setFilterTotalAmount(summaryData.amount);
+    setFilterTotalFee(summaryData.fee);
+    setFilterGrandTotal(filterGrandTotal);
+    setFilterTotalDeposit(filterTotalDeposit);
+    setFilterTotalCash(filterTotalCash);
+    setFilterTotalTransactions(filterTotalTransactions);
+  };
+
+  // Use the updateFilterStatistics function in the useEffect
+  useEffect(() => {
+    updateFilterStatistics(transfers);
+  }, [transfers]);
+
   const [loading, setLoading] = useState(false);
 
   const handleSave = async (row) => {
@@ -616,7 +680,6 @@ function Transfers() {
       // Refresh data after update
       fetchTransfers();
       openSuccesNotification();
-
     } catch (error) {
       // Undo optimistic update
       // Show error message
@@ -658,50 +721,88 @@ function Transfers() {
       <span class="gradient-text">Transfer 2.0</span>
       <Divider style={{ borderTopWidth: 2 }} />
 
-      <Title style={{ paddingTop: "20px", paddingBottom:"10px"}} level={5}>
-        <FilterOutlined /> Filter 
-          <span style={{marginLeft: '10px'}}>
-            <Tooltip placement="right" title="Returns table based on your select query.">
-              <QuestionCircleOutlined style={{color:"gray", fontSize: '15px', cursor: 'help'}}/>
-            </Tooltip>
-          </span>
+      <Title style={{ paddingTop: "20px", paddingBottom: "10px" }} level={5}>
+        <FilterOutlined /> Filter
+        <span style={{ marginLeft: "10px" }}>
+          <Tooltip
+            placement="right"
+            title="Returns table based on your select query"
+          >
+            <QuestionCircleOutlined
+              style={{ color: "gray", fontSize: "15px", cursor: "help" }}
+            />
+          </Tooltip>
+        </span>
       </Title>
 
       <div className="filter-container">
-
-      <div className="filter-inputs">
-          <span><Text strong>Code: </Text></span><Input placeholder="All Codes" value={searchCode} onChange={handleCodeInputChange} 
-          style={{ width: "200px" }} allowClear onClear={onClear}/>
+        <div className="filter-inputs">
+          <span>
+            <Text strong>Code: </Text>
+          </span>
+          <Input
+            placeholder="All Codes"
+            value={searchCode}
+            onChange={handleCodeInputChange}
+            style={{ width: "200px" }}
+            allowClear
+            onClear={onClear}
+          />
         </div>
 
         <div className="filter-inputs">
-          <span><Text strong>Label: </Text></span><Input placeholder="All Labels" value={searchLabel} onChange={handleLabelInputChange} 
-          style={{ width: "200px" }} allowClear onClear={onClear}/>
+          <span>
+            <Text strong>Label: </Text>
+          </span>
+          <Input
+            placeholder="All Labels"
+            value={searchLabel}
+            onChange={handleLabelInputChange}
+            style={{ width: "200px" }}
+            allowClear
+            onClear={onClear}
+          />
         </div>
 
         <div className="filter-inputs">
-          <span><Text strong>Date: </Text></span><Input placeholder="All Time" value={searchDate} onChange={handleDateInputChange} 
-          style={{ width: "200px" }} allowClear onClear={onClear} />
+          <span>
+            <Text strong>Date: </Text>
+          </span>
+          <Input
+            placeholder="All Time"
+            value={searchDate}
+            onChange={handleDateInputChange}
+            style={{ width: "200px" }}
+            allowClear
+            onClear={onClear}
+          />
         </div>
 
         <div>
-        <Tooltip title="search">
-          <Button shape="circle" icon={<SearchOutlined />} onClick={handleUserSearch}/>
-        </Tooltip>
+          <Tooltip title="search">
+            <Button
+              shape="circle"
+              icon={<SearchOutlined />}
+              onClick={handleUserSearch}
+            />
+          </Tooltip>
         </div>
       </div>
 
-
       {/* totals summary stats */}
-      <div style={{ paddingBottom: "20px", paddingTop:"15px" }}>
+      <div style={{ paddingBottom: "20px", paddingTop: "15px" }}>
         <Row gutter={80}>
           <Col>
-            <Statistic title="Sent" value={totalAmount} formatter={formatter} />
+            <Statistic
+              title="Sent"
+              value={filterTotalAmount}
+              formatter={formatter}
+            />
           </Col>
           <Col>
             <Statistic
               title="Fees"
-              value={totalFee}
+              value={filterTotalFee}
               precision={2}
               formatter={formatter}
             />
@@ -709,7 +810,7 @@ function Transfers() {
           <Col>
             <Statistic
               title="Total"
-              value={grandTotal}
+              value={filterGrandTotal}
               precision={2}
               formatter={formatter}
             />
@@ -717,7 +818,7 @@ function Transfers() {
           <Col>
             <Statistic
               title="Deposits"
-              value={totalDeposit}
+              value={filterTotalDeposit}
               precision={2}
               formatter={formatterDeposit}
             />
@@ -725,35 +826,40 @@ function Transfers() {
           <Col>
             <Statistic
               title="Cash"
-              value={totalCash}
+              value={filterTotalCash}
               precision={2}
               formatter={formatterCash}
             />
           </Col>
           <Col>
-            <Statistic title="Transactions" value={totalTransactions} />
+            <Statistic title="Transactions" value={filterTotalTransactions} />
           </Col>
         </Row>
       </div>
 
       <Divider style={{ borderTopWidth: 2 }} />
 
-      <Title style={{ paddingTop: "20px", paddingBottom:"10px"}} level={5}>
-        <EyeOutlined /> View 
-          <span style={{marginLeft: '10px'}}>
-            <Tooltip placement="right" title="Returns table based on your select query.">
-              <QuestionCircleOutlined style={{color:"gray", fontSize: '15px', cursor: 'help'}}/>
-            </Tooltip>
-          </span>
+      <Title style={{ paddingTop: "20px", paddingBottom: "10px" }} level={5}>
+        <EyeOutlined /> View
+        <span style={{ marginLeft: "10px" }}>
+          <Tooltip
+            placement="right"
+            title="View and search returned table"
+          >
+            <QuestionCircleOutlined
+              style={{ color: "gray", fontSize: "15px", cursor: "help" }}
+            />
+          </Tooltip>
+        </span>
       </Title>
-      
+
       <Table
         components={components}
         rowClassName={() => "editable-row"}
         columns={editColumns}
         dataSource={transfers}
         pagination={{
-          position: ['bottomCenter'], // Centered at the bottom
+          position: ["bottomCenter"], // Centered at the bottom
           pageSize: 10, // transactions per page size
         }}
         scroll={{
