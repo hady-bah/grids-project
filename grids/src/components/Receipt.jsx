@@ -49,7 +49,7 @@ function Receipt() {
           newLoadings[index] = false;
           return newLoadings;
         });
-      }, 2000);
+      }, 500);
     });
 
   };
