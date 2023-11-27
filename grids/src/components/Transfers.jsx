@@ -744,7 +744,7 @@ function Transfers() {
             placeholder="All Codes"
             value={searchCode}
             onChange={handleCodeInputChange}
-            style={{ width: "200px" }}
+            style={{ width: "150px" }}
             allowClear
             onClear={onClear}
           />
@@ -758,7 +758,7 @@ function Transfers() {
             placeholder="All Labels"
             value={searchLabel}
             onChange={handleLabelInputChange}
-            style={{ width: "200px" }}
+            style={{ width: "100px" }}
             allowClear
             onClear={onClear}
           />
@@ -772,7 +772,7 @@ function Transfers() {
             placeholder="All Time"
             value={searchDate}
             onChange={handleDateInputChange}
-            style={{ width: "200px" }}
+            style={{ width: "150px" }}
             allowClear
             onClear={onClear}
           />

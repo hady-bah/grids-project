@@ -75,10 +75,13 @@ function Receipt() {
   };
 
   const onFinish = async (values) => {
+
+    console.log("Form Values:", values);
     const { data, error } = await supabase.from("transfers").insert([values]);
 
     if (error) {
       openErrorNotification();
+      console.error("Supabase Error:", error);
     } else {
       openSuccesNotification(); // Display success message
       // Print receipt
@@ -126,7 +129,7 @@ function Receipt() {
   async function generateUniqueCode() {
     const existingCodes = await fetchCodesFromDatabase();
     const totalPossibleCodes = 10 ** 8; // Assuming there are 10^8 possible codes
-    console.log(existingCodes);
+    // console.log(existingCodes);
 
     if (existingCodes.length >= totalPossibleCodes) {
       // Handle the case when all possible codes are used
@@ -449,5 +452,3 @@ function Receipt() {
   );
 }
 export default Receipt;
-
-
