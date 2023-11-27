@@ -865,7 +865,7 @@ function Transfers() {
         <span style={{ marginLeft: "10px" }}>
           <Tooltip
             placement="right"
-            title="View and search returned table"
+            title="View, search, edit and delete"
           >
             <QuestionCircleOutlined
               style={{ color: "gray", fontSize: "15px", cursor: "help" }}
