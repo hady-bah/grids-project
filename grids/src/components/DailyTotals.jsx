@@ -112,7 +112,7 @@ function DailyTotals() {
         transactionsAC ++;
       }
 
-      if (transfer.status === "Deposit") {
+      if (transfer.status.toLowerCase() === "deposit") {
         totalDeposits += transfer.amount + transfer.fee;
       }
 

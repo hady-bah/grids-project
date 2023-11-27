@@ -460,7 +460,7 @@ function Transfers() {
       ...getColumnSearchProps("status"),
       render: (text, record) => (
         <span>
-          <Tag color={record.status === "Deposit" ? "blue" : "green"}>
+          <Tag color={record.status.toLowerCase() === "deposit" ? "blue" : "green"}>
             {text}
           </Tag>
         </span>
@@ -531,7 +531,7 @@ function Transfers() {
     ).toFixed(2);
 
     const depositData = filteredData.filter(
-      (record) => record.status === "Deposit"
+      (record) => record.status.toLowerCase() === "deposit"
     );
     const depostData = calculateSum(depositData);
 
@@ -643,7 +643,7 @@ function Transfers() {
     ).toFixed(2);
   
     const depositData = filteredData.filter(
-      (record) => record.status === "Deposit"
+      (record) => record.status.toLowerCase() === "deposit"
     );
     const filterDepostData = calculateFilterSum(depositData);
   
