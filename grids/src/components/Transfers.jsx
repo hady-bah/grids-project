@@ -597,44 +597,64 @@ function Transfers() {
   //For select query
   // Calculate the sums based on the filtered data
   const calculateFilterSum = (filteredData) => {
+    if (!filteredData || filteredData.length === 0) {
+      return {
+        label: "Summary",
+        amount: "0.00",
+        fee: "0.00",
+      };
+    }
+  
     let sumAmount = 0;
     let sumFee = 0;
-
+  
     filteredData.forEach((record) => {
       const amount = Number(record.amount) || 0;
       const fee = Number(record.fee) || 0;
-
+  
       sumAmount += amount;
       sumFee += fee;
     });
-
+  
     return {
       label: "Summary",
       amount: sumAmount.toFixed(2),
       fee: sumFee.toFixed(2),
     };
   };
+  
 
   // Function to update the statistics based on filtered data
   const updateFilterStatistics = (filteredData) => {
+    if (!filteredData || filteredData.length === 0) {
+      // Set default values or handle the case when there is no data
+      setFilterTotalAmount("0.00");
+      setFilterTotalFee("0.00");
+      setFilterGrandTotal("0.00");
+      setFilterTotalDeposit("0.00");
+      setFilterTotalCash("0.00");
+      setFilterTotalTransactions(0);
+      return;
+    }
+  
     const summaryData = calculateFilterSum(filteredData);
     const filterGrandTotal = (
       parseFloat(summaryData.amount) + parseFloat(summaryData.fee)
     ).toFixed(2);
-
+  
     const depositData = filteredData.filter(
       (record) => record.status === "Deposit"
     );
     const filterDepostData = calculateFilterSum(depositData);
-
+  
     const filterTotalDeposit = (
       parseFloat(filterDepostData.amount) + parseFloat(filterDepostData.fee)
     ).toFixed(2);
-
+  
     const filterTotalCash = (filterGrandTotal - filterTotalDeposit).toFixed(2);
-
+  
     const filterTotalTransactions = filteredData.length;
-
+  
     // Update the state variables
     setFilterTotalAmount(summaryData.amount);
     setFilterTotalFee(summaryData.fee);
@@ -643,6 +663,7 @@ function Transfers() {
     setFilterTotalCash(filterTotalCash);
     setFilterTotalTransactions(filterTotalTransactions);
   };
+  
 
   // Use the updateFilterStatistics function in the useEffect
   useEffect(() => {
