@@ -823,7 +823,7 @@ function Transfers() {
       {/* totals summary stats */}
       <div style={{ paddingBottom: "20px", paddingTop: "25px" }}>
         <Row gutter={80}>
-          <Col span={0}>
+          <Col>
             <Statistic
               title="Sent"
               value={filterTotalAmount}
