@@ -187,17 +187,27 @@ function Transfers() {
   };
 
   const formatter = (value) => (
-    <span>
+    <span style={{fontSize: "20px" }}>
       <CountUp end={value} separator="," decimals={2} prefix="$ " />
     </span>
   );
+  const formatterTrans = (value) => (
+    <span style={{fontSize: "20px" }}>
+      <CountUp end={value} separator=","/>
+    </span>
+  );
   const formatterCash = (value) => (
-    <span style={{ color: "green" }}>
+    <span style={{ color: "green", fontSize: "20px"  }}>
       <CountUp end={value} separator="," decimals={2} prefix="$ " />
     </span>
   );
   const formatterDeposit = (value) => (
-    <span style={{ color: "#1677ff" }}>
+    <span style={{ color: "#1677ff", fontSize: "20px" }}>
+      <CountUp end={value} separator="," decimals={2} prefix="$ " />
+    </span>
+  );
+  const formatterSent = (value) => (
+    <span style={{ color: "#1677ff", fontSize: "20px" }}>
       <CountUp end={value} separator="," decimals={2} prefix="$ " />
     </span>
   );
@@ -800,10 +810,10 @@ function Transfers() {
         </div>
 
         <div>
-          <Tooltip title="search">
+          <Tooltip title="Filter & calculate">
             <Button
               shape="circle"
-              icon={<SearchOutlined />}
+              icon={<FilterOutlined />}
               onClick={handleUserSearch}
             />
           </Tooltip>
@@ -811,9 +821,9 @@ function Transfers() {
       </div>
 
       {/* totals summary stats */}
-      <div style={{ paddingBottom: "20px", paddingTop: "15px" }}>
+      <div style={{ paddingBottom: "20px", paddingTop: "25px" }}>
         <Row gutter={80}>
-          <Col>
+          <Col span={0}>
             <Statistic
               title="Sent"
               value={filterTotalAmount}
@@ -853,7 +863,7 @@ function Transfers() {
             />
           </Col>
           <Col>
-            <Statistic title="Transactions" value={filterTotalTransactions} />
+            <Statistic title="Transactions" value={filterTotalTransactions} formatter={formatterTrans}/>
           </Col>
         </Row>
       </div>
@@ -865,7 +875,7 @@ function Transfers() {
         <span style={{ marginLeft: "10px" }}>
           <Tooltip
             placement="right"
-            title="View, search, edit and delete"
+            title="View, search, print, edit and delete"
           >
             <QuestionCircleOutlined
               style={{ color: "gray", fontSize: "15px", cursor: "help" }}
