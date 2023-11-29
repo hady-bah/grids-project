@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
-import { BrowserRouter,Routes, Route, Link, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import ContentComponent from '../Layouts/ContentComponent';
 import {
-  FundOutlined,
+  BarChartOutlined,
   AppstoreOutlined,
   SnippetsOutlined,
   HomeOutlined,
   TeamOutlined,
-  BarChartOutlined,
-  UserOutlined,
   EnvironmentOutlined,
 } from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
+import { Layout, Menu, theme } from 'antd';
 import '../styles/nav.css';
-const { Header, Content, Footer, Sider } = Layout;
+
+const { Sider, Content } = Layout;
+
 function getItem(label, key, icon, children) {
   return {
     key,
@@ -22,79 +22,72 @@ function getItem(label, key, icon, children) {
     label,
   };
 }
+
 const items = [
   getItem('Dashboard', '/', <BarChartOutlined />),
-  getItem('Grids', 'sub1', <AppstoreOutlined />,[
+  getItem('Grids', 'sub1', <AppstoreOutlined />, [
     getItem('Transfer 2.0', '/transfers'),
     // getItem('Add new', '/newgrid'),
-
   ]),
   getItem('Receipt', '/receipt', <SnippetsOutlined />),
-  // getItem('Admins', 'sub2', <UserOutlined />, [
-  //   getItem('Hady Bah', '/hadybah'),
-  //   getItem('Abdourahamane Ly', '/abdourahamanely'),
-  //   getItem('Amadou Diallo', '/amadoudiallo'),
-  //   getItem('Abdoulaye Diallo', '/abdoulayediallo'),
-  //   getItem('Alpha Diallo', '/alphadiallo'),
-  // ]),
-  getItem('Places', "/places", <EnvironmentOutlined />),
-  getItem('Customers', "/customers", <TeamOutlined />),
-  
+  getItem('Places', '/places', <EnvironmentOutlined />),
+  getItem('Customers', '/customers', <TeamOutlined />),
 ];
 
 function Sidebar() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
 
-
   return (
     <>
-    <div style={{display:'flex'}}>
-    <Layout>
-        <Sider  theme="dark" style={{
-          overflow: 'auto',
-          height: '100vh',
-          position: 'fixed',
-          paddingTop:'20px',
-          // borderInlineEnd: '1px solid rgba(5, 5, 5, 0.06)', 
-        }}>
-            <div className="demo-logo-vertical" />
-            <Menu
-            onClick={({key})=>{
-                navigate(key)
-            }} 
-            theme="dark" 
-            defaultSelectedKeys={['1']} 
-            mode="inline" 
-            items={items} />
-        </Sider>
-        <Layout
-        className="site-layout">
-        <Content 
-          style={{ 
-            marginLeft: 200, 
-            paddingTop:'100px',
-            overflowX: 'hidden',
-            backgroundColor: 'rgba(255, 255, 255)', 
-          }}
-        >
-          <div
+      <div style={{ display: 'flex' }}>
+        <Layout>
+          <Sider
+            theme="dark"
             style={{
-              padding: 30,
-              
+              overflow: 'auto',
+              height: '100vh',
+              position: 'fixed',
+              paddingTop: '20px',
             }}
           >
-            <ContentComponent/>
-          </div>
-        </Content>
+            <div className="demo-logo-vertical" />
+            <Menu
+              onClick={({ key }) => {
+                navigate(key);
+              }}
+              theme="dark"
+              defaultSelectedKeys={[location.pathname]}
+              mode="inline"
+              items={items}
+            />
+          </Sider>
+          <Layout className="site-layout">
+            <Content
+              style={{
+                marginLeft: 200,
+                paddingTop: '100px',
+                overflowX: 'hidden',
+                backgroundColor: 'rgba(255, 255, 255)',
+              }}
+            >
+              <div
+                style={{
+                  padding: 30,
+                }}
+              >
+                <ContentComponent />
+              </div>
+            </Content>
+          </Layout>
         </Layout>
-        </Layout>
-    </div>
+      </div>
     </>
-  )
+  );
 }
 
-export default Sidebar
+export default Sidebar;
