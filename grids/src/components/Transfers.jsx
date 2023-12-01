@@ -172,6 +172,14 @@ function Transfers() {
     return formattedTime;
   }
 
+  const formatDate = (dateTimeString) => {
+    const date = new Date(dateTimeString);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${month}/${day}/${year}`;
+  }
+
   const formatNumber = (number) => {
     // Ensure the input is a valid number
     const parsedNumber = parseFloat(number);
@@ -455,11 +463,11 @@ function Transfers() {
       ...getColumnSearchProps("mobileMoney"),
     },
     {
-      title: "Date(yy/mm/dd)",
-      dataIndex: "date",
-      key: "date",
+      title: "Date",
+      dataIndex: "time",
+      key: "time",
       width: "20%",
-      ...getColumnSearchProps("date"),
+      render: (text, record) => formatDate(record.time),
     },
     {
       title: "Status",
