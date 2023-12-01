@@ -16,3 +16,9 @@
   display: flex;
 }
 
+.receipt-content-layout{
+  display: flex;
+  justify-content: space-between;
+}
+
+

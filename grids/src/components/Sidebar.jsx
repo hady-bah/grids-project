@@ -8,6 +8,7 @@ import {
   HomeOutlined,
   TeamOutlined,
   EnvironmentOutlined,
+  FileSearchOutlined,
 } from '@ant-design/icons';
 import { Layout, Menu, theme } from 'antd';
 import '../styles/nav.css';
@@ -25,10 +26,7 @@ function getItem(label, key, icon, children) {
 
 const items = [
   getItem('Dashboard', '/', <BarChartOutlined />),
-  getItem('Grids', 'sub1', <AppstoreOutlined />, [
-    getItem('Transfer 2.0', '/transfers'),
-    // getItem('Add new', '/newgrid'),
-  ]),
+  getItem('Transfers', '/transfers', <FileSearchOutlined />),
   getItem('Receipt', '/receipt', <SnippetsOutlined />),
   getItem('Places', '/places', <EnvironmentOutlined />),
   getItem('Customers', '/customers', <TeamOutlined />),
