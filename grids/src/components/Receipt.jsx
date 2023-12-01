@@ -23,6 +23,7 @@ import {
   Radio,
   Tag,
   notification,
+  Badge,
 } from "antd";
 
 import "../styles/styles.css";
@@ -183,15 +184,15 @@ function Receipt() {
     <>
       <span class="gradient-text">Receipt</span>
       <Divider style={{ borderTopWidth: 2 }} />
-      <Card
-        title={
+      <Badge.Ribbon text={
           <span>
             <FormOutlined style={{ marginRight: "8px" }} />
             New Receipt
           </span>
-        }
+        } placement="start">
+      <Card
         hoverable
-        style={{ width: 500, cursor: "default" }}
+        style={{ width: 500, cursor: "default", paddingTop:"20px" }}
       >
         <Form
           name="Receipt"
@@ -395,23 +396,6 @@ function Receipt() {
             </Space>
           </Form.Item>
 
-          {/* <Form.Item label="Date" required tooltip="This is a required field">
-        <Space>
-          <Form.Item
-            name="date"
-            noStyle
-            rules={[
-              {
-                required: true,
-                message: "Date is required",
-              },
-            ]}
-          >
-            <DatePicker/>
-          </Form.Item>
-        </Space>
-        </Form.Item> */}
-
           <Form.Item label="Status" required tooltip="This is a required field">
             <Form.Item
               name="status"
@@ -448,6 +432,7 @@ function Receipt() {
           </Form.Item>
         </Form>
       </Card>
+      </Badge.Ribbon>
     </>
   );
 }
