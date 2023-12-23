@@ -18,6 +18,7 @@ import {
     notification,
     message,
     Tooltip,
+    Divider
   } from "antd";
 
 import "../styles/styles.css";
@@ -115,6 +116,8 @@ const EditableCell = ({
 
 function Places() {
   const [places, setPlaces] = useState([]);
+  const { Title, Text } = Typography;
+
 
   useEffect(() => {
     fetchPlaces();
@@ -401,6 +404,26 @@ function Places() {
 
   return (
     <>
+      <span class="gradient-text">Places</span>
+      <Divider style={{ borderTopWidth: 2 }} />
+
+
+        
+      <Divider style={{ borderTopWidth: 2 }} />
+
+      <Title style={{ paddingTop: "20px", paddingBottom: "10px" }} level={5}>
+        <EyeOutlined /> View
+        <span style={{ marginLeft: "10px" }}>
+          <Tooltip
+            placement="right"
+            title="View, search, edit and delete"
+          >
+            <QuestionCircleOutlined
+              style={{ color: "gray", fontSize: "15px", cursor: "help" }}
+            />
+          </Tooltip>
+        </span>
+      </Title>  
       <div>
         <Table
           dataSource={places}
