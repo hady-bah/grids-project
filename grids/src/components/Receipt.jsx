@@ -489,7 +489,7 @@ function Receipt() {
         </div>
 
         <div style={{width:"500px"}}>
-          <Calendar fullscreen={false} onPanelChange={onPanelChange} />
+          {/* <Calendar fullscreen={false} onPanelChange={onPanelChange} /> */}
         </div>
       </div>
     </>
