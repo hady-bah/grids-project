@@ -435,7 +435,7 @@ function Receipt() {
                 <Form.Item label="Mobile" tooltip="Optional field">
                   <Space>
                     <Form.Item name="mobileMoney" noStyle>
-                      <Input
+                      <InputNumber
                         style={{
                           width: 160,
                         }}
