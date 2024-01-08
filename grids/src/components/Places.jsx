@@ -22,6 +22,7 @@ import {
   } from "antd";
 
 import "../styles/styles.css";
+import AddPlace from "./AddPlace";
 
 import {
     SearchOutlined,
@@ -407,8 +408,10 @@ function Places() {
       <span class="gradient-text">Places</span>
       <Divider style={{ borderTopWidth: 2 }} />
 
+      <div style={{display:"flex", justifyContent:"center" }}> 
+      <AddPlace/>
+      </div> 
 
-        
       <Divider style={{ borderTopWidth: 2 }} />
 
       <Title style={{ paddingTop: "20px", paddingBottom: "10px" }} level={5}>
