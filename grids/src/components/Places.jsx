@@ -412,8 +412,6 @@ function Places() {
       <AddPlace/>
       </div> 
 
-      <Divider style={{ borderTopWidth: 2 }} />
-
       <Title style={{ paddingTop: "20px", paddingBottom: "10px" }} level={5}>
         <EyeOutlined /> View
         <span style={{ marginLeft: "10px" }}>
