@@ -8,6 +8,7 @@ import Transfers from '../components/Transfers';
 import NewGrid from '../components/NewGrid';
 import ComingSoon from '../components/ComingSoon';
 import Places from '../components/Places';
+import Customers from '../components/Customers';
 
 function ContentComponent() {
   return (
@@ -17,7 +18,7 @@ function ContentComponent() {
         <Route path = "/transfers" element = {<Transfers/>}></Route>
         <Route path = "/receipt" element = {<Receipt/>}></Route>
         {/* <Route path = "/newgrid" element = {<ComingSoon/>}></Route> */}
-        <Route path = "/customers" element = {<ComingSoon/>}></Route>
+        <Route path = "/customers" element = {<Customers/>}></Route>
         <Route path = "/places" element = {<Places/>}></Route>
       </Routes>
     </div>
