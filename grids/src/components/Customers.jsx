@@ -34,6 +34,8 @@ import {
     EditOutlined
   } from "@ant-design/icons";
 
+import AddCustomer from "./AddCustomer";
+
 
 //editing cells
 const EditableContext = React.createContext(null);
@@ -276,7 +278,7 @@ function Customers() {
 
   const columns = [
     {
-      title: "Customer",
+      title: "Name",
       dataIndex: "name",
       key: "name",
       width: "10%",
@@ -398,10 +400,10 @@ function Customers() {
     <>
       <span class="gradient-text">customers</span>
       <Divider style={{ borderTopWidth: 2 }} />
-
-
-        
-      <Divider style={{ borderTopWidth: 2 }} />
+      
+      <div style={{display:"flex", justifyContent:"center" }}> 
+      <AddCustomer/>
+      </div> 
 
       <Title style={{ paddingTop: "20px", paddingBottom: "10px" }} level={5}>
         <EyeOutlined /> View
