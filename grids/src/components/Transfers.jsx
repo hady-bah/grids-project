@@ -243,14 +243,17 @@ function Transfers() {
     }
 
     if (searchDate !== "") {
-      dataQuery = dataQuery.eq("date", searchDate);
+      // Convert the time column to date and compare with the provided date
+      dataQuery = dataQuery.eq('date(time)', searchDate);
     }
+    
 
     dataQuery = dataQuery.order("time", { ascending: false });
 
     const { data } = await dataQuery;
     setTransfers(data);
   }
+  
 
   // Function to handle user input change
   const handleCodeInputChange = (e) => {
