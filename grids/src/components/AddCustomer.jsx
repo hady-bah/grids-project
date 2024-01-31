@@ -182,7 +182,7 @@ function AddCustomer() {
                 <Form.Item label=" " colon={false}>
                   <div style={{ display: "flex", marginTop: "20px" }}>
                     <Button type="primary" htmlType="submit" size="default">
-                      Submit & Print
+                      Submit
                     </Button>
                     <Button
                       htmlType="button"

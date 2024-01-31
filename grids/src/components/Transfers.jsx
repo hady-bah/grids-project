@@ -246,7 +246,6 @@ function Transfers() {
     }
 
     if (searchDate !== "") {
-      // Convert the time column to date and compare with the provided date
       dataQuery = dataQuery.eq('date(time)', searchDate);
     }
 
@@ -466,7 +465,6 @@ function Transfers() {
       key: "amount",
       width: "20%",
       editable: true,
-      ...getColumnSearchProps("amount"),
     },
     {
       title: "Fee",
@@ -474,7 +472,6 @@ function Transfers() {
       key: "fee",
       width: "20%",
       editable: true,
-      ...getColumnSearchProps("fee"),
     },
     {
       title: "Mobile",
@@ -787,7 +784,7 @@ function Transfers() {
         <span style={{ marginLeft: "10px" }}>
           <Tooltip
             placement="right"
-            title="Apply Data Filters"
+            title="Data filter is default to all transactions"
           >
             <QuestionCircleOutlined
               style={{ color: "gray", fontSize: "15px", cursor: "help" }}
@@ -802,7 +799,7 @@ function Transfers() {
             <Text strong>Code: </Text>
           </span>
           <Input
-            placeholder=""
+            placeholder="Input Code"
             value={searchCode}
             onChange={handleCodeInputChange}
             style={{ width: "150px" }}
@@ -816,7 +813,7 @@ function Transfers() {
             <Text strong>Label: </Text>
           </span>
           <Input
-            placeholder=""
+            placeholder="-"
             value={searchLabel}
             onChange={handleLabelInputChange}
             style={{ width: "65px" }}
@@ -830,10 +827,10 @@ function Transfers() {
             <Text strong>Date: </Text>
           </span>
           <Input
-            placeholder=""
+            placeholder="YYYY-MM-DD"
             value={searchDate}
             onChange={handleDateInputChange}
-            style={{ width: "125px" }}
+            style={{ width: "126px" }}
             allowClear
             onClear={onClear}
           />
@@ -844,7 +841,7 @@ function Transfers() {
             <Text strong>Amount: </Text>
           </span>
           <Input
-            placeholder=""
+            placeholder="$"
             value={searchAmount}
             onChange={handleAmountInputChange}
             style={{ width: "110px" }}
@@ -858,7 +855,7 @@ function Transfers() {
             <Text strong>Fee: </Text>
           </span>
           <Input
-            placeholder=""
+            placeholder="$"
             value={searchFee}
             onChange={handleFeeInputChange}
             style={{ width: "110px" }}
