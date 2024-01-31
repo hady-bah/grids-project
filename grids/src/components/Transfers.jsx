@@ -231,6 +231,8 @@ function Transfers() {
   const [searchCode, setSearchCode] = useState("");
   const [searchLabel, setSearchLabel] = useState("");
   const [searchDate, setSearchDate] = useState("");
+  const [searchAmount, setSearchAmount] = useState("");
+  const [searchFee, setSearchFee] = useState("");
 
   async function fetchTransfers() {
     let dataQuery = supabase.from("transfers").select("*");
@@ -246,6 +248,14 @@ function Transfers() {
     if (searchDate !== "") {
       // Convert the time column to date and compare with the provided date
       dataQuery = dataQuery.eq('date(time)', searchDate);
+    }
+
+    if (searchAmount !== "") {
+      dataQuery = dataQuery.eq("amount", searchAmount);
+    }
+
+    if (searchFee !== "") {
+      dataQuery = dataQuery.eq("fee", searchFee);
     }
     
 
@@ -267,6 +277,14 @@ function Transfers() {
 
   const handleDateInputChange = (e) => {
     setSearchDate(e.target.value);
+  };
+
+  const handleAmountInputChange = (e) => {
+    setSearchAmount(e.target.value);
+  };
+
+  const handleFeeInputChange = (e) => {
+    setSearchFee(e.target.value);
   };
 
   const handleUserSearch = async () => {
@@ -769,7 +787,7 @@ function Transfers() {
         <span style={{ marginLeft: "10px" }}>
           <Tooltip
             placement="right"
-            title="Returns table based on your select query"
+            title="Apply Data Filters"
           >
             <QuestionCircleOutlined
               style={{ color: "gray", fontSize: "15px", cursor: "help" }}
@@ -784,7 +802,7 @@ function Transfers() {
             <Text strong>Code: </Text>
           </span>
           <Input
-            placeholder="All Codes"
+            placeholder=""
             value={searchCode}
             onChange={handleCodeInputChange}
             style={{ width: "150px" }}
@@ -798,10 +816,10 @@ function Transfers() {
             <Text strong>Label: </Text>
           </span>
           <Input
-            placeholder="All Labels"
+            placeholder=""
             value={searchLabel}
             onChange={handleLabelInputChange}
-            style={{ width: "100px" }}
+            style={{ width: "65px" }}
             allowClear
             onClear={onClear}
           />
@@ -812,17 +830,45 @@ function Transfers() {
             <Text strong>Date: </Text>
           </span>
           <Input
-            placeholder="All Time"
+            placeholder=""
             value={searchDate}
             onChange={handleDateInputChange}
-            style={{ width: "150px" }}
+            style={{ width: "125px" }}
+            allowClear
+            onClear={onClear}
+          />
+        </div>
+
+        <div className="filter-inputs">
+          <span>
+            <Text strong>Amount: </Text>
+          </span>
+          <Input
+            placeholder=""
+            value={searchAmount}
+            onChange={handleAmountInputChange}
+            style={{ width: "110px" }}
+            allowClear
+            onClear={onClear}
+          />
+        </div>
+
+        <div className="filter-inputs">
+          <span>
+            <Text strong>Fee: </Text>
+          </span>
+          <Input
+            placeholder=""
+            value={searchFee}
+            onChange={handleFeeInputChange}
+            style={{ width: "110px" }}
             allowClear
             onClear={onClear}
           />
         </div>
 
         <div>
-          <Tooltip title="Filter & calculate">
+          <Tooltip title="Filter & Calculate">
             <Button
               shape="circle"
               icon={<FilterOutlined />}
