@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect, useContext } from "react";
-import Highlighter from "react-highlight-words";import { supabase } from "../../createClient";
+import Highlighter from "react-highlight-words";
+import { supabase } from "../../createClient";
 import {
     Button,
     Switch,
@@ -18,7 +19,10 @@ import {
     notification,
     message,
     Tooltip,
-    Divider
+    Divider,
+    Card,
+    InputNumber
+    
   } from "antd";
 
 import "../styles/styles.css";
@@ -32,7 +36,8 @@ import {
     QuestionCircleOutlined,
     FilterOutlined,
     EyeOutlined,
-    EditOutlined
+    EditOutlined,
+    FormOutlined
   } from "@ant-design/icons";
 
 
@@ -118,6 +123,43 @@ const EditableCell = ({
 function Places() {
   const [places, setPlaces] = useState([]);
   const { Title, Text } = Typography;
+
+  const [form] = Form.useForm();
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const openSuccesNotificationForm = () => {
+    notification.success({
+      message: "Place added",
+      description: "The place was successfully saved to the database.",
+      placement: "bottomRight",
+    });
+  };
+
+  const openErrorNotificationForm = () => {
+    notification.error({
+      message: "Error",
+      description: "Unable to add place.",
+      placement: "bottomRight",
+    });
+  };
+
+  const onReset = () => {
+    form.resetFields();
+  };
+
+  const onFinish = async (values) => {
+    console.log("Form Values:", values);
+    const { data, error } = await supabase.from("places").insert([values]);
+
+    if (error) {
+      openErrorNotificationForm();
+      console.error("Supabase Error:", error);
+    } else {
+      openSuccesNotificationForm(); // Display success message
+      fetchPlaces();
+      form.resetFields();
+    }
+  };
 
 
   useEffect(() => {
@@ -409,7 +451,161 @@ function Places() {
       <Divider style={{ borderTopWidth: 2 }} />
 
       <div style={{display:"flex", justifyContent:"center" }}> 
-      <AddPlace/>
+      <div className="receipt-content-layout">
+        <div>
+          <Badge.Ribbon
+            text={
+              <span>
+                <FormOutlined style={{ marginRight: "8px" }} />
+                New Place
+              </span>
+            }
+            placement="start"
+          >
+            <Card
+              hoverable
+              style={{ width: 500, cursor: "default", paddingTop: "20px"}}
+            >
+              <Form
+                name="Place"
+                onFinish={onFinish}
+                form={form}
+                labelCol={{
+                  span: 8,
+                }}
+                wrapperCol={{
+                  span: 16,
+                }}
+                style={{
+                  maxWidth: 600,
+                }}
+                size="large"
+              >
+                
+                <Form.Item
+                  label="Name"
+                  required
+                  tooltip="This is a required field"
+                >
+                  <Space>
+                    <Form.Item
+                      name="name"
+                      noStyle
+                      rules={[
+                        {
+                          required: true,
+                          message: "Name is required",
+                        },
+                      ]}
+                    >
+                      <Input
+                        style={{
+                          width: 270,
+                        }}
+                        placeholder="City, Country"
+                      />
+                    </Form.Item>
+                  </Space>
+                </Form.Item>
+
+                <Form.Item
+                  label="Address"
+                  required
+                  tooltip="This is a required field"
+                >
+                  <Space>
+                    <Form.Item
+                      name="address"
+                      noStyle
+                      rules={[
+                        {
+                          required: true,
+                          message: "Address is required",
+                        },
+                      ]}
+                    >
+                      <Input
+                        style={{
+                          width: 270,
+                        }}
+                        placeholder="Full Address"
+                      />
+                    </Form.Item>
+                  </Space>
+                </Form.Item>
+
+                <Form.Item
+                  label="Operator"
+                  required
+                  tooltip="This is a required field"
+                >
+                  <Space>
+                    <Form.Item
+                      name="operator"
+                      noStyle
+                      rules={[
+                        {
+                          required: true,
+                          message: "Operator is required",
+                        },
+                      ]}
+                    >
+                      <Input
+                        style={{
+                          width: 270,
+                        }}
+                        placeholder="Full Name"
+                      />
+                    </Form.Item>
+                  </Space>
+                </Form.Item>
+
+                <Form.Item
+                  label="Number"
+                  required
+                  tooltip="This is a required field"
+                >
+                  <Space>
+                    <Form.Item
+                      name="number"
+                      noStyle
+                      rules={[
+                        {
+                          required: true,
+                          message: "Number is required",
+                        },
+                      ]}
+                    >
+                      <InputNumber
+                        style={{
+                          width: 270,
+                        }}
+                        placeholder="Operator Number"
+                      />
+                    </Form.Item>
+                  </Space>
+                </Form.Item>
+
+                <Form.Item label=" " colon={false}>
+                  <div style={{ display: "flex", marginTop: "20px" }}>
+                    <Button type="primary" htmlType="submit" size="default">
+                      Submit
+                    </Button>
+                    <Button
+                      htmlType="button"
+                      onClick={onReset}
+                      style={{ marginLeft: "10px" }}
+                      size="default"
+                    >
+                      Reset
+                    </Button>
+                  </div>
+                </Form.Item>
+              </Form>
+            </Card>
+          </Badge.Ribbon>
+        </div>
+      </div>
       </div> 
 
       <Title style={{ paddingTop: "20px", paddingBottom: "10px" }} level={5}>

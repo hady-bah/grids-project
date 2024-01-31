@@ -18,7 +18,9 @@ import {
     notification,
     message,
     Tooltip,
-    Divider
+    Divider,
+    Card,
+    InputNumber
   } from "antd";
 
 import "../styles/styles.css";
@@ -31,7 +33,8 @@ import {
     QuestionCircleOutlined,
     FilterOutlined,
     EyeOutlined,
-    EditOutlined
+    EditOutlined,
+    FormOutlined
   } from "@ant-design/icons";
 
 import AddCustomer from "./AddCustomer";
@@ -119,6 +122,42 @@ const EditableCell = ({
 function Customers() {
   const [customers, setCustomers] = useState([]);
   const { Title, Text } = Typography;
+  const [form] = Form.useForm();
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const openSuccesNotificationForm = () => {
+    notification.success({
+      message: "Customer added",
+      description: "The customer was successfully saved to the database.",
+      placement: "bottomRight",
+    });
+  };
+
+  const openErrorNotificationForm = () => {
+    notification.error({
+      message: "Error",
+      description: "Unable to add customer.",
+      placement: "bottomRight",
+    });
+  };
+
+  const onReset = () => {
+    form.resetFields();
+  };
+
+  const onFinish = async (values) => {
+    console.log("Form Values:", values);
+    const { data, error } = await supabase.from("customers").insert([values]);
+
+    if (error) {
+      openErrorNotificationForm();
+      console.error("Supabase Error:", error);
+    } else {
+      openSuccesNotificationForm(); // Display success message
+      fetchCustomers();
+      form.resetFields();
+    }
+  };
 
 
   useEffect(() => {
@@ -402,7 +441,134 @@ function Customers() {
       <Divider style={{ borderTopWidth: 2 }} />
       
       <div style={{display:"flex", justifyContent:"center" }}> 
-      <AddCustomer/>
+      <div className="receipt-content-layout">
+        <div>
+          <Badge.Ribbon
+            text={
+              <span>
+                <FormOutlined style={{ marginRight: "8px" }} />
+                New Customer
+              </span>
+            }
+            placement="start"
+          >
+            <Card
+              hoverable
+              style={{ width: 500, cursor: "default", paddingTop: "20px"}}
+            >
+              <Form
+                name="Customers"
+                onFinish={onFinish}
+                form={form}
+                labelCol={{
+                  span: 8,
+                }}
+                wrapperCol={{
+                  span: 16,
+                }}
+                style={{
+                  maxWidth: 600,
+                }}
+                size="large"
+              >
+                
+                <Form.Item
+                  label="Name"
+                  required
+                  tooltip="This is a required field"
+                >
+                  <Space>
+                    <Form.Item
+                      name="name"
+                      noStyle
+                      rules={[
+                        {
+                          required: true,
+                          message: "Name is required",
+                        },
+                      ]}
+                    >
+                      <Input
+                        style={{
+                          width: 270,
+                        }}
+                        placeholder="Customer Name"
+                      />
+                    </Form.Item>
+                  </Space>
+                </Form.Item>
+
+                <Form.Item
+                  label="Number"
+                  required
+                  tooltip="This is a required field"
+                >
+                  <Space>
+                    <Form.Item
+                      name="number"
+                      noStyle
+                      rules={[
+                        {
+                          required: true,
+                          message: "Number is required",
+                        },
+                      ]}
+                    >
+                      <InputNumber
+                        style={{
+                          width: 270,
+                        }}
+                        placeholder="Phone Number"
+                      />
+                    </Form.Item>
+                  </Space>
+                </Form.Item>
+
+                <Form.Item
+                  label="Email"
+                  required
+                  tooltip="Optional"
+                >
+                  <Space>
+                    <Form.Item
+                      name="email"
+                      noStyle
+                      rules={[
+                        {
+                          required: false,
+                        },
+                      ]}
+                    >
+                      <Input
+                        style={{
+                          width: 270,
+                        }}
+                        placeholder="Email Address"
+                      />
+                    </Form.Item>
+                  </Space>
+                </Form.Item>
+
+                <Form.Item label=" " colon={false}>
+                  <div style={{ display: "flex", marginTop: "20px" }}>
+                    <Button type="primary" htmlType="submit" size="default">
+                      Submit
+                    </Button>
+                    <Button
+                      htmlType="button"
+                      onClick={onReset}
+                      style={{ marginLeft: "10px" }}
+                      size="default"
+                    >
+                      Reset
+                    </Button>
+                  </div>
+                </Form.Item>
+              </Form>
+            </Card>
+          </Badge.Ribbon>
+        </div>
+      </div>
       </div> 
 
       <Title style={{ paddingTop: "20px", paddingBottom: "10px" }} level={5}>
