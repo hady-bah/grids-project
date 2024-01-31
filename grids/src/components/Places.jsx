@@ -26,7 +26,6 @@ import {
   } from "antd";
 
 import "../styles/styles.css";
-import AddPlace from "./AddPlace";
 
 import {
     SearchOutlined,

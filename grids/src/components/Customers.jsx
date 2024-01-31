@@ -37,7 +37,6 @@ import {
     FormOutlined
   } from "@ant-design/icons";
 
-import AddCustomer from "./AddCustomer";
 
 
 //editing cells
