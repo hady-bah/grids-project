@@ -51,6 +51,8 @@ function Sidebar() {
               height: '100vh',
               position: 'fixed',
               paddingTop: '20px',
+              backgroundColor: 'black', // Change the background color
+              color: 'white', // Change the text color
             }}
           >
             <div className="demo-logo-vertical" />
@@ -62,6 +64,10 @@ function Sidebar() {
               defaultSelectedKeys={[location.pathname]}
               mode="inline"
               items={items}
+              style={{
+                backgroundColor: 'black', // Change the background color
+                color: 'white', // Change the text color
+              }}
             />
           </Sider>
           <Layout className="site-layout">

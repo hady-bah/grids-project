@@ -4,6 +4,8 @@ import Sidebar from "./components/Sidebar";
 import NavBar from "./components/NavBar";
 import ContentComponent from "./Layouts/ContentComponent";
 import { FloatButton } from 'antd';
+import { Button, ConfigProvider, Space } from 'antd';
+
 
 
 function App() {
@@ -11,6 +13,20 @@ function App() {
 
   return (
     <>
+    <ConfigProvider
+    theme={{
+      token: {
+        // Seed Token
+        colorPrimary: '#28282B',
+        borderRadius: 5,
+        colorPrimaryBg:'white'
+        
+
+        // Alias Token
+        // colorBgContainer: '#f6ffed',
+      },
+    }}
+  >
     <div>
       <div>
         <NavBar />
@@ -20,6 +36,7 @@ function App() {
       </div>
       <FloatButton.BackTop />
     </div>
+    </ConfigProvider>
     </>
   );
 }

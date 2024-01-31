@@ -8,7 +8,7 @@
     --border-style: solid;
     --border-top-width: 0.5px;
     backdrop-filter: blur(20px);
-    background: linear-gradient(rgba(192, 192, 192, 0.15) 0%, rgba(0, 0, 0, 0.05) 100%);
+    background: linear-gradient(rgba(40, 40, 43, 0.15) 0%, rgba(0, 0, 0, 0.05) 100%);
     opacity: 1;
     border-radius: 20px;
     box-shadow: rgba(0, 0, 0, 0.11) 0px 0.636953px 0.636953px -0.9375px, rgba(0, 0, 0, 0.1) 0px 1.9316px 1.9316px -1.875px, rgba(0, 0, 0, 0.09) 0px 5.10612px 5.10612px -2.8125px, rgba(0, 0, 0, 0.04) 0px 16px 16px -3.75px;
@@ -24,7 +24,7 @@
 .nav-buttons {
     cursor: pointer;
     border: none;
-    background: linear-gradient(rgb(192, 192, 192) 0%, rgba(0, 0, 0, 0.05) 100%);
+    background: linear-gradient(rgb(40, 40, 43, 0.50) 0%, rgba(0, 0, 0, 0.05) 100%);
     opacity: 1;
     border-radius: 15px;
     z-index: 7;
@@ -36,11 +36,11 @@
 }
 
 .nav-buttons:active {
-    box-shadow: 0 0 3px 3px rgba(22, 119, 255, 0.7);
+    box-shadow: 0 0 3px 3px rgba(40, 40, 43, 0.7);
   }
 
 .nav-buttons:hover {
-    background: rgb(0, 0, 0);
+    background: rgb(40, 40, 43);
 }
 
 .logout-position {
