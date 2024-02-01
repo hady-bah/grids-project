@@ -88,14 +88,15 @@ function Receipt() {
       openSuccesNotification(); // Display success message
       // Print receipt
       const text =
-        `Place: ${values.place}\n` +
-        `Code: ${values.label} ${values.codeNumber}\n` +
-        `Sender: ${values.sender}\n` +
-        `Receiver: ${values.receiver}\n` +
-        `Amount: $${values.amount}\n` +
-        `Fee: $${values.fee}\n` +
-        `Mobile: ${values.mobileMoney || "N/A"}\n` +
-        `Status: ${values.status}\n`;
+        `Code: <strong>${values.codeNumber}</strong> <br />` +
+        `Label: ${values.label}<br />` +
+        `Place: ${values.place}<br />` +
+        `Sender: ${values.sender}<br />` +
+        `Receiver: ${values.receiver}<br />` +
+        `Amount: $${values.amount}<br />` +
+        `Fee: $${values.fee}<br />` +
+        `Mobile: ${values.mobileMoney || "N/A"}<br />` +
+        `Status: ${values.status}<br />`;
 
       printReceipt(text);
       form.resetFields();
