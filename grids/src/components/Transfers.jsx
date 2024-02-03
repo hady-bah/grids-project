@@ -546,6 +546,76 @@ function Transfers() {
     openDeleteNotification();
   };
 
+  //handle print
+  const handlePrint = async (id) => {
+    try {
+      // Fetch the specific transfer record based on its id
+      const { data: record, error } = await supabase
+        .from("transfers")
+        .select("*")
+        .eq("id", id)
+        .single();
+  
+      if (error) {
+        openErrorNotification();
+        console.error("Supabase Error:", error);
+        return;
+      }
+  
+      if (!record) {
+        console.error("Record not found");
+        return;
+      }
+  
+      // Fetch place information
+      const { data: placeData, error: placeError } = await supabase
+        .from("places")
+        .select("operator, number, address")
+        .eq("name", record.place);
+  
+      if (placeError) {
+        console.error("Supabase Error fetching place information:", placeError);
+        return;
+      }
+  
+      const { operator, number: placeNumber, address: placeAddress } =
+        placeData && placeData.length > 0 ? placeData[0] : {};
+  
+      // Print receipt
+      const text = `Code: <strong>${record.codeNumber}</strong> <br />` +
+        `Label: ${record.label}<br />` +
+        `Place: ${record.place}<br />` +
+        `Sender: ${record.sender}<br />` +
+        `Receiver: ${record.receiver}<br />` +
+        `Amount: $${record.amount}<br />` +
+        `Fee: $${record.fee}<br />` +
+        `Mobile: ${record.mobileMoney || "N/A"}<br />` +
+        `Status: ${record.status}<br /><br />` +
+        `<strong>Pick up info: </strong><br />` +
+        `Operator: ${operator || "N/A"}<br />` +
+        `Phone #: ${placeNumber || "N/A"}<br />` +
+        `Address: ${placeAddress || "N/A"}<br />`;
+  
+      printReceipt(text);
+      openSuccesNotification(); // Display success message
+    } catch (error) {
+      openErrorNotification();
+      console.error("Error fetching and printing record:", error);
+    }
+  };
+  
+
+  const printReceipt = (text) => {
+    // Example implementation of printReceipt function
+    const printWindow = window.open();
+    printWindow.document.write(text);
+    printWindow.print();
+    printWindow.close();
+  };
+
+
+
+
   const customFooter = (currentPageData) => {
     let filteredData = currentPageData;
 
