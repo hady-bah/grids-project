@@ -77,15 +77,32 @@ function Receipt() {
     form.resetFields();
   };
 
-  const onFinish = async (values) => {
-    console.log("Form Values:", values);
-    const { data, error } = await supabase.from("transfers").insert([values]);
+  
 
+  const onFinish = async (values) => {
+    // console.log("Form Values:", values);
+    const { data, error } = await supabase.from("transfers").insert([values]);
+  
     if (error) {
       openErrorNotification();
       console.error("Supabase Error:", error);
     } else {
       openSuccesNotification(); // Display success message
+  
+      // Fetch place information
+      const { data: placeData, error: placeError } = await supabase
+        .from("places")
+        .select("operator, number, address")
+        .eq("name", values.place);
+  
+      if (placeError) {
+        console.error("Supabase Error fetching place information:", placeError);
+        return;
+      }
+  
+      const { operator, number: placeNumber, address: placeAddress } =
+        placeData && placeData.length > 0 ? placeData[0] : {};
+  
       // Print receipt
       const text =
         `Code: <strong>${values.codeNumber}</strong> <br />` +
@@ -96,12 +113,18 @@ function Receipt() {
         `Amount: $${values.amount}<br />` +
         `Fee: $${values.fee}<br />` +
         `Mobile: ${values.mobileMoney || "N/A"}<br />` +
-        `Status: ${values.status}<br />`;
-
+        `Status: ${values.status}<br /><br />`+
+        `<strong>Pick up info: </strong><br />` +
+        `Operator: ${operator || "N/A"}<br />` +
+        `Phone #: ${placeNumber || "N/A"}<br />` +
+        `Address: ${placeAddress || "N/A"}<br />`
+        ;
+  
       printReceipt(text);
       form.resetFields();
     }
   };
+  
 
   const printReceipt = (text) => {
     const printWindow = window.open();
