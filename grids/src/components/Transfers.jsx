@@ -597,7 +597,6 @@ function Transfers() {
         `Address: ${placeAddress || "N/A"}<br />`;
   
       printReceipt(text);
-      openSuccesNotification(); // Display success message
     } catch (error) {
       openErrorNotification();
       console.error("Error fetching and printing record:", error);
