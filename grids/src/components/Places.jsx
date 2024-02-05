@@ -169,7 +169,7 @@ function Places() {
     const { data } = await supabase
       .from("places")
       .select("*")
-      .order("name", { ascending: false });
+      .order("name", { ascending: true });
     setPlaces(data);
   }
 

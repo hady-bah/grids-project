@@ -167,7 +167,7 @@ function Customers() {
     const { data } = await supabase
       .from("customers")
       .select("*")
-      .order("name", { ascending: false });
+      .order("name", { ascending: true });
     setCustomers(data);
   }
 
