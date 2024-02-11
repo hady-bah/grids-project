@@ -897,7 +897,7 @@ function Transfers() {
             placeholder="YYYY-MM-DD"
             value={searchDate}
             onChange={handleDateInputChange}
-            style={{ width: "126px" }}
+            style={{ width: "127px" }}
             allowClear
             onClear={onClear}
           />
