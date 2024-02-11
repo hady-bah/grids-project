@@ -8,6 +8,8 @@ import { ConfigProvider } from "antd";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { supabase } from "../createClient";
+import logoImage from "./assets/gridsofflogo.png"; // Adjust the path based on your file structure
+
 
 function App() {
   const [session, setSession] = useState(null);
@@ -43,14 +45,29 @@ function App() {
         <div>
           {/* Render authentication UI if no session */}
           {!session ? (
-            <div
-              style={{ maxWidth: "400px", margin: "auto", marginTop: "150px"}}
-            >
+            <div className="authContainer">
+              <div className="logo-container">
+              <img src={logoImage} alt="Grids Logo" className="logo-img" />
+              </div>
+              <div className="logo-container">
+              <p className="logo-title">Grids</p>
+              </div>
+              <div className="logo-container">
+              <p className="logo-title">Private application from BAH Software &copy;</p>
+              </div>
               <Auth
                 supabaseClient={supabase}
-                appearance={{ style: {
-                  button: { background: '#28282B', color: 'white' },
-                },}}
+                appearance={{
+                  theme: ThemeSupa,
+                  variables: {
+                    default: {
+                      colors: {
+                        brand: "#28282B",
+                        brandAccent: "#28282B",
+                      },
+                    },
+                  },
+                }}
                 providers={[]}
                 showLinks={false}
               />
@@ -77,17 +94,6 @@ function App() {
 }
 
 export default App;
-
-
-
-
-
-
-
-
-
-
-
 
 // //Pre Auth setup
 // import React, { useState, useEffect } from "react";
