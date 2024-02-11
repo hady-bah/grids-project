@@ -1,3 +1,4 @@
+//Pre Auth setup
 import React, { useState } from "react";
 import "./styles/App.css";
 import Sidebar from "./components/Sidebar";
