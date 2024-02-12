@@ -7,12 +7,52 @@ import '../styles/nav.css';
 import { supabase } from "../../createClient";
 
 const { Header, Content, Sider } = Layout;
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 function NavBar() {
   const [userModalOpen, setUserModalOpen] = useState(false);
   const [settingModalOpen, setSettingModalOpen] = useState(false);
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
+  const [session, setSession] = useState(null);
+  const [userEmail, setUserEmail] = useState(null); // State to store the user's email
+  const [createdAt, setCreatedAt] = useState(null);
+  const [lastSignInAt, setLastSignInAt] = useState(null);
+  const [updatedAt, setUpdatedAt] = useState(null);
+
+  useEffect(() => {
+    // Fetch the current user session and update the state
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+
+      // Set the user's email if available in the session
+      if (session?.user?.email) {
+        setUserEmail(session.user.email);
+        setCreatedAt(session.user.created_at);
+        setLastSignInAt(session.user.last_sign_in_at);
+        setUpdatedAt(session.user.updated_at);
+      }
+    });
+
+    // Subscribe to changes in the authentication state
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+
+      // Set the user's email if available in the session
+      if (session?.user?.email) {
+        setUserEmail(session.user.email);
+        setCreatedAt(session.user.created_at);
+        setLastSignInAt(session.user.last_sign_in_at);
+        setUpdatedAt(session.user.updated_at);
+      }
+    });
+
+    // Unsubscribe from the authentication state changes when the component is unmounted
+    return () => subscription.unsubscribe();
+  }, []);
+  
+  
 
   const handleLogout = async () => {
     // Perform logout logic using Supabase
@@ -25,6 +65,7 @@ function NavBar() {
       setLogoutModalOpen(false);
     }
   };
+
 
   return (
     <>
@@ -57,9 +98,9 @@ function NavBar() {
         onOk={() => setUserModalOpen(false)}
         onCancel={() => setUserModalOpen(false)}
       >
-        <p>some contents...</p>
-        <p>some contents...</p>
-        <p>some contents...</p>
+        <p><strong>Email: </strong> {userEmail} </p>
+        <p><strong>Created: </strong> {createdAt ? new Date(createdAt).toLocaleDateString('en-US', { timeZone: 'America/New_York' }) : 'N/A'}</p>
+        <p><strong>Last Sign In: </strong> {lastSignInAt ? new Date(lastSignInAt).toLocaleString('en-US', { timeZone: 'America/New_York' }) : 'N/A'}</p>
       </Modal>
 
       <Modal
@@ -69,7 +110,9 @@ function NavBar() {
         onOk={() => setSettingModalOpen(false)}
         onCancel={() => setSettingModalOpen(false)}
       >
-        <p>settings</p>
+        <p><strong>Software: </strong>Grids</p>
+        <p><strong>Version: </strong><Text code>grids version 0.0</Text></p>
+        <p><strong>Developed By: </strong>BAH Software &copy;</p>
       </Modal>
 
       <Modal
