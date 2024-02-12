@@ -53,10 +53,6 @@
     border-radius: 10px;
 }
 
-.logo-container-nav:hover{
-    box-shadow: 0 0 3px 3px rgba(40, 40, 43, 0.7);
-}
-
 
 .logotitle{
     font-size: 20px;
