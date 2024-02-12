@@ -5,6 +5,8 @@ import { Divider } from 'antd';
 import { Typography } from 'antd';
 import '../styles/nav.css';
 import { supabase } from "../../createClient";
+import logoImage from "../assets/gridsofflogo.png"; // Adjust the path based on your file structure
+
 
 const { Header, Content, Sider } = Layout;
 const { Title, Text } = Typography;
@@ -70,7 +72,12 @@ function NavBar() {
   return (
     <>
       <div className="blured-navbar">
-        <div className="logout-position">
+          <div className="logo-container-nav">
+            <span>
+            <img src={logoImage} alt="Grids Logo" className="logo-img" />
+            </span>
+          </div>
+        <div className="right-buttons-position">
           <Tooltip title="User Information" placement="bottom">
             <button className="nav-buttons" onClick={() => setUserModalOpen(true)}>
               <UserOutlined />
@@ -112,6 +119,7 @@ function NavBar() {
       >
         <p><strong>Software: </strong>Grids</p>
         <p><strong>Version: </strong><Text code>grids version 0.0</Text></p>
+        <p><strong>Region/Time Zone: </strong>North America Eastern</p>
         <p><strong>Developed By: </strong>BAH Software &copy;</p>
       </Modal>
 

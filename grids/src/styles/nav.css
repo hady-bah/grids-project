@@ -43,8 +43,22 @@
     background: rgb(40, 40, 43);
 }
 
-.logout-position {
+.right-buttons-position {
     margin-left: auto; /* Pushes the button to the far right */
     padding: 10px;
+}
+
+.logo-container-nav{
+    margin-left: 10px;
+    border-radius: 10px;
+}
+
+.logo-container-nav:hover{
+    box-shadow: 0 0 3px 3px rgba(40, 40, 43, 0.7);
+}
+
+
+.logotitle{
+    font-size: 20px;
 }
   
