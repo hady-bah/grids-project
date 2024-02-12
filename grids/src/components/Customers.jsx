@@ -436,7 +436,7 @@ function Customers() {
 
   return (
     <>
-      <span class="gradient-text">customers</span>
+      <span class="gradient-text">Customers</span>
       <Divider style={{ borderTopWidth: 2 }} />
       
       <div style={{display:"flex", justifyContent:"center" }}> 
