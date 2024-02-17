@@ -227,9 +227,9 @@ function Transfers() {
   }, []);
 
   const [searchCode, setSearchCode] = useState("");
-  const [searchLabel, setSearchLabel] = useState("");
+  const [searchPlace, setSearchPlace] = useState("");
   const [searchDate, setSearchDate] = useState("");
-  const [searchAmount, setSearchAmount] = useState("");
+  const [searchNumber, setSearchNumber] = useState("");
   const [searchFee, setSearchFee] = useState("");
 
   async function fetchTransfers() {
@@ -239,16 +239,28 @@ function Transfers() {
       dataQuery = dataQuery.eq("codeNumber", searchCode);
     }
 
-    if (searchLabel !== "") {
-      dataQuery = dataQuery.eq("label", searchLabel);
+    if (searchPlace !== "") {
+      const [city, country] = searchPlace.split(',').map(part => part.trim());
+    
+      if (city && country) {
+        // Search by both city and country
+        dataQuery = dataQuery
+          .ilike('place', `%${city.trim()}, ${country.trim()}%`);
+      } else if (city) {
+        // Search only by city
+        dataQuery = dataQuery.ilike('place', `%${city.trim()}%`);
+      } else if (country) {
+        // Search only by country
+        dataQuery = dataQuery.ilike('place', `%${country.trim()}%`);
+      }
     }
 
     if (searchDate !== "") {
       dataQuery = dataQuery.eq('date(time)', searchDate);
     }
 
-    if (searchAmount !== "") {
-      dataQuery = dataQuery.eq("amount", searchAmount);
+    if (searchNumber !== "") {
+      dataQuery = dataQuery.eq("sender_number", searchNumber);
     }
 
     if (searchFee !== "") {
@@ -269,7 +281,7 @@ function Transfers() {
   };
 
   const handleLabelInputChange = (e) => {
-    setSearchLabel(e.target.value);
+    setSearchPlace(e.target.value);
   };
 
   const handleDateInputChange = (e) => {
@@ -277,7 +289,7 @@ function Transfers() {
   };
 
   const handleAmountInputChange = (e) => {
-    setSearchAmount(e.target.value);
+    setSearchNumber(e.target.value);
   };
 
   const handleFeeInputChange = (e) => {
@@ -472,12 +484,11 @@ function Transfers() {
       editable: true,
     },
     {
-      title: "Mobile",
+      title: "Mobile Transfer",
       dataIndex: "mobileMoney",
       key: "mobileMoney",
       width: "20%",
       editable: true,
-      ...getColumnSearchProps("mobileMoney"),
     },
     {
       title: "Date",
@@ -851,7 +862,7 @@ function Transfers() {
         <span style={{ marginLeft: "10px" }}>
           <Tooltip
             placement="right"
-            title="Data filter is default to all transactions"
+            title="Default to all transactions"
           >
             <QuestionCircleOutlined
               style={{ color: "gray", fontSize: "15px", cursor: "help" }}
@@ -863,7 +874,7 @@ function Transfers() {
       <div className="filter-container">
         <div className="filter-inputs">
           <span>
-            <Text strong>Code: </Text>
+            <Text strong>Code </Text>
           </span>
           <Input
             placeholder="Input Code"
@@ -877,13 +888,13 @@ function Transfers() {
 
         <div className="filter-inputs">
           <span>
-            <Text strong>Label: </Text>
+            <Text strong>Place </Text>
           </span>
           <Input
-            placeholder="-"
-            value={searchLabel}
+            placeholder="City, Country"
+            value={searchPlace}
             onChange={handleLabelInputChange}
-            style={{ width: "65px" }}
+            style={{ width: "185px" }}
             allowClear
             onClear={onClear}
           />
@@ -891,10 +902,10 @@ function Transfers() {
 
         <div className="filter-inputs">
           <span>
-            <Text strong>Date: </Text>
+            <Text strong>Date </Text>
           </span>
           <Input
-            placeholder="YYYY-MM-DD"
+            placeholder="MM/DD/YYY"
             value={searchDate}
             onChange={handleDateInputChange}
             style={{ width: "127px" }}
@@ -905,13 +916,13 @@ function Transfers() {
 
         <div className="filter-inputs">
           <span>
-            <Text strong>Amount: </Text>
+            <Text strong>Number </Text>
           </span>
           <Input
-            placeholder="$"
-            value={searchAmount}
+            placeholder="Phone #"
+            value={searchNumber}
             onChange={handleAmountInputChange}
-            style={{ width: "110px" }}
+            style={{ width: "130px" }}
             allowClear
             onClear={onClear}
           />
@@ -932,7 +943,7 @@ function Transfers() {
         </div>
 
         <div>
-          <Tooltip title="Filter & Calculate">
+          <Tooltip title="Filter">
             <Button
               shape="circle"
               icon={<FilterOutlined />}
