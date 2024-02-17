@@ -27,7 +27,7 @@ function getItem(label, key, icon, children) {
 const items = [
   getItem('Dashboard', '/', <BarChartOutlined />),
   getItem('Transfers', '/transfers', <FileSearchOutlined />),
-  getItem('Receipt', '/receipt', <SnippetsOutlined />),
+  getItem('New Transfer', '/receipt', <SnippetsOutlined />),
   getItem('Places', '/places', <EnvironmentOutlined />),
   getItem('Customers', '/customers', <TeamOutlined />),
 ];

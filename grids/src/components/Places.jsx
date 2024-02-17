@@ -342,7 +342,7 @@ function Places() {
       ...getColumnSearchProps("number"),
     },
     {
-      title: "Oprator",
+      title: "Operator",
       dataIndex: "operator",
       key: "operator",
       width: "10%",

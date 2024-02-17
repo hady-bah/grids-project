@@ -106,6 +106,7 @@ function Receipt() {
       // Print receipt
       const text =
         `Code: <strong>${values.codeNumber}</strong> <br />` +
+        `Date: ${new Date().toLocaleDateString("en-US")}<br />` +
         `Label: ${values.label}<br />` +
         `Place: ${values.place}<br />` +
         `Sender: ${values.sender}<br />` +
@@ -230,7 +231,7 @@ function Receipt() {
 
   return (
     <>
-      <span class="gradient-text">Receipt</span>
+      <span class="gradient-text">New Transfer</span>
       <Divider style={{ borderTopWidth: 2 }} />
       <div className="receipt-content-layout">
         <div>
