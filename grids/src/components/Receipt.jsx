@@ -279,7 +279,7 @@ function Receipt() {
                         },
                       ]}
                     >
-                      <Select placeholder="Place" style={{ width: "225px" }}>
+                      <Select placeholder="Select" style={{ width: "225px" }}>
                         {places.map((place) => (
                           <Option key={place.name} value={place.name}>
                             {place.name}
@@ -364,6 +364,45 @@ function Receipt() {
                         }}
                         placeholder="Full Name"
                       />
+                    </Form.Item>
+                  </Space>
+                </Form.Item>
+                <Form.Item
+                  label="Number"
+                  required
+                  tooltip="This is a required field"
+                >
+                  <Space>
+                    <Form.Item
+                      name="sender_number"
+                      noStyle
+                      rules={[
+                        {
+                          required: true,
+                          message: "Sender is required",
+                        },
+                      ]}
+                    >
+                      <InputNumber
+                          style={{
+                            width: 185,
+                          }}
+                          placeholder="Sender's Phone #"
+                          formatter={(value) => {
+                            // Format input as a phone number
+                            if (value) {
+                              const formattedValue = value.replace(/\D/g, ''); // Remove non-numeric characters
+                              if (formattedValue.length > 10) {
+                                return `+${formattedValue.slice(0, -10)} (${formattedValue.slice(-10, -7)}) ${formattedValue.slice(-7, -4)}-${formattedValue.slice(-4)}`;
+                              }
+                              return `(${formattedValue.slice(0, 3)}) ${formattedValue.slice(3, 6)}-${formattedValue.slice(6, 10)}`;
+                            }
+                          }}
+                          parser={(value) => {
+                            // Remove non-numeric characters
+                            return value ? value.replace(/\D/g, '') : '';
+                          }}
+                        />
                     </Form.Item>
                   </Space>
                 </Form.Item>
@@ -457,15 +496,29 @@ function Receipt() {
                   </Space>
                 </Form.Item>
 
-                <Form.Item label="Mobile" tooltip="Optional field">
+                <Form.Item label="Mobile Transfer" tooltip="Optional field">
                   <Space>
                     <Form.Item name="mobileMoney" noStyle>
-                      <InputNumber
-                        style={{
-                          width: 160,
-                        }}
-                        placeholder="Phone #"
-                      />
+                    <InputNumber
+                          style={{
+                            width: 185,
+                          }}
+                          placeholder="Recipient's #"
+                          formatter={(value) => {
+                            // Format input as a phone number
+                            if (value) {
+                              const formattedValue = value.replace(/\D/g, ''); // Remove non-numeric characters
+                              if (formattedValue.length > 10) {
+                                return `+${formattedValue.slice(0, -10)} (${formattedValue.slice(-10, -7)}) ${formattedValue.slice(-7, -4)}-${formattedValue.slice(-4)}`;
+                              }
+                              return `(${formattedValue.slice(0, 3)}) ${formattedValue.slice(3, 6)}-${formattedValue.slice(6, 10)}`;
+                            }
+                          }}
+                          parser={(value) => {
+                            // Remove non-numeric characters
+                            return value ? value.replace(/\D/g, '') : '';
+                          }}
+                        />
                     </Form.Item>
                   </Space>
                 </Form.Item>
