@@ -113,14 +113,15 @@ function Receipt() {
       // Print receipt
       const text =
         `Code: <strong>${values.codeNumber}</strong> <br />` +
-        `Date: ${new Date().toLocaleDateString("en-US")}<br />` +
+        `Date: ${values.date}<br />` +
         `Label: ${values.label}<br />` +
         `Place: ${values.place}<br />` +
         `Sender: ${values.sender}<br />` +
+        `Number: ${values.sender_number}<br />` +
         `Receiver: ${values.receiver}<br />` +
         `Amount: $${values.amount}<br />` +
         `Fee: $${values.fee}<br />` +
-        `Mobile: ${values.mobileMoney || "N/A"}<br />` +
+        `Mobile Transfer: ${values.mobileMoney || "N/A"}<br />` +
         `Status: ${values.status}<br /><br />`+
         `<strong>Pick up info: </strong><br />` +
         `Operator: ${operator || "N/A"}<br />` +
