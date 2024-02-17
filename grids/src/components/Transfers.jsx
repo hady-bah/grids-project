@@ -171,12 +171,6 @@ function Transfers() {
     const formattedTime = date.toLocaleString("en-US", options);
     return formattedTime;
   }
-
-  const formatDate = (dateTimeString) => {
-    const date = new Date(dateTimeString);
-    const options = { timeZone: 'America/New_York', year: 'numeric', month: '2-digit', day: '2-digit' };
-    return date.toLocaleDateString('en-US', options);
-};
   
 
   const formatNumber = (number) => {
@@ -256,7 +250,8 @@ function Transfers() {
     }
 
     if (searchDate !== "") {
-      dataQuery = dataQuery.eq('date(time)', searchDate);
+      // Perform a string search for the date
+      dataQuery = dataQuery.ilike('date', `%${searchDate}%`);
     }
 
     if (searchNumber !== "") {
@@ -492,10 +487,9 @@ function Transfers() {
     },
     {
       title: "Date",
-      dataIndex: "time",
+      dataIndex: "date",
       key: "time",
       width: "20%",
-      render: (text, record) => formatDate(record.time),
     },
     {
       title: "Status",
