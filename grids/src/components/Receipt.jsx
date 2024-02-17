@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { supabase } from "../../createClient";
 import { AutoComplete } from "antd";
+import moment from 'moment-timezone';
 import {
   InfoCircleOutlined,
   FormOutlined,
@@ -75,6 +76,12 @@ function Receipt() {
 
   const onReset = () => {
     form.resetFields();
+    const generatedDate = generateDate();
+
+    if (generatedDate) {
+      form.setFieldsValue({ date: generatedDate });
+      setDate(generatedDate); // Update the state variable
+    }
   };
 
   
@@ -211,12 +218,35 @@ function Receipt() {
     return finalCode;
   }
 
-  // Use useEffect to update the form field after code is generated
+    // Use useEffect to update the form field after code is generated
+    useEffect(() => {
+      if (code) {
+        form.setFieldsValue({ codeNumber: code });
+      }
+    }, [code]);
+
+
+  const [date, setDate] = useState("");
+
+  function generateDate() {
+    // Get the current date and time in Eastern Time Zone (ET)
+    const easternDate = moment().tz('America/New_York');
+  
+    // Format the date as a string in MM/DD/YYYY format
+    const formattedDate = easternDate.format('MM/DD/YYYY');
+  
+    return formattedDate;
+  }
+
+  // Use useEffect to update the form field after date is generated
   useEffect(() => {
-    if (code) {
-      form.setFieldsValue({ codeNumber: code });
+    const generatedDate = generateDate();
+
+    if (generatedDate) {
+      form.setFieldsValue({ date: generatedDate });
+      setDate(generatedDate); // Update the state variable
     }
-  }, [code]);
+  }, []);
 
   const onPanelChange = (value, mode) => {
     console.log(value.format("YYYY-MM-DD"), mode);
@@ -544,6 +574,32 @@ function Receipt() {
                       {/* <Option value="Not Paid">Not Paid</Option> */}
                     </Select>
                   </Form.Item>
+                </Form.Item>
+                <Form.Item
+                  label="Date"
+                  required
+                  tooltip="This is a required field"
+                >
+                  <Space>
+                    <Form.Item
+                      name="date"
+                      noStyle
+                      rules={[
+                        {
+                          required: true,
+                          message: "Date is required",
+                        },
+                      ]}
+                    >
+                      <Input
+                        style={{
+                          width: 160,
+                        }}
+                        placeholder="Today"
+                        disabled
+                      />
+                    </Form.Item>
+                  </Space>
                 </Form.Item>
 
                 <Form.Item label=" " colon={false}>
