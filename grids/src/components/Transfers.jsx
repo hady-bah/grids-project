@@ -250,9 +250,21 @@ function Transfers() {
     }
 
     if (searchDate !== "") {
-      // Perform a string search for the date
-      dataQuery = dataQuery.ilike('date', `%${searchDate}%`);
+      // Check if the input is in DD/MM/YYYY format
+      if (/^\d{2}\/\d{2}\/\d{4}$/.test(searchDate)) {
+        // If DD/MM/YYYY, perform a string search for the exact date
+        dataQuery = dataQuery.ilike('date', `%${searchDate}%`);
+      } else if (/^\d{2}\/\d{4}$/.test(searchDate)) {
+        // If DD/YYYY, perform a string search for the month and year
+        const [day, monthYear] = searchDate.split('/');
+        dataQuery = dataQuery.ilike('date', `%${day}/${monthYear}%`);
+      } else if (/^\d{4}$/.test(searchDate)) {
+        // If YYYY, perform a string search for the year
+        dataQuery = dataQuery.ilike('date', `%${searchDate}%`);
+      }
     }
+    
+    
 
     if (searchNumber !== "") {
       dataQuery = dataQuery.eq("sender_number", searchNumber);
@@ -446,7 +458,6 @@ function Transfers() {
       key: "place",
       width: "20%",
       editable: true,
-      ...getColumnSearchProps("place"),
     },
     {
       title: "Sender",
@@ -899,7 +910,7 @@ function Transfers() {
             <Text strong>Date </Text>
           </span>
           <Input
-            placeholder="MM/DD/YYY"
+            placeholder="DD/MM/YYYY"
             value={searchDate}
             onChange={handleDateInputChange}
             style={{ width: "127px" }}

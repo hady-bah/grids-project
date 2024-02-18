@@ -234,7 +234,7 @@ function Receipt() {
     const easternDate = moment().tz('America/New_York');
   
     // Format the date as a string in MM/DD/YYYY format
-    const formattedDate = easternDate.format('MM/DD/YYYY');
+    const formattedDate = easternDate.format('DD/MM/YYYY');
   
     return formattedDate;
   }
