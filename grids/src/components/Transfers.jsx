@@ -468,6 +468,13 @@ function Transfers() {
       ...getColumnSearchProps("sender"),
     },
     {
+      title: "Number",
+      dataIndex: "sender_number",
+      key: "sender_number",
+      width: "20%",
+      editable: true,
+    },
+    {
       title: "Receiver",
       dataIndex: "receiver",
       key: "receiver",
