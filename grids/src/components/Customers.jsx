@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect, useContext } from "react";
 import Highlighter from "react-highlight-words";import { supabase } from "../../createClient";
+import CountUp from "react-countup";
 import {
     Button,
     Switch,
@@ -20,7 +21,7 @@ import {
     Tooltip,
     Divider,
     Card,
-    InputNumber
+    InputNumber,
   } from "antd";
 
 import "../styles/styles.css";
@@ -123,6 +124,7 @@ function Customers() {
   const { Title, Text } = Typography;
   const [form] = Form.useForm();
   const [messageApi, contextHolder] = message.useMessage();
+  const totalCustomers = customers.length;
 
   const openSuccesNotificationForm = () => {
     notification.success({
@@ -143,6 +145,12 @@ function Customers() {
   const onReset = () => {
     form.resetFields();
   };
+
+  const formatterTotalCustomers = (value) => (
+    <span style={{fontSize:'40px'}}>
+      <CountUp end={value} duration = {2}/>
+    </span>
+  );
 
   const onFinish = async (values) => {
     console.log("Form Values:", values);
@@ -438,8 +446,24 @@ function Customers() {
     <>
       <span class="gradient-text">Customers</span>
       <Divider style={{ borderTopWidth: 2 }} />
+
+      <div style={{display: 'flex', justifyContent: 'center'}}>
+        <Title>Total Customers</Title>
+      </div>
+
+      <div style={{display: 'flex', justifyContent: 'center'}}>
+        <div>
+        <Col>
+          <Statistic
+            title=""
+            value={totalCustomers}
+            formatter= {formatterTotalCustomers}
+          />
+        </Col>
+        </div>
+      </div>
       
-      <div style={{display:"flex", justifyContent:"center" }}> 
+      {/* <div style={{display:"flex", justifyContent:"center" }}> 
       <div className="receipt-content-layout">
         <div>
           <Badge.Ribbon
@@ -568,7 +592,7 @@ function Customers() {
           </Badge.Ribbon>
         </div>
       </div>
-      </div> 
+      </div>  */}
 
       <Title style={{ paddingTop: "20px", paddingBottom: "10px" }} level={5}>
         <EyeOutlined /> View
