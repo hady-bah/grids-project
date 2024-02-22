@@ -339,14 +339,6 @@ function Customers() {
       editable: true,
       ...getColumnSearchProps("number"),
     },
-    {
-      title: "E-mail",
-      dataIndex: "email",
-      key: "email",
-      width: "10%",
-      editable: true,
-      ...getColumnSearchProps("email"),
-    },
     // Operation column renders delete button
     {
         title: "Action",
