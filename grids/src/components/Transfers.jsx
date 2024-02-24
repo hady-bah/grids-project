@@ -731,18 +731,6 @@ function Transfers() {
         <td
           style={{ fontWeight: "bold", paddingLeft: "60px", fontSize: "16px" }}
         >
-          {`Deposits: $${formatNumber(totalDeposit)}`}
-        </td>
-        <td colSpan="6"></td>
-        <td
-          style={{ fontWeight: "bold", paddingLeft: "60px", fontSize: "16px" }}
-        >
-          {`Cash: $${formatNumber(totalCash)}`}
-        </td>
-        <td colSpan="6"></td>
-        <td
-          style={{ fontWeight: "bold", paddingLeft: "60px", fontSize: "16px" }}
-        >
           {`Transactions: ${totalTransactions}`}
         </td>
         <td colSpan="6"></td>
