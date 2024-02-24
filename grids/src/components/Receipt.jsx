@@ -122,7 +122,7 @@ function Receipt() {
         `Amount: $${values.amount}<br />` +
         `Fee: $${values.fee}<br />` +
         `Mobile Transfer: ${values.mobileMoney || "N/A"}<br />` +
-        `Status: ${values.status}<br /><br />`+
+        `Payment: ${values.status}<br /><br />`+
         `<strong>Pick up info: </strong><br />` +
         `Operator: ${operator || "N/A"}<br />` +
         `Phone #: ${placeNumber || "N/A"}<br />` +
@@ -555,7 +555,7 @@ function Receipt() {
                 </Form.Item>
 
                 <Form.Item
-                  label="Status"
+                  label="Payment"
                   required
                   tooltip="This is a required field"
                 >
@@ -565,11 +565,11 @@ function Receipt() {
                     rules={[
                       {
                         required: true,
-                        message: "Status is required",
+                        message: "Payment is required",
                       },
                     ]}
                   >
-                    <Select placeholder="Status" style={{ width: "155px" }}>
+                    <Select placeholder="Payment" style={{ width: "155px" }}>
                       <Option value="Cash">Cash</Option>
                       <Option value="Deposit">Deposit</Option>
                       {/* <Option value="Not Paid">Not Paid</Option> */}
