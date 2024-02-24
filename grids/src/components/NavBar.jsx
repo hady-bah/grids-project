@@ -119,7 +119,7 @@ function NavBar() {
       >
         <p><strong>Software: </strong>Grids</p>
         <p><strong>Version: </strong><Text code>grids version 0.0</Text></p>
-        <p><strong>Region/Time Zone: </strong>North America Eastern</p>
+        <p><strong>Region/Time Zone: </strong>Eastern Standard Time</p>
         <p><strong>Developed By: </strong>BAH Software &copy;</p>
       </Modal>
 

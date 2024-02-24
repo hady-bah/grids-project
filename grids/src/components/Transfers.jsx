@@ -6,6 +6,12 @@ import {
   QuestionCircleOutlined,
   FilterOutlined,
   EyeOutlined,
+  CheckCircleOutlined,
+  ClockCircleOutlined,
+  CloseCircleOutlined,
+  ExclamationCircleOutlined,
+  MinusCircleOutlined,
+  SyncOutlined,
 } from "@ant-design/icons";
 import React, { useRef, useState, useEffect, useContext } from "react";
 import Highlighter from "react-highlight-words";
@@ -511,6 +517,22 @@ function Transfers() {
     },
     {
       title: "Status",
+      dataIndex: "payment_status",
+      key: "payment_status",
+      width: "20%",
+      editable: true,
+      render: (text, record) => (
+        <span>
+          <Tag color={record.payment_status.toLowerCase() === "processing"? "processing" : "success"}
+                icon={record.payment_status.toLowerCase() === "processing" ? <SyncOutlined spin /> : <CheckCircleOutlined /> }
+          >
+            {text}
+          </Tag>
+        </span>
+      ),
+    },
+    {
+      title: "Payment",
       dataIndex: "status",
       key: "status",
       width: "20%",
@@ -565,6 +587,8 @@ function Transfers() {
 
     // Filter deleted record from UI
     setTransfers(transfers.filter((t) => t.id !== id));
+
+    fetchTransfers();
 
     openDeleteNotification();
   };
