@@ -140,6 +140,7 @@ function Transfers() {
   const [filterTotalDeposit, setFilterTotalDeposit] = useState(0);
   const [filterTotalCash, setFilterTotalCash] = useState(0);
   const [filterTotalTransactions, setFilterTotalTransactions] = useState(0);
+  const [filterTotalPayed, setFilterTotalPayed] = useState(0);
 
   const openSuccesNotification = () => {
     notification.success({
@@ -194,27 +195,32 @@ function Transfers() {
   };
 
   const formatter = (value) => (
-    <span style={{fontSize: "20px" }}>
+    <span style={{fontSize: "17px" }}>
       <CountUp end={value} separator="," decimals={2} prefix="$ " />
     </span>
   );
   const formatterTrans = (value) => (
-    <span style={{fontSize: "20px" }}>
+    <span style={{fontSize: "17px" }}>
       <CountUp end={value} separator=","/>
     </span>
   );
   const formatterCash = (value) => (
-    <span style={{ color: "green", fontSize: "20px"  }}>
+    <span style={{ color: "green", fontSize: "17px"  }}>
       <CountUp end={value} separator="," decimals={2} prefix="$ " />
     </span>
   );
   const formatterDeposit = (value) => (
-    <span style={{ color: "#1677ff", fontSize: "20px" }}>
+    <span style={{ color: "#1677ff", fontSize: "17px" }}>
+      <CountUp end={value} separator="," decimals={2} prefix="$ " />
+    </span>
+  );
+  const formatterPayed = (value) => (
+    <span style={{ color: "gray", fontSize: "17px" }}>
       <CountUp end={value} separator="," decimals={2} prefix="$ " />
     </span>
   );
   const formatterSent = (value) => (
-    <span style={{ color: "#1677ff", fontSize: "20px" }}>
+    <span style={{ color: "#1677ff", fontSize: "17px" }}>
       <CountUp end={value} separator="," decimals={2} prefix="$ " />
     </span>
   );
@@ -520,7 +526,6 @@ function Transfers() {
       dataIndex: "payment_status",
       key: "payment_status",
       width: "20%",
-      editable: true,
       render: (text, record) => (
         <span>
           <Tag color={record.payment_status.toLowerCase() === "processing"? "processing" : "success"}
@@ -783,6 +788,7 @@ function Transfers() {
       setFilterTotalFee("0.00");
       setFilterGrandTotal("0.00");
       setFilterTotalDeposit("0.00");
+      setFilterTotalPayed("0.00");
       setFilterTotalCash("0.00");
       setFilterTotalTransactions(0);
       return;
@@ -801,6 +807,19 @@ function Transfers() {
     const filterTotalDeposit = (
       parseFloat(filterDepostData.amount) + parseFloat(filterDepostData.fee)
     ).toFixed(2);
+
+    //payment status
+    const payedData = filteredData.filter(
+      (record) => record.payment_status.toLowerCase() === "payed"
+    );
+    const filterPayedData = calculateFilterSum(payedData);
+  
+    const filterTotalPayed = (
+      parseFloat(filterPayedData.amount)
+    ).toFixed(2);
+    //
+
+
   
     const filterTotalCash = (filterGrandTotal - filterTotalDeposit).toFixed(2);
   
@@ -811,6 +830,7 @@ function Transfers() {
     setFilterTotalFee(summaryData.fee);
     setFilterGrandTotal(filterGrandTotal);
     setFilterTotalDeposit(filterTotalDeposit);
+    setFilterTotalPayed(filterTotalPayed);
     setFilterTotalCash(filterTotalCash);
     setFilterTotalTransactions(filterTotalTransactions);
   };
@@ -1013,6 +1033,14 @@ function Transfers() {
               value={filterGrandTotal}
               precision={2}
               formatter={formatter}
+            />
+          </Col>
+          <Col>
+            <Statistic
+              title="Payed"
+              value={filterTotalPayed}
+              precision={2}
+              formatter={formatterPayed}
             />
           </Col>
           <Col>
