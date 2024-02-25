@@ -7,6 +7,7 @@ import {
   FilterOutlined,
   EyeOutlined,
   CheckCircleOutlined,
+  CheckCircleTwoTone,
   ClockCircleOutlined,
   CloseCircleOutlined,
   ExclamationCircleOutlined,
@@ -140,12 +141,12 @@ function Transfers() {
   const [filterTotalDeposit, setFilterTotalDeposit] = useState(0);
   const [filterTotalCash, setFilterTotalCash] = useState(0);
   const [filterTotalTransactions, setFilterTotalTransactions] = useState(0);
-  const [filterTotalPayed, setFilterTotalPayed] = useState(0);
+  const [filterTotalpaid, setFilterTotalpaid] = useState(0);
 
   const openSuccesNotification = () => {
     notification.success({
-      message: "Updated successfully",
-      description: "The receipt was successfully updated to the database.",
+      message: "Successfull",
+      description: "Operation was successful",
       placement: "bottomRight",
     });
   };
@@ -214,7 +215,7 @@ function Transfers() {
       <CountUp end={value} separator="," decimals={2} prefix="$ " />
     </span>
   );
-  const formatterPayed = (value) => (
+  const formatterpaid = (value) => (
     <span style={{ color: "gray", fontSize: "17px" }}>
       <CountUp end={value} separator="," decimals={2} prefix="$ " />
     </span>
@@ -563,7 +564,18 @@ function Transfers() {
       title: "Operations",
       render: (_, record) => (
         <div>
-          <span style={{ marginRight: "25px" }}>
+          <span style={{ marginRight: "10px"}}>
+          <Tooltip title="Pay" placement="bottom">
+            <Popconfirm
+              title="Paying transfer"
+              onConfirm={() => handlePay(record.id)}
+            >
+              <CheckCircleTwoTone twoToneColor="#52c41a" style={{ fontSize: "16px" }}/>
+            </Popconfirm>
+          </Tooltip>
+          </span>
+
+          <span style={{ marginRight: "10px" }}>
             <Tooltip title="Print" placement="bottom">
               <PrinterOutlined
                 style={{ fontSize: "18px" }}
@@ -596,6 +608,27 @@ function Transfers() {
     fetchTransfers();
 
     openDeleteNotification();
+  };
+
+  //handle pay
+  const handlePay = async (id) =>{
+    // Update payment_status to 'Paid'
+  const { data, error } = await supabase
+  .from("transfers")
+  .update({ payment_status: "Paid" })
+  .eq("id", id);
+
+  if (error) {
+  openErrorNotification();
+  // Handle error scenario if needed
+  } else {
+  // If the update is successful, you can fetch the updated data or perform other actions
+  openSuccesNotification();
+
+  // Fetch transfers again or perform any necessary actions
+  fetchTransfers();
+
+}
   };
 
   //handle print
@@ -776,7 +809,7 @@ function Transfers() {
       setFilterTotalFee("0.00");
       setFilterGrandTotal("0.00");
       setFilterTotalDeposit("0.00");
-      setFilterTotalPayed("0.00");
+      setFilterTotalpaid("0.00");
       setFilterTotalCash("0.00");
       setFilterTotalTransactions(0);
       return;
@@ -797,13 +830,13 @@ function Transfers() {
     ).toFixed(2);
 
     //payment status
-    const payedData = filteredData.filter(
-      (record) => record.payment_status.toLowerCase() === "payed"
+    const paidData = filteredData.filter(
+      (record) => record.payment_status.toLowerCase() === "paid"
     );
-    const filterPayedData = calculateFilterSum(payedData);
+    const filterpaidData = calculateFilterSum(paidData);
   
-    const filterTotalPayed = (
-      parseFloat(filterPayedData.amount)
+    const filterTotalpaid = (
+      parseFloat(filterpaidData.amount)
     ).toFixed(2);
     //
 
@@ -818,7 +851,7 @@ function Transfers() {
     setFilterTotalFee(summaryData.fee);
     setFilterGrandTotal(filterGrandTotal);
     setFilterTotalDeposit(filterTotalDeposit);
-    setFilterTotalPayed(filterTotalPayed);
+    setFilterTotalpaid(filterTotalpaid);
     setFilterTotalCash(filterTotalCash);
     setFilterTotalTransactions(filterTotalTransactions);
   };
@@ -1025,10 +1058,10 @@ function Transfers() {
           </Col>
           <Col>
             <Statistic
-              title="Payed"
-              value={filterTotalPayed}
+              title="Paid"
+              value={filterTotalpaid}
               precision={2}
-              formatter={formatterPayed}
+              formatter={formatterpaid}
             />
           </Col>
           <Col>
