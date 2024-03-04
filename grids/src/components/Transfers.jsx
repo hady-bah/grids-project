@@ -523,21 +523,6 @@ function Transfers() {
       width: "20%",
     },
     {
-      title: "Status",
-      dataIndex: "payment_status",
-      key: "payment_status",
-      width: "20%",
-      render: (text, record) => (
-        <span>
-          <Tag color={record.payment_status.toLowerCase() === "processing"? "processing" : "success"}
-                icon={record.payment_status.toLowerCase() === "processing" ? <SyncOutlined spin /> : <CheckCircleOutlined /> }
-          >
-            {text}
-          </Tag>
-        </span>
-      ),
-    },
-    {
       title: "Payment",
       dataIndex: "status",
       key: "status",
@@ -547,6 +532,21 @@ function Transfers() {
       render: (text, record) => (
         <span>
           <Tag color={record.status.toLowerCase() === "deposit" ? "blue" : "green"}>
+            {text}
+          </Tag>
+        </span>
+      ),
+    },
+    {
+      title: "Status",
+      dataIndex: "payment_status",
+      key: "payment_status",
+      width: "20%",
+      render: (text, record) => (
+        <span>
+          <Tag color={record.payment_status.toLowerCase() === "processing"? "processing" : "success"}
+                icon={record.payment_status.toLowerCase() === "processing" ? <SyncOutlined spin /> : <CheckCircleOutlined /> }
+          >
             {text}
           </Tag>
         </span>
@@ -1074,7 +1074,7 @@ function Transfers() {
           </Col>
           <Col>
             <Statistic
-              title="Cash"
+              title="Est. Cash"
               value={filterTotalCash}
               precision={2}
               formatter={formatterCash}
