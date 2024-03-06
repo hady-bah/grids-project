@@ -54,7 +54,7 @@ function CodeGenerator() {
 
     let finalCode = 'B' + code[0] + code[1] + code[2] + 'A' + code[3] + code[4] + 'H' + code[5] + code[6] + code[7];
 
-    setCo finalCode;
+    setCode(finalCode);
   }
 
   return <>{code}</>;

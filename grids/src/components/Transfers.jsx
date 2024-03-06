@@ -300,7 +300,7 @@ function Transfers() {
     setSearchCode(e.target.value);
   };
 
-  const handleLabelInputChange = (e) => {
+  const handlePlaceInputChange = (e) => {
     setSearchPlace(e.target.value);
   };
 
@@ -452,18 +452,41 @@ function Transfers() {
   });
 
   const columns = [
-    {
-      title: "Label",
-      dataIndex: "label",
-      key: "label",
-      width: "20%",
-      editable: true,
-    },
+  
     {
       title: "Code",
       dataIndex: "codeNumber",
       key: "codeNumber",
       width: "20%",
+    },
+    {
+      title: "Status",
+      dataIndex: "payment_status",
+      key: "payment_status",
+      width: "20%",
+      render: (text, record) => (
+        <span>
+          <Tag color={record.payment_status.toLowerCase() === "processing"? "processing" : "success"}
+                icon={record.payment_status.toLowerCase() === "processing" ? <SyncOutlined spin /> : <CheckCircleOutlined /> }
+          >
+            {text}
+          </Tag>
+        </span>
+      ),
+    },
+    {
+      title: "Amount",
+      dataIndex: "amount",
+      key: "amount",
+      width: "20%",
+      editable: true,
+    },
+    {
+      title: "Fee",
+      dataIndex: "fee",
+      key: "fee",
+      width: "20%",
+      editable: true,
     },
     {
       title: "Place",
@@ -481,13 +504,6 @@ function Transfers() {
       ...getColumnSearchProps("sender"),
     },
     {
-      title: "Number",
-      dataIndex: "sender_number",
-      key: "sender_number",
-      width: "20%",
-      editable: true,
-    },
-    {
       title: "Receiver",
       dataIndex: "receiver",
       key: "receiver",
@@ -496,34 +512,23 @@ function Transfers() {
       ...getColumnSearchProps("receiver"),
     },
     {
-      title: "Amount",
-      dataIndex: "amount",
-      key: "amount",
-      width: "20%",
-      editable: true,
-    },
-    {
-      title: "Fee",
-      dataIndex: "fee",
-      key: "fee",
-      width: "20%",
-      editable: true,
-    },
-    {
       title: "Mobile Transfer",
       dataIndex: "mobileMoney",
       key: "mobileMoney",
       width: "20%",
       editable: true,
+      render: (text) => (
+        <span>
+          {text !== null ? (
+            <p>{text}</p>
+          ) : (
+            <Tag color="default">N/A</Tag>
+          )}
+        </span>
+      ),
     },
     {
-      title: "Date",
-      dataIndex: "date",
-      key: "time",
-      width: "20%",
-    },
-    {
-      title: "Payment",
+      title: "Method",
       dataIndex: "status",
       key: "status",
       width: "20%",
@@ -538,19 +543,24 @@ function Transfers() {
       ),
     },
     {
-      title: "Status",
-      dataIndex: "payment_status",
-      key: "payment_status",
+      title: "Sender #",
+      dataIndex: "sender_number",
+      key: "sender_number",
       width: "20%",
-      render: (text, record) => (
-        <span>
-          <Tag color={record.payment_status.toLowerCase() === "processing"? "processing" : "success"}
-                icon={record.payment_status.toLowerCase() === "processing" ? <SyncOutlined spin /> : <CheckCircleOutlined /> }
-          >
-            {text}
-          </Tag>
-        </span>
-      ),
+      editable: true,
+    },
+    {
+      title: "From",
+      dataIndex: "place_from",
+      key: "place_from",
+      width: "20%",
+      editable: true,
+    },
+    {
+      title: "Date",
+      dataIndex: "date",
+      key: "time",
+      width: "20%",
     },
     {
       title: "Time(+zone)",
@@ -668,7 +678,7 @@ function Transfers() {
   
       // Print receipt
       const text = `Code: <strong>${record.codeNumber}</strong> <br />` +
-        `Label: ${record.label}<br />` +
+        `place_from: ${record.place_from}<br />` +
         `Place: ${record.place}<br />` +
         `Sender: ${record.sender}<br />` +
         `Receiver: ${record.receiver}<br />` +
@@ -743,7 +753,7 @@ function Transfers() {
     return (
       <tr>
         {/* <td style={{ fontWeight: "bold", fontSize: "16px" }}>
-          {summaryData.label}
+          {summaryData.place_from}
         </td> */}
         <td
           style={{ fontWeight: "bold", paddingLeft: "60px", fontSize: "16px" }}
@@ -970,7 +980,7 @@ function Transfers() {
           <Input
             placeholder="City, Country"
             value={searchPlace}
-            onChange={handleLabelInputChange}
+            onChange={handlePlaceInputChange}
             style={{ width: "185px" }}
             allowClear
             onClear={onClear}
