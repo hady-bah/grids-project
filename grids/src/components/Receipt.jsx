@@ -114,8 +114,8 @@ function Receipt() {
       const text =
         `Code: <strong>${values.codeNumber}</strong> <br />` +
         `Date: ${values.date}<br />` +
-        `Label: ${values.label}<br />` +
-        `Place: ${values.place}<br />` +
+        `From: ${values.place_from}<br />` +
+        `To: ${values.place}<br />` +
         `Sender: ${values.sender}<br />` +
         `Number: ${values.sender_number}<br />` +
         `Receiver: ${values.receiver}<br />` +
@@ -295,7 +295,62 @@ function Receipt() {
                 size="large"
               >
                 <Form.Item
-                  label="Place"
+                  label="From"
+                  required
+                  tooltip="This is a required field"
+                >
+                  <Space.Compact>
+                    <Form.Item
+                      name="place_from"
+                      noStyle
+                      rules={[
+                        {
+                          required: true,
+                          message: "Place from is required",
+                        },
+                      ]}
+                    >
+                      <Select placeholder="Select" style={{ width: "225px" }}>
+                        {places.map((place) => (
+                          <Option key={place.name} value={place.name}>
+                            {place.name}
+                          </Option>
+                        ))}
+                      </Select>
+                    </Form.Item>
+                    <Form.Item
+                      name="codeNumber"
+                      noStyle
+                      rules={[
+                        {
+                          required: true,
+                          message: "Code number is required",
+                        },
+                      ]}
+                    >
+                      <Input
+                        style={{
+                          width: "50px",
+                        }}
+                        placeholder="->"
+                        disabled
+                      />
+                    </Form.Item>
+
+                    <span>
+                      <Tooltip title="New Code" placement="right">
+                        <Button
+                          type="primary"
+                          icon={<SyncOutlined />}
+                          loading={loadings[2]}
+                          onClick={() => enterLoading(2)}
+                        />
+                      </Tooltip>
+                    </span>
+                  </Space.Compact>
+                </Form.Item>
+                <Form.Item
+                  label="To"
                   required
                   tooltip="This is a required field"
                 >
@@ -319,59 +374,6 @@ function Receipt() {
                       </Select>
                     </Form.Item>
                   </Space>
-                </Form.Item>
-                <Form.Item
-                  label="Code"
-                  required
-                  tooltip="This is a required field"
-                >
-                  <Space.Compact>
-                    <Form.Item
-                      name="label"
-                      noStyle
-                      rules={[
-                        {
-                          required: true,
-                          message: "Label is required",
-                        },
-                      ]}
-                    >
-                      <Select placeholder="Label" style={{ width: "100px" }}>
-                        <Option value="AS">AS</Option>
-                        <Option value="BL">BL</Option>
-                        <Option value="AC">AC</Option>
-                      </Select>
-                    </Form.Item>
-                    <Form.Item
-                      name="codeNumber"
-                      noStyle
-                      rules={[
-                        {
-                          required: true,
-                          message: "Code number is required",
-                        },
-                      ]}
-                    >
-                      <Input
-                        style={{
-                          width: "150px",
-                        }}
-                        placeholder="No code"
-                        disabled
-                      />
-                    </Form.Item>
-
-                    <span>
-                      <Tooltip title="Generate New" placement="right">
-                        <Button
-                          type="primary"
-                          icon={<SyncOutlined />}
-                          loading={loadings[2]}
-                          onClick={() => enterLoading(2)}
-                        />
-                      </Tooltip>
-                    </span>
-                  </Space.Compact>
                 </Form.Item>
                 <Form.Item
                   label="Sender"
