@@ -237,7 +237,7 @@ function Transfers() {
   const [searchPlace, setSearchPlace] = useState("");
   const [searchDate, setSearchDate] = useState("");
   const [searchNumber, setSearchNumber] = useState("");
-  const [searchFee, setSearchFee] = useState("");
+  const [searchFrom, setSearchFrom] = useState("");
 
   async function fetchTransfers() {
     let dataQuery = supabase.from("transfers").select("*");
@@ -283,8 +283,20 @@ function Transfers() {
       dataQuery = dataQuery.eq("sender_number", searchNumber);
     }
 
-    if (searchFee !== "") {
-      dataQuery = dataQuery.eq("fee", searchFee);
+    if (searchFrom !== "") {
+      const [city, country] = searchFrom.split(',').map(part => part.trim());
+    
+      if (city && country) {
+        // Search by both city and country
+        dataQuery = dataQuery
+          .ilike('place_from', `%${city.trim()}, ${country.trim()}%`);
+      } else if (city) {
+        // Search only by city
+        dataQuery = dataQuery.ilike('place_from', `%${city.trim()}%`);
+      } else if (country) {
+        // Search only by country
+        dataQuery = dataQuery.ilike('place_from', `%${country.trim()}%`);
+      }
     }
     
 
@@ -308,12 +320,12 @@ function Transfers() {
     setSearchDate(e.target.value);
   };
 
-  const handleAmountInputChange = (e) => {
+  const handleNumberInputChange = (e) => {
     setSearchNumber(e.target.value);
   };
 
-  const handleFeeInputChange = (e) => {
-    setSearchFee(e.target.value);
+  const handleFromInputChange = (e) => {
+    setSearchFrom(e.target.value);
   };
 
   const handleUserSearch = async () => {
@@ -1008,7 +1020,7 @@ function Transfers() {
           <Input
             placeholder="Phone #"
             value={searchNumber}
-            onChange={handleAmountInputChange}
+            onChange={handleNumberInputChange}
             style={{ width: "130px" }}
             allowClear
             onClear={onClear}
@@ -1017,13 +1029,13 @@ function Transfers() {
 
         <div className="filter-inputs">
           <span>
-            <Text strong>Fee: </Text>
+            <Text strong>Office From: </Text>
           </span>
           <Input
-            placeholder="$"
-            value={searchFee}
-            onChange={handleFeeInputChange}
-            style={{ width: "110px" }}
+            placeholder="City, Country"
+            value={searchFrom}
+            onChange={handleFromInputChange}
+            style={{ width: "185px" }}
             allowClear
             onClear={onClear}
           />
