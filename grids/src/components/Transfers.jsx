@@ -1131,7 +1131,7 @@ function Transfers() {
         dataSource={transfers}
         pagination={{
           position: ["bottomCenter"], // Centered at the bottom
-          pageSize: 10, // transactions per page size
+          // pageSize: 10, // transactions per page size
         }}
         scroll={{
           x: "calc(700px + 50%)",
