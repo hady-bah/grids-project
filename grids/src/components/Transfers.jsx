@@ -501,7 +501,7 @@ function Transfers() {
       editable: true,
     },
     {
-      title: "Place",
+      title: "To",
       dataIndex: "place",
       key: "place",
       width: "20%",
@@ -987,7 +987,7 @@ function Transfers() {
 
         <div className="filter-inputs">
           <span>
-            <Text strong>Place </Text>
+            <Text strong>To </Text>
           </span>
           <Input
             placeholder="City, Country"
@@ -1029,7 +1029,7 @@ function Transfers() {
 
         <div className="filter-inputs">
           <span>
-            <Text strong>Office From: </Text>
+            <Text strong>From: </Text>
           </span>
           <Input
             placeholder="City, Country"
