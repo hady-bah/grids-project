@@ -262,8 +262,6 @@ function Receipt() {
 
   return (
     <>
-      <span class="gradient-text">New Transfer</span>
-      <Divider style={{ borderTopWidth: 2 }} />
       <div className="receipt-content-layout">
         <div>
           <Badge.Ribbon
