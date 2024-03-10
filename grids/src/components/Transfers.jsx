@@ -1018,7 +1018,7 @@ function Transfers() {
             <Text strong>Number </Text>
           </span>
           <Input
-            placeholder="Phone #"
+            placeholder="Sender #"
             value={searchNumber}
             onChange={handleNumberInputChange}
             style={{ width: "130px" }}
