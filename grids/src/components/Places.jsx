@@ -377,6 +377,7 @@ function Places() {
     setPlaces(places.filter((t) => t.id !== id));
 
     openDeleteNotification();
+    fetchPlaces();
   };
 
   //handle edit columns

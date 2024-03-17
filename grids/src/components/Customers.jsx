@@ -367,6 +367,7 @@ function Customers() {
     setCustomers(customers.filter((t) => t.id !== id));
 
     openDeleteNotification();
+    fetchCustomers();
   };
 
   //handle edit columns
