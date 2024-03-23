@@ -8,19 +8,18 @@ function Dashboard() {
   const { Title } = Typography;
   return (
     <>
-    <Title>Dashboard</Title>
-    <Divider style={{ borderTopWidth: 5 }}/>
+    <span class="gradient-text">Dashboard</span>
+    <Divider style={{ borderTopWidth: 2 }} />
   
-
-    <div style={{paddingTop: '20px'}}>
+    <div style={{paddingTop: '10px'}}>
+    <Title level={2}>Summary</Title>
     <AllTimeTotals/>
     </div>
-    
-    <div style={{paddingTop: '20px'}}>
-    <DailyTotals/>
+    <Divider style={{ borderTopWidth: 2 }} />
+
+    <div>
+    <Title level={2}>Chart</Title>
     </div>
-    
-    
     
     </>
   )
