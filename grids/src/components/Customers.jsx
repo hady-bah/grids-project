@@ -147,7 +147,7 @@ function Customers() {
   };
 
   const formatterTotalCustomers = (value) => (
-    <span style={{fontSize:'40px'}}>
+    <span style={{fontSize:'30px', color:'#8884d8'}}>
       <CountUp end={value} duration = {2}/>
     </span>
   );
@@ -441,7 +441,7 @@ function Customers() {
       <Divider style={{ borderTopWidth: 2 }} />
 
       <div style={{display: 'flex', justifyContent: 'center'}}>
-        <Title>Total Customers</Title>
+        <Title level={3}>Total Customers</Title>
       </div>
 
       <div style={{display: 'flex', justifyContent: 'center'}}>

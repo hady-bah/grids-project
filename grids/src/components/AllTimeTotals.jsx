@@ -12,8 +12,14 @@ function AllTimeTotals() {
     </span>
   );
 
-  const formatterCash = (value) => (
+  const formatterProfit = (value) => (
     <span style={{ color: "green" }}>
+      <CountUp end={value} separator="," decimals={2} prefix="$ " />
+    </span>
+  );
+
+  const formatterSent = (value) => (
+    <span style={{ color: "#8884d8" }}>
       <CountUp end={value} separator="," decimals={2} prefix="$ " />
     </span>
   );
@@ -42,11 +48,9 @@ function AllTimeTotals() {
     let transactions = 0;
 
     data.forEach((transfer) => {
-      if (transfer.status !== "Not Paid") {
         totalAmount += transfer.amount;
         totalFee += transfer.fee;
         transactions++;
-      }
     });
 
     const grandTotal = totalAmount + totalFee;
@@ -66,7 +70,7 @@ function AllTimeTotals() {
           <Statistic
             title="Total Sent"
             value={totals.totalAmount}
-            formatter={formatter}
+            formatter={formatterSent}
           />
         </Col>
         <Col>
@@ -74,7 +78,7 @@ function AllTimeTotals() {
             title="Total Profit"
             value={totals.totalFee}
             precision={2}
-            formatter={formatterCash}
+            formatter={formatterProfit}
           />
         </Col>
         <Col>
