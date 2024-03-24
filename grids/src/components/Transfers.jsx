@@ -220,8 +220,14 @@ function Transfers() {
       <CountUp end={value} separator="," decimals={2} prefix="$ " />
     </span>
   );
+  const formatterProfit = (value) => (
+    <span style={{ color: "#82ca9d", fontSize: "17px" }}>
+      <CountUp end={value} separator="," decimals={2} prefix="$ " />
+    </span>
+  );
+
   const formatterSent = (value) => (
-    <span style={{ color: "#1677ff", fontSize: "17px" }}>
+    <span style={{ color: "#8884d8", fontSize: "17px" }}>
       <CountUp end={value} separator="," decimals={2} prefix="$ " />
     </span>
   );
@@ -1059,7 +1065,7 @@ function Transfers() {
             <Statistic
               title="Sent"
               value={filterTotalAmount}
-              formatter={formatter}
+              formatter={formatterSent}
             />
           </Col>
           <Col>
@@ -1067,7 +1073,7 @@ function Transfers() {
               title="Fees"
               value={filterTotalFee}
               precision={2}
-              formatter={formatter}
+              formatter={formatterProfit}
             />
           </Col>
           <Col>

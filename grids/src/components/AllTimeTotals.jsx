@@ -13,7 +13,7 @@ function AllTimeTotals() {
   );
 
   const formatterProfit = (value) => (
-    <span style={{ color: "green" }}>
+    <span style={{ color: "#82ca9d" }}>
       <CountUp end={value} separator="," decimals={2} prefix="$ " />
     </span>
   );
