@@ -2,8 +2,18 @@ import React, { useState, useEffect, PureComponent } from "react";
 import { supabase } from "../../createClient";
 import CountUp from "react-countup";
 import { Col, Row, Statistic, Typography, Divider, DatePicker } from "antd";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-
+import {
+  ResponsiveContainer,
+  ComposedChart,
+  Line,
+  Area,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+} from 'recharts';
 
 function TotalCharts() {
 
@@ -62,29 +72,32 @@ function TotalCharts() {
 
   return (
     <>
-      <ResponsiveContainer width="100%" height="100%">
-        <LineChart
-          width={500}
-          height={300}
-          data={weekTransfers}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="date" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Line type="monotone" dataKey="totalAmount" name="Total Amount" stroke="#8884d8" activeDot={{ r: 8 }} />
-          <Line type="monotone" dataKey="totalFee" name="Total Fee" stroke="#82ca9d" />
-        </LineChart>
-      </ResponsiveContainer>
+      <ResponsiveContainer>
+          <ComposedChart
+            width={500}
+            height={400}
+            data={weekTransfers}
+            margin={{
+              top: 20,
+              right: 20,
+              bottom: 20,
+              left: 20,
+            }}
+          >
+            <CartesianGrid stroke="#f5f5f5" />
+            <XAxis dataKey="date" scale="band" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Area type="monotone" dataKey="totalAmountFee" name = 'Total' fill="#8884d8" stroke="#8884d8" />
+            <Bar dataKey="totalAmount" name = 'Sent' stackId="a" barSize={20} fill="#413ea0" />
+            <Bar type="monotone" dataKey="totalFee" stackId="a" name = 'Profit' fill="#82ca9d" />
+          </ComposedChart>
+        </ResponsiveContainer>
     </>
   );
 }
 
 export default TotalCharts;
+
+//#8884d8 #413ea0

@@ -695,15 +695,18 @@ function Transfers() {
         placeData && placeData.length > 0 ? placeData[0] : {};
   
       // Print receipt
-      const text = `Code: <strong>${record.codeNumber}</strong> <br />` +
-        `place_from: ${record.place_from}<br />` +
-        `Place: ${record.place}<br />` +
+      const text = 
+        `Code: <strong>${record.codeNumber}</strong> <br />` +
+        `Date: ${record.date}<br />` +
+        `From: ${record.place_from}<br />` +
+        `To: ${record.place}<br />` +
         `Sender: ${record.sender}<br />` +
+        `Number: ${record.sender_number}<br />` +
         `Receiver: ${record.receiver}<br />` +
         `Amount: $${record.amount}<br />` +
         `Fee: $${record.fee}<br />` +
-        `Mobile: ${record.mobileMoney || "N/A"}<br />` +
-        `Status: ${record.status}<br /><br />` +
+        `Mobile Transfer: ${record.mobileMoney || "N/A"}<br />` +
+        `Payment: ${record.status}<br /><br />`+
         `<strong>Pick up info: </strong><br />` +
         `Operator: ${operator || "N/A"}<br />` +
         `Phone #: ${placeNumber || "N/A"}<br />` +

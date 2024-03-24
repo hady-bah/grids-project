@@ -7,7 +7,7 @@ function AllTimeTotals() {
   const { Title } = Typography;
 
   const formatter = (value) => (
-    <span style={{fontSize: "17px"}}>
+    <span style={{fontSize: "17px", color:'#8884d8'}}>
       <CountUp end={value} separator="," decimals={2} prefix="$ "  />
     </span>
   );
@@ -25,7 +25,7 @@ function AllTimeTotals() {
   );
 
   const formatterSent = (value) => (
-    <span style={{ color: "#8884d8", fontSize: "17px" }}>
+    <span style={{ color: "#413ea0", fontSize: "17px" }}>
       <CountUp end={value} separator="," decimals={2} prefix="$ " />
     </span>
   );
