@@ -51,13 +51,66 @@ const data = [
 
 function TotalCharts() {
 
+  const [weekTransfers, setWeekTransfers] = useState([]);
+
+  async function fetchWeekTransfers(){
+    try {
+      const { data, error } = await supabase
+        .from('transfers')
+        .select('date, amount, fee, total_amount_fee')
+        .order("time", { ascending: false });
+
+      if (error) {
+        console.error('Error fetching weekly transfers:', error.message);
+        return;
+      }
+
+      // Group and sum transfers by date
+      const groupedTransfers = {};
+      let daysProcessed = 0;
+      data.forEach(transfer => {
+        if (daysProcessed >= 7) return; // Exit loop if 7 days have been processed
+        const transferDate = transfer.date;
+        if (!groupedTransfers[transferDate]) {
+          groupedTransfers[transferDate] = {
+            date: transferDate,
+            totalAmount: transfer.amount,
+            totalFee: transfer.fee,
+            totalAmountFee: transfer.total_amount_fee,
+            transfers: [transfer] // Initialize transfers array with the current transfer
+          };
+          daysProcessed++;
+        } else {
+          groupedTransfers[transferDate].totalAmount += transfer.amount;
+          groupedTransfers[transferDate].totalFee += transfer.fee;
+          groupedTransfers[transferDate].totalAmountFee += transfer.total_amount_fee;
+          groupedTransfers[transferDate].transfers.push(transfer);
+        }
+      });
+
+      // Convert grouped transfers to array of objects
+      const weekTransfers = Object.values(groupedTransfers);
+
+      setWeekTransfers(weekTransfers);
+    } catch (error) {
+      console.error('Error fetching weekly transfers:', error.message);
+    }
+  }
+
+  useEffect(()=>{
+    fetchWeekTransfers();
+  },[]);
+
+  console.log(weekTransfers);
+
+
   return (
     <>
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
           width={500}
           height={300}
-          data={data}
+          data={weekTransfers}
           margin={{
             top: 5,
             right: 30,
@@ -66,12 +119,12 @@ function TotalCharts() {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
+          <XAxis dataKey="date" />
           <YAxis />
           <Tooltip />
           <Legend />
-          <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
-          <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+          <Line type="monotone" dataKey="totalAmount" stroke="#8884d8" activeDot={{ r: 8 }} />
+          <Line type="monotone" dataKey="totalFee" stroke="#82ca9d" />
         </LineChart>
       </ResponsiveContainer>
     </>
@@ -79,3 +132,21 @@ function TotalCharts() {
 }
 
 export default TotalCharts;
+
+
+    // try {
+    //   const { data, error } = await supabase
+    //     .from('transfers')
+    //     .select('date, amount, fee, total_amount_fee')
+    //     .order("time", { ascending: false })
+    //     .limit(7);
+
+    //   if (error) {
+    //     console.error('Error fetching weekly transfers:', error.message);
+    //     return;
+    //   }
+
+    //   setWeekTransfers(data);
+    // } catch (error) {
+    //   console.error('Error fetching weekly transfers:', error.message);
+    // }

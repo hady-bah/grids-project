@@ -569,7 +569,7 @@ function Receipt() {
                       },
                     ]}
                   >
-                    <Select placeholder="Paid" style={{ width: "155px" }}>
+                    <Select placeholder="Paid In" style={{ width: "155px" }}>
                       <Option value="Cash">Cash</Option>
                       <Option value="Deposit">Deposit</Option>
                       {/* <Option value="Not Paid">Not Paid</Option> */}

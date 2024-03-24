@@ -20,7 +20,7 @@ function Dashboard() {
     <Divider style={{ borderTopWidth: 2 }} />
 
     <div style={{display:'flex', justifyContent:'center', paddingBottom:'15px'}}>
-    <Title level={3}>Weekly Summary</Title>
+    <Title level={3}>TOTW</Title>
     </div>
     <div style={{ width: '100%', height: '400px' }}>
     <TotalCharts />
