@@ -7,19 +7,25 @@ function AllTimeTotals() {
   const { Title } = Typography;
 
   const formatter = (value) => (
-    <span>
-      <CountUp end={value} separator="," decimals={2} prefix="$ " />
+    <span style={{fontSize: "17px"}}>
+      <CountUp end={value} separator="," decimals={2} prefix="$ "  />
+    </span>
+  );
+
+  const formatterTrans = (value) => (
+    <span style={{fontSize: "17px" }}>
+      <CountUp end={value} separator=","/>
     </span>
   );
 
   const formatterProfit = (value) => (
-    <span style={{ color: "#82ca9d" }}>
+    <span style={{ color: "#82ca9d", fontSize: "17px" }}>
       <CountUp end={value} separator="," decimals={2} prefix="$ " />
     </span>
   );
 
   const formatterSent = (value) => (
-    <span style={{ color: "#8884d8" }}>
+    <span style={{ color: "#8884d8", fontSize: "17px" }}>
       <CountUp end={value} separator="," decimals={2} prefix="$ " />
     </span>
   );
@@ -92,6 +98,7 @@ function AllTimeTotals() {
         <Col>
           <Statistic
             title="Total Transactions"
+            formatter={formatterTrans}
             value={totals.transactions}
           />
         </Col>
