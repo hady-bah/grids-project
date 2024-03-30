@@ -147,7 +147,7 @@ function Customers() {
   };
 
   const formatterTotalCustomers = (value) => (
-    <span style={{fontSize:'30px', color:'#8884d8'}}>
+    <span style={{fontSize:'30px', color:'#8dd1e1'}}>
       <CountUp end={value} duration = {2}/>
     </span>
   );
