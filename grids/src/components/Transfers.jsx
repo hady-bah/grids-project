@@ -1038,7 +1038,7 @@ function Transfers() {
 
         <div className="filter-inputs">
           <span>
-            <Text strong>From: </Text>
+            <Text strong>From </Text>
           </span>
           <Input
             placeholder="City, Country"
