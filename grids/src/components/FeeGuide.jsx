@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { InputNumber, Typography } from "antd";
+import { InputNumber, Typography, Collapse } from "antd";
 
 function FeeGuide({ initialAmount }) {
   const [result, setResult] = useState(initialAmount); // Initialize result with the initial amount
@@ -62,22 +62,54 @@ const handleInputChange = (value) => {
   setResult(fee);
 };
 
-
   return (
     <>
       <div style={{ fontSize: "20px" }}>
         <p>
-          <Text strong>Enter an amount below</Text>
+          <Text strong>Enter an amount below:</Text>
         </p>
         <div>
           <InputNumber
             defaultValue={initialAmount}
             onChange={handleInputChange}
+            formatter={(value) =>
+              `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            }
+            parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
+            style={{
+              width: 120,
+            }}
+            placeholder="$"
+            step={0.01}
+            precision={2}
           />
         </div>
         <p>
-          <Text strong>Fee = {result} </Text>
+          <Text strong>Fee = <span style={{color:'green'}}>${result}</span> </Text>
         </p>
+      </div>
+      <div>
+      <Collapse
+      items={[
+        {
+          key: '1',
+          label: 'Calculation Guide',
+          children: <div>
+          <Text strong>Per 1000:</Text>
+          <p>0-50 = 5</p>
+          <p>51-100 = 10</p>
+          <p>101-150 = 15</p>
+          <p>151-200 = 20</p>
+          <p>201-250 = 25</p>
+          <p>251-300 = 30</p>
+          <p>301-550 = 35</p>
+          <p>551-650 = 45</p>
+          <p>651-900 = 50</p>
+          <p>901-1000 = 60</p>
+        </div>,
+        },
+      ]}
+    />
       </div>
     </>
   );
