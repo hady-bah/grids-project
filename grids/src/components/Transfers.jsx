@@ -519,7 +519,6 @@ function Transfers() {
       key: "sender",
       width: "20%",
       editable: true,
-      ...getColumnSearchProps("sender"),
     },
     {
       title: "Receiver",
@@ -527,7 +526,6 @@ function Transfers() {
       key: "receiver",
       width: "20%",
       editable: true,
-      ...getColumnSearchProps("receiver"),
     },
     {
       title: "Mobile Transfer",
@@ -551,7 +549,6 @@ function Transfers() {
       key: "status",
       width: "20%",
       editable: true,
-      ...getColumnSearchProps("status"),
       render: (text, record) => (
         <span>
           <Tag color={record.status.toLowerCase() === "deposit" ? "blue" : "green"}>
