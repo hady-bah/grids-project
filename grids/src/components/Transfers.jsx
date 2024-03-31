@@ -696,11 +696,11 @@ function Transfers() {
         `Code: <strong>${record.codeNumber}</strong> <br />` +
         `Date: ${record.date}<br />` +
         `From: ${record.place_from}<br />` +
-        `To: ${record.place}<br />` +
+        `To: <strong>${record.place}</strong><br />` +
         `Sender: ${record.sender}<br />` +
         `Number: ${record.sender_number}<br />` +
         `Receiver: ${record.receiver}<br />` +
-        `Amount: $${record.amount}<br />` +
+        `Amount: <strong>$${record.amount}</strong><br />` +
         `Fee: $${record.fee}<br />` +
         `Mobile Transfer: ${record.mobileMoney || "N/A"}<br />` +
         `Payment: ${record.status}<br /><br />`+

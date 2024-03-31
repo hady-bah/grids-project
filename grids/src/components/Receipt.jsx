@@ -115,11 +115,11 @@ function Receipt() {
         `Code: <strong>${values.codeNumber}</strong> <br />` +
         `Date: ${values.date}<br />` +
         `From: ${values.place_from}<br />` +
-        `To: ${values.place}<br />` +
+        `To: <strong>${values.place}</strong><br />` +
         `Sender: ${values.sender}<br />` +
         `Number: ${values.sender_number}<br />` +
         `Receiver: ${values.receiver}<br />` +
-        `Amount: $${values.amount}<br />` +
+        `Amount: <strong>$${values.amount}</strong><br />` +
         `Fee: $${values.fee}<br />` +
         `Mobile Transfer: ${values.mobileMoney || "N/A"}<br />` +
         `Payment: ${values.status}<br /><br />`+
