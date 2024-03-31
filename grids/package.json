@@ -26,7 +26,8 @@
     "react-dom": "^18.2.0",
     "react-highlight-words": "^0.20.0",
     "react-router-dom": "^6.15.0",
-    "recharts": "^2.12.3"
+    "recharts": "^2.12.3",
+    "twilio": "^5.0.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
