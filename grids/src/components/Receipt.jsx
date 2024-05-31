@@ -2,11 +2,13 @@ import React, { useRef, useState, useEffect } from "react";
 import { supabase } from "../../createClient";
 import { AutoComplete } from "antd";
 import moment from 'moment-timezone';
+import axios from 'axios';
 import {
   InfoCircleOutlined,
   FormOutlined,
   ScissorOutlined,
   SyncOutlined,
+  CalendarOutlined
 } from "@ant-design/icons";
 import {
   Button,
@@ -84,6 +86,15 @@ function Receipt() {
     }
   };
 
+  const onLoadDate = () => {
+    const generatedDate = generateDate();
+
+    if (generatedDate) {
+      form.setFieldsValue({ date: generatedDate });
+      setDate(generatedDate); // Update the state variable
+    }
+  };
+
   
 
   const onFinish = async (values) => {
@@ -110,7 +121,7 @@ function Receipt() {
       const { operator, number: placeNumber, address: placeAddress } =
         placeData && placeData.length > 0 ? placeData[0] : {};
   
-      // Print receipt
+      // sms message content
       const text =
         `Code: <strong>${values.codeNumber}</strong> <br />` +
         `Date: ${values.date}<br />` +
@@ -339,7 +350,7 @@ function Receipt() {
                       <Tooltip title="New Code" placement="right">
                         <Button
                           type="primary"
-                          icon={<SyncOutlined />}
+                          icon={<SyncOutlined/>}
                           loading={loadings[2]}
                           onClick={() => enterLoading(2)}
                         />
@@ -596,10 +607,20 @@ function Receipt() {
                         style={{
                           width: 160,
                         }}
-                        placeholder="Today"
+                        placeholder="Set Date"
                         disabled
                       />
                     </Form.Item>
+                    <span>
+                      <Tooltip title="Set Date" placement="right">
+                        <Button
+                          type="primary"
+                          icon={<CalendarOutlined />}
+                          loading={loadings[2]}
+                          onClick={onLoadDate}
+                        />
+                      </Tooltip>
+                    </span>
                   </Space>
                 </Form.Item>
 
