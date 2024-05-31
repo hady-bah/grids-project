@@ -1,6 +1,6 @@
 import React, {useState, } from 'react'
 import Receipt from '../components/Receipt'
-import { Divider, Drawer, Button, Tooltip} from 'antd'
+import { Divider, Drawer, Button, Tooltip, FloatButton} from 'antd'
 import {
   CalculatorOutlined,
 } from "@ant-design/icons";
@@ -18,15 +18,14 @@ function ReceiptLayout() {
     <>
     <span class="gradient-text">New Transfer</span>
     <Divider style={{ borderTopWidth: 2 }} />
-    <div style={{textAlign: 'right', paddingRight: '16px'}}>
+    
     <Tooltip title="Fee Calculator" placement="left">  
-    <Button icon={<CalculatorOutlined/>} type="primary" onClick={showDrawer}/>
-
+    <FloatButton icon={<CalculatorOutlined/>} type="primary" onClick={showDrawer}/>
     </Tooltip>
-        <Drawer title="Fee Calculator" onClose={onClose} open={open}>
-        <FeeGuide/>
-      </Drawer>
-    </div>
+
+    <Drawer title="Fee Calculator" onClose={onClose} open={open}>
+      <FeeGuide/>
+    </Drawer>
     <div>
         <div>
         <Receipt/>
