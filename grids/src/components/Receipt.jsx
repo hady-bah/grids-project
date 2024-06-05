@@ -122,25 +122,21 @@ function Receipt() {
         placeData && placeData.length > 0 ? placeData[0] : {};
   
       // sms message content
-      const text =
-        `Code: <strong>${values.codeNumber}</strong> <br />` +
-        `Date: ${values.date}<br />` +
-        `From: ${values.place_from}<br />` +
-        `To: <strong>${values.place}</strong><br />` +
-        `Sender: ${values.sender}<br />` +
-        `Number: ${values.sender_number}<br />` +
-        `Receiver: ${values.receiver}<br />` +
-        `Amount: <strong>$${values.amount}</strong><br />` +
-        `Fee: $${values.fee}<br />` +
-        `Mobile Transfer: ${values.mobileMoney || "N/A"}<br />` +
-        `Payment: ${values.status}<br /><br />`+
-        `<strong>Pick up info: </strong><br />` +
-        `Operator: ${operator || "N/A"}<br />` +
-        `Phone #: ${placeNumber || "N/A"}<br />` +
-        `Address: ${placeAddress || "N/A"}<br />`
-        ;
+      const text = "test";
   
-      printReceipt(text);
+      
+      //printReceipt(text);
+      try {
+        const response = await fetch(`http://localhost:3001/send-receipt?phoneNumber=${values.sender_number}&messageContent=${encodeURIComponent(text)}`);
+        if (response.ok) {
+          console.log('SMS sent successfully');
+        } else {
+          console.error('Error sending SMS:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error sending SMS:', error);
+      }
+      
       form.resetFields();
     }
   };
