@@ -122,7 +122,23 @@ function Receipt() {
         placeData && placeData.length > 0 ? placeData[0] : {};
   
       // sms message content
-      const text = "test";
+      const text = `
+      Code: ${values.codeNumber}\n
+      Date: ${values.date}\n
+      From: ${values.place_from}\n
+      To: ${values.place}\n
+      Sender: ${values.sender}\n
+      Number: ${values.sender_number}\n
+      Receiver: ${values.receiver}\n
+      Amount: $${values.amount}\n
+      Fee: $${values.fee}\n
+      Mobile Transfer: ${values.mobileMoney || "N/A"}\n
+      Payment: ${values.status}\n\n
+      Pick up info:\n
+      Operator: ${operator || "N/A"}\n
+      Phone #: ${placeNumber || "N/A"}\n
+      Address: ${placeAddress || "N/A"}\n
+    `;
   
       
       //printReceipt(text);
@@ -142,12 +158,12 @@ function Receipt() {
   };
   
 
-  const printReceipt = (text) => {
-    const printWindow = window.open();
-    printWindow.document.write(text);
-    printWindow.print();
-    printWindow.close();
-  };
+  // const printReceipt = (text) => {
+  //   const printWindow = window.open();
+  //   printWindow.document.write(text);
+  //   printWindow.print();
+  //   printWindow.close();
+  // };
 
   //supabase setup
   const [places, setPlaces] = useState([]);
@@ -623,7 +639,7 @@ function Receipt() {
                 <Form.Item label=" " colon={false}>
                   <div style={{ display: "flex", marginTop: "20px" }}>
                     <Button type="primary" htmlType="submit" size="default">
-                      Submit & Print
+                      Send
                     </Button>
                     <Button
                       htmlType="button"
