@@ -13,6 +13,7 @@ import {
   ExclamationCircleOutlined,
   MinusCircleOutlined,
   SyncOutlined,
+  CommentOutlined, 
 } from "@ant-design/icons";
 import React, { useRef, useState, useEffect, useContext } from "react";
 import Highlighter from "react-highlight-words";
@@ -586,7 +587,7 @@ function Transfers() {
     },
     // Operation column renders delete button
     {
-      title: "Operations",
+      title: "Operationsgggg",
       render: (_, record) => (
         <div>
           <span style={{ marginRight: "10px"}}>
@@ -598,6 +599,19 @@ function Transfers() {
               <CheckCircleTwoTone twoToneColor="#52c41a" style={{ fontSize: "16px" }}/>
             </Popconfirm>
           </Tooltip>
+          </span>
+
+          <span style={{ marginRight: "10px" }}>
+            <Tooltip title="Text" placement="bottom">
+            <Popconfirm
+              title="send?"
+              onConfirm={() => handleText(record.id)}
+            >
+              <CommentOutlined
+                style={{ fontSize: "18px" }}
+              />
+            </Popconfirm>
+            </Tooltip>
           </span>
 
           <span style={{ marginRight: "10px" }}>
@@ -710,6 +724,79 @@ function Transfers() {
         `Address: ${placeAddress || "N/A"}<br />`;
   
       printReceipt(text);
+    } catch (error) {
+      openErrorNotification();
+      console.error("Error fetching and printing record:", error);
+    }
+  };
+  
+  const handleText = async (id) => {
+    try {
+      // Fetch the specific transfer record based on its id
+      const { data: record, error } = await supabase
+        .from("transfers")
+        .select("*")
+        .eq("id", id)
+        .single();
+  
+      if (error) {
+        openErrorNotification();
+        console.error("Supabase Error:", error);
+        return;
+      }
+  
+      if (!record) {
+        console.error("Record not found");
+        return;
+      }
+  
+      // Fetch place information
+      const { data: placeData, error: placeError } = await supabase
+        .from("places")
+        .select("operator, number, address")
+        .eq("name", record.place);
+  
+      if (placeError) {
+        console.error("Supabase Error fetching place information:", placeError);
+        return;
+      }
+  
+      const { operator, number: placeNumber, address: placeAddress } =
+        placeData && placeData.length > 0 ? placeData[0] : {};
+  
+      // Compose the SMS message content
+      const text = `
+        Code: ${record.codeNumber}\n
+        Date: ${record.date}\n
+        From: ${record.place_from}\n
+        To: ${record.place}\n
+        Sender: ${record.sender}\n
+        Number: ${record.sender_number}\n
+        Receiver: ${record.receiver}\n
+        Amount: $${record.amount}\n
+        Fee: $${record.fee}\n
+        Mobile Transfer: ${record.mobileMoney || "N/A"}\n
+        Payment: ${record.status}\n\n
+        Pick up info:\n
+        Operator: ${operator || "N/A"}\n
+        Phone #: ${placeNumber || "N/A"}\n
+        Address: ${placeAddress || "N/A"}\n
+      `;
+  
+      // Send SMS using fetch
+      try {
+        const response = await fetch(`http://localhost:3001/send-receipt?phoneNumber=${record.sender_number}&messageContent=${encodeURIComponent(text)}`);
+        if (response.ok) {
+          openSuccesNotification();
+          console.log('SMS sent successfully');
+        } else {
+          openErrorNotification();
+          console.error('Error sending SMS:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error sending SMS:', error);
+      }
+      
     } catch (error) {
       openErrorNotification();
       console.error("Error fetching and printing record:", error);
