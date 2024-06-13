@@ -57,17 +57,16 @@ function App() {
               </div>
               <Auth
                 supabaseClient={supabase}
-                appearance={{
-                  theme: ThemeSupa,
+                localization={{
                   variables: {
-                    default: {
-                      colors: {
-                        brand: "#28282B",
-                        brandAccent: "#28282B",
-                      },
+                    sign_in: {
+                      email_label: 'Email Address',
+                      password_label: 'Password',
                     },
                   },
                 }}
+                appearance={{ theme: ThemeSupa}}
+                theme="dark"
                 providers={[]}
                 showLinks={false}
               />

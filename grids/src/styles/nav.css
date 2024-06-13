@@ -16,7 +16,7 @@
     width: 70%;
     position: fixed;
     left: 50%; /* Center horizontally */
-    top: 3%;
+    top: 2%;
     transform: translateX(-40%); /* Center horizontally */
     z-index: 6; /* Ensure it's above everything */
     transition: box-shadow 0.3s ease, backdrop-filter 0.3s ease;
