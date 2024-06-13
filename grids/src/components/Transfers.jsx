@@ -587,7 +587,7 @@ function Transfers() {
     },
     // Operation column renders delete button
     {
-      title: "Operationsgggg",
+      title: "Operations(ops)",
       render: (_, record) => (
         <div>
           <span style={{ marginRight: "10px"}}>

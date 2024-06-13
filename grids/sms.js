@@ -20,7 +20,7 @@ const sendSMS = (to, from, message) => {
     .catch(error => console.error('Error sending message:', error));
 };
 
-const to = '+13476909573'; // Replace with the recipient's phone number
+const to = '+224625290956'; // Replace with the recipient's phone number
 const from = process.env.TWILIO_NUMBER; 
 const message = 'Hello, this is a test message from Hady with the APP!';
 

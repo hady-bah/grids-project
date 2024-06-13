@@ -28,7 +28,7 @@ app.get('/send-receipt', async (req, res) => {
     // Send Text
     const message = await client.messages.create({
       body: messageContent,
-      to: phoneNumber,  // Text this number
+      to: "+"+phoneNumber,  // Text this number
       from:  process.env.TWILIO_NUMBER // From a valid Twilio number
     });
     res.status(200).send({ sid: message.sid });
