@@ -1,7 +1,7 @@
 import React, { useState, useEffect, PureComponent } from "react";
 import { supabase } from "../../createClient";
 import CountUp from "react-countup";
-import { Col, Row, Statistic, Typography, Divider, DatePicker } from "antd";
+import { Col, Row, Statistic, Typography, Divider, DatePicker, message } from "antd";
 import {
   ResponsiveContainer,
   ComposedChart,
@@ -27,7 +27,7 @@ function TotalCharts() {
         .order("time", { ascending: false });
   
       if (error) {
-        console.error('Error fetching weekly transfers:', error.message);
+        message.error('Error fetching weekly transfers:', error.message);
         return;
       }
   
@@ -59,7 +59,7 @@ function TotalCharts() {
   
       setWeekTransfers(weekTransfers);
     } catch (error) {
-      console.error('Error fetching weekly transfers:', error.message);
+      message.error('Error fetching weekly transfers:', error.message);
     }
   }
 
@@ -67,7 +67,7 @@ function TotalCharts() {
     fetchWeekTransfers();
   },[]);
 
-  console.log(weekTransfers);
+  // console.log(weekTransfers);
 
 
   return (

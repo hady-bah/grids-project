@@ -87,7 +87,7 @@ const EditableCell = ({
         ...values,
       });
     } catch (errInfo) {
-      console.log("Save failed:", errInfo);
+      message.error("Save failed:", errInfo);
     }
   };
   let childNode = children;
@@ -682,12 +682,12 @@ function Transfers() {
   
       if (error) {
         openErrorNotification();
-        console.error("Supabase Error:", error);
+        message.error("Supabase Error:", error);
         return;
       }
   
       if (!record) {
-        console.error("Record not found");
+        message.error("Record not found");
         return;
       }
   
@@ -698,7 +698,7 @@ function Transfers() {
         .eq("name", record.place);
   
       if (placeError) {
-        console.error("Supabase Error fetching place information:", placeError);
+        message.error("Supabase Error fetching place information:", placeError);
         return;
       }
   
@@ -726,7 +726,7 @@ function Transfers() {
       printReceipt(text);
     } catch (error) {
       openErrorNotification();
-      console.error("Error fetching and printing record:", error);
+      message.error("Error fetching and printing record:", error);
     }
   };
   
@@ -741,12 +741,12 @@ function Transfers() {
   
       if (error) {
         openErrorNotification();
-        console.error("Supabase Error:", error);
+        message.error("Supabase Error:", error);
         return;
       }
   
       if (!record) {
-        console.error("Record not found");
+        message.error("Record not found");
         return;
       }
   
@@ -757,7 +757,7 @@ function Transfers() {
         .eq("name", record.place);
   
       if (placeError) {
-        console.error("Supabase Error fetching place information:", placeError);
+        message.error("Supabase Error fetching place information:", placeError);
         return;
       }
   
@@ -788,18 +788,18 @@ function Transfers() {
         const response = await fetch(`http://localhost:3001/send-receipt?phoneNumber=${record.sender_number}&messageContent=${encodeURIComponent(text)}`);
         if (response.ok) {
           openSuccesNotification();
-          console.log('SMS sent successfully');
+          message.success('SMS sent successfully');
         } else {
           openErrorNotification();
-          console.error('Error sending SMS:', response.statusText);
+          message.error('Error sending SMS:', response.statusText);
         }
       } catch (error) {
-        console.error('Error sending SMS:', error);
+        message.error('Error sending SMS:', error);
       }
       
     } catch (error) {
       openErrorNotification();
-      console.error("Error fetching and printing record:", error);
+      message.error("Error fetching and printing record:", error);
     }
   };
   

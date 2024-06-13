@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { LaptopOutlined, NotificationOutlined, UserOutlined, LogoutOutlined, SettingOutlined } from '@ant-design/icons';
-import { Breadcrumb, Layout, Menu, theme, Button, Modal, Tooltip, } from 'antd';
+import { Breadcrumb, Layout, Menu, theme, Button, Modal, Tooltip, message} from 'antd';
 import { Divider } from 'antd';
 import { Typography } from 'antd';
 import '../styles/nav.css';
@@ -61,7 +61,7 @@ function NavBar() {
     const { error } = await supabase.auth.signOut();
 
     if (error) {
-      console.error("Logout error:", error.message);
+      message.error("Logout error:", error.message);
     } else {
       // Close the logout modal and update any necessary state
       setLogoutModalOpen(false);

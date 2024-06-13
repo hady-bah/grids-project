@@ -103,7 +103,7 @@ function Receipt() {
   
     if (error) {
       openErrorNotification();
-      console.error("Supabase Error:", error);
+      message.error("Supabase Error:", error);
     } else {
       openSuccesNotification(); // Display success message
   
@@ -114,7 +114,7 @@ function Receipt() {
         .eq("name", values.place);
   
       if (placeError) {
-        console.error("Supabase Error fetching place information:", placeError);
+        message.error("Supabase Error fetching place information:", placeError);
         return;
       }
   
@@ -145,12 +145,12 @@ function Receipt() {
       try {
         const response = await fetch(`http://localhost:3001/send-receipt?phoneNumber=${values.sender_number}&messageContent=${encodeURIComponent(text)}`);
         if (response.ok) {
-          console.log('SMS sent successfully');
+          message.success('SMS sent successfully');
         } else {
-          console.error('Error sending SMS:', response.statusText);
+          message.error('Error sending SMS:', response.statusText);
         }
       } catch (error) {
-        console.error('Error sending SMS:', error);
+        message.error('Error sending SMS:', error);
       }
       
       form.resetFields();
@@ -213,7 +213,7 @@ function Receipt() {
       .from("transfers")
       .select("codeNumber");
     if (error) {
-      console.error("Error fetching codes:", error);
+      message.error("Error fetching codes:", error);
       return [];
     }
     return data.map((item) => item.codeNumber);
@@ -273,7 +273,7 @@ function Receipt() {
   }, []);
 
   const onPanelChange = (value, mode) => {
-    console.log(value.format("YYYY-MM-DD"), mode);
+    message.log(value.format("YYYY-MM-DD"), mode);
   };
 
   const { token } = theme.useToken();

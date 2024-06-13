@@ -1,10 +1,10 @@
 import React from 'react';
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Button, Checkbox, Form, Input, message } from 'antd';
 const onFinish = (values) => {
-  console.log('Success:', values);
+  message.success('Success:', values);
 };
 const onFinishFailed = (errorInfo) => {
-  console.log('Failed:', errorInfo);
+  message.error('Failed:', errorInfo);
 };
 const App = () => (
   <Form

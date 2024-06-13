@@ -8,7 +8,7 @@ import { ConfigProvider } from "antd";
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { supabase } from "../createClient";
-import logoImage from "./assets/gridsofflogo.png"; // Adjust the path based on your file structure
+import logoImage from "./assets/gridsofflogo.png"; 
 
 
 function App() {
@@ -95,48 +95,4 @@ function App() {
 
 export default App;
 
-// //Pre Auth setup
-// import React, { useState, useEffect } from "react";
-// import "./styles/App.css";
-// import Sidebar from "./components/Sidebar";
-// import NavBar from "./components/NavBar";
-// import ContentComponent from "./Layouts/ContentComponent";
-// import { FloatButton } from 'antd';
-// import { Button, ConfigProvider, Space } from 'antd';
-// import { Auth } from '@supabase/auth-ui-react';
-// import { ThemeSupa } from '@supabase/auth-ui-shared';
-// import { supabase } from "../createClient";
 
-// function App() {
-//   const [count, setCount] = useState(0);
-
-//   return (
-//     <>
-//     <ConfigProvider
-//     theme={{
-//       token: {
-//         // Seed Token
-//         colorPrimary: '#28282B',
-//         borderRadius: 5,
-//         colorPrimaryBg:'white'
-
-//         // Alias Token
-//         // colorBgContainer: '#f6ffed',
-//       },
-//     }}
-//   >
-//     <div>
-//       <div>
-//         <NavBar />
-//       </div>
-//       <div>
-//         <Sidebar />
-//       </div>
-//       <FloatButton.BackTop />
-//     </div>
-//     </ConfigProvider>7
-//     </>
-//   );
-// }
-
-// export default App;

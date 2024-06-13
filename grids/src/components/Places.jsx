@@ -84,7 +84,7 @@ const EditableCell = ({
         ...values,
       });
     } catch (errInfo) {
-      console.log("Save failed:", errInfo);
+      message.error("Save failed:", errInfo);
     }
   };
   let childNode = children;
@@ -147,12 +147,12 @@ function Places() {
   };
 
   const onFinish = async (values) => {
-    console.log("Form Values:", values);
+    // console.log("Form Values:", values);
     const { data, error } = await supabase.from("places").insert([values]);
 
     if (error) {
       openErrorNotificationForm();
-      console.error("Supabase Error:", error);
+      message.error("Supabase Error:", error);
     } else {
       openSuccesNotificationForm(); // Display success message
       fetchPlaces();

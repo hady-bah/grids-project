@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { supabase } from "../../createClient";
 import CountUp from "react-countup";
-import { Col, Row, Statistic, Typography } from "antd";
+import { Col, Row, Statistic, Typography, message } from "antd";
 
 function AllTimeTotals() {
   const { Title } = Typography;
@@ -45,7 +45,7 @@ function AllTimeTotals() {
     const { data, error } = await supabase.from("transfers").select("*");
 
     if (error) {
-      console.error("Error fetching data from Supabase:", error.message);
+      message.error("Error fetching data from Supabase:", error.message);
       return;
     }
 
