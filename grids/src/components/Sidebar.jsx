@@ -66,7 +66,6 @@ function Sidebar() {
               items={items}
               style={{
                 backgroundColor: 'black', // Change the background color
-                color: 'white', // Change the text color
               }}
             />
           </Sider>
