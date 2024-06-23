@@ -785,7 +785,7 @@ function Transfers() {
   
       // Send SMS using fetch
       try {
-        const API_URL = 'http://localhost:8888/.netlify/functions/';
+        const API_URL = 'https://gridssoftware.netlify.app/.netlify/functions/';
         const response = await fetch(`${API_URL}send-receipt?phoneNumber=${record.sender_number}&messageContent=${encodeURIComponent(text)}`, {
           method: 'GET',
           headers: {
