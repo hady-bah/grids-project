@@ -785,21 +785,26 @@ function Transfers() {
   
       // Send SMS using fetch
       try {
-        const response = await fetch(`http://localhost:3001/send-receipt?phoneNumber=${record.sender_number}&messageContent=${encodeURIComponent(text)}`);
+        const API_URL = 'http://localhost:8888/.netlify/functions/';
+        const response = await fetch(`${API_URL}send-receipt?phoneNumber=${record.sender_number}&messageContent=${encodeURIComponent(text)}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
         if (response.ok) {
-          openSuccesNotification();
           message.success('SMS sent successfully');
         } else {
-          openErrorNotification();
-          message.error('Error sending SMS:', response.statusText);
+          const errorText = await response.text();
+          message.error(`Error sending SMS: ${errorText}`);
         }
       } catch (error) {
-        message.error('Error sending SMS:', error);
+        message.error(`Error sending SMS: ${error.message}`);
       }
       
     } catch (error) {
       openErrorNotification();
-      message.error("Error fetching and printing record:", error);
+      message.error("Error fetching record:", error);
     }
   };
   
